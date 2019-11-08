@@ -1,0 +1,92 @@
+/*
+Theme Name:Photo Child
+Theme URI: https://folkphotography.com
+Author: Zachary Folk
+Author URI: https://folkphotography.com
+Template: photograph
+Description: Child theme of Photograph created by https://themefreesia.com/photograph
+Version: 1.0.1
+Text Domain: photograph
+License: GNU General Public License version 3.0
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
+
+Tags: threaded-comments, right-sidebar, custom-background, custom-colors, custom-header, custom-logo, custom-menu, editor-style, featured-images, flexible-header, post-formats, sticky-post, theme-options, translation-ready, photography, blog, portfolio
+
+All files, unless otherwise stated, are released under the GNU General Public License
+version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
+==================================================
+*/
+
+body, button, input, select, textarea {
+    color: #909090;
+  }
+
+  /* ! Removing the single post sidebar ! */
+  /* #primary { width: 100%}
+#secondary {width: 0%; visibility: hidden;display: none;}
+  #content {padding: 0} */
+.custom-logo-link .custom-logo {
+	height: 50px;
+	margin: 10px 0;
+}
+.side-menu-wrap .custom-logo {
+	background-color: transparent;
+}
+
+.page-overlay:before {
+	background-color: #000000;
+}
+.side-menu:after {
+    box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.20);
+    content: "";
+    background-color: #4b4b4b;
+    position: absolute;
+    height: 50px;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    transform: rotate(0deg);
+}
+#page {
+    background-color: #ffffff;
+}
+.featured-gallery .featured-item {
+    padding: 0;
+    float: left;
+}
+.featured-gallery-content {
+    width: 86%;
+    margin-left: auto;
+    margin-right: auto;
+    clear: both;
+}
+.filter-button ul li:hover, .filter-button ul li.active {
+    color: #dde9ff;
+}
+
+.scroll-down span {
+    border-left: 2px solid #2e2e2e;
+    border-bottom: 2px solid #181818;
+  }
+
+.show-fgt-hover .featured-item.has-post-thumbnail .featured-title, .show-fgt-hover .featured-item.has-post-thumbnail:hover .featured-title {
+    font-size: 17px;
+    line-height: 17px;
+    top: 90%;
+  }
+
+  .featured-text-content .featured-title a:hover {
+      text-decoration: underline;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+  	color: #222;
+  	font-family: "Roboto-Condensed", sans-serif;
+  	font-weight: 600;
+  	margin-top:0;
+  	margin-bottom: 15px;
+  }

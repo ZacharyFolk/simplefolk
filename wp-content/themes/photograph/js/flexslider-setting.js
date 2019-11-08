@@ -1,0 +1,1 @@
+jQuery(document).ready(function(e){e(window);e(".layer-slider").flexslider({animation:photograph_slider_value.photograph_animation_effect,animationLoop:!0,slideshow:!0,slideshowSpeed:photograph_slider_value.photograph_slideshowSpeed,animationSpeed:photograph_slider_value.photograph_animationSpeed,smoothHeight:!0})});
