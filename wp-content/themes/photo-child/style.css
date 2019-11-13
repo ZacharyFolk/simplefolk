@@ -16,77 +16,113 @@ All files, unless otherwise stated, are released under the GNU General Public Li
 version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 ==================================================
 */
-
-body, button, input, select, textarea {
-    color: #909090;
-  }
-
-  /* ! Removing the single post sidebar ! */
-  /* #primary { width: 100%}
-#secondary {width: 0%; visibility: hidden;display: none;}
-  #content {padding: 0} */
-.custom-logo-link .custom-logo {
-	height: 50px;
-	margin: 10px 0;
+#content {
+  padding: 0
 }
+
+@media only screen and (max-width: 767px) {
+  #content {
+    padding-top: 0!important; /* todo : clean up parent files */
+  }
+}
+#primary, #secondary {
+    margin-bottom: 0!important;
+  }
+#secondary {
+  border: 0;
+  padding-left: 10px;
+}
+#colophon{
+margin-top: 50px;
+}
+.site-info .copyright {
+    color: #000;
+    font-size: 12px;
+    line-height: 1.666;
+    text-align: right;
+  }
+a {
+  color: #000;
+  text-decoration: underline;
+}
+
+a:hover {
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+.custom-logo-link .custom-logo {
+  height: 50px;
+  margin: 10px 0;
+}
+
 .side-menu-wrap .custom-logo {
-	background-color: transparent;
+  background-color: transparent;
 }
 
 .page-overlay:before {
-	background-color: #000000;
+  background-color: #000000;
 }
+
 .side-menu:after {
-    box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.20);
-    content: "";
-    background-color: #4b4b4b;
-    position: absolute;
-    height: 50px;
-    width: 100%;
-    top: 0px;
-    left: 0px;
-    transform: rotate(0deg);
+  box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.20);
+  content: "";
+  background-color: #4b4b4b;
+  position: absolute;
+  height: 50px;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  transform: rotate(0deg);
 }
+
 #page {
-    background-color: #ffffff;
+  background-color: #ffffff;
 }
+
 .featured-gallery .featured-item {
-    padding: 0;
-    float: left;
+  padding: 0;
+  float: left;
 }
+
 .featured-gallery-content {
-    width: 86%;
-    margin-left: auto;
-    margin-right: auto;
-    clear: both;
+  width: 86%;
+  margin-left: auto;
+  margin-right: auto;
+  clear: both;
 }
+
 .filter-button ul li:hover, .filter-button ul li.active {
-    color: #dde9ff;
+  color: #dde9ff;
 }
 
 .scroll-down span {
-    border-left: 2px solid #2e2e2e;
-    border-bottom: 2px solid #181818;
-  }
+  border-left: 2px solid #2e2e2e;
+  border-bottom: 2px solid #181818;
+}
 
 .show-fgt-hover .featured-item.has-post-thumbnail .featured-title, .show-fgt-hover .featured-item.has-post-thumbnail:hover .featured-title {
-    font-size: 17px;
-    line-height: 17px;
-    top: 90%;
-  }
+  font-size: 17px;
+  line-height: 17px;
+  top: 90%;
+}
 
-  .featured-text-content .featured-title a:hover {
-      text-decoration: underline;
-  }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-  	color: #222;
-  	font-family: "Roboto-Condensed", sans-serif;
-  	font-weight: 600;
-  	margin-top:0;
-  	margin-bottom: 15px;
-  }
+.featured-text-content .featured-title a:hover {
+  text-decoration: underline;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #222;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+h1, p {
+  font-family: "Special Elite", sans-serif;
+}

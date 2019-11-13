@@ -27,53 +27,21 @@ while( have_posts() ) {
 <div class="wrap">
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
-      			<h1 class="entry-title"><?php the_title();?></h1>
 			<article id="post-<?php the_ID(); ?>" <?php post_class();?>>
 				<?php if(has_post_thumbnail() && $photograph_display_page_single_featured_image == 0 ){ ?>
 					<div class="entry-thumb">
 						<figure class="entry-thumb-content">
 							<?php the_post_thumbnail(); ?>
 						</figure>
-					</div> <!-- end .entry-thumb -->
+					</div>
 				<?php }
 				 ?>
-				<div class="entry-content">
-					<?php the_content(); ?>
-				</div><!-- end .entry-content -->
-				<?php wp_link_pages( array(
-					'before'            => '<div style="clear: both;"></div><div class="pagination clearfix">'.esc_html__( 'Pages:', 'photograph' ),
-					'after'             => '</div>',
-					'link_before'       => '<span>',
-					'link_after'        => '</span>',
-					'pagelink'          => '%',
-					'echo'              => 1
-				) );
-        echo get_the_tag_list('<p>Tagged with: ',', ','</p>'); ?>
-			</article><!-- end .post -->
-			<?php
-			if ( comments_open() || get_comments_number() ) {
-				comments_template();
-			}
-			if ( is_singular( 'attachment' ) ) {
-				// Parent post navigation.
-				the_post_navigation( array(
-							'prev_text' => _x( '<span class="meta-nav">Published in</span><span class="post-title">%title</span>', 'Parent post link', 'photograph' ),
-						) );
-			} elseif ( is_singular( 'post' ) ) {
-			the_post_navigation( array(
-					'next_text' => '<span class="meta-nav" aria-hidden="true">' . __( 'Next', 'photograph' ) . '</span> ' .
-						'<span class="screen-reader-text">' . __( 'Next post:', 'photograph' ) . '</span> ' .
-						'<span class="post-title">%title</span>',
-					'prev_text' => '<span class="meta-nav" aria-hidden="true">' . __( 'Previous', 'photograph' ) . '</span> ' .
-						'<span class="screen-reader-text">' . __( 'Previous post:', 'photograph' ) . '</span> ' .
-						'<span class="post-title">%title</span>',
-				) );
-				} ?>
-		</main><!-- end #main -->
-	</div> <!-- end #primary -->
+			</article>
+		</main>
+	</div>
 	<?php
 	get_sidebar();
 	?>
-</div><!-- end .wrap -->
+</div>
 <?php }
 get_footer();

@@ -30,12 +30,12 @@ function delicious_recent_posts() {
       'category' => 7,
       //'post__not_in' => array( $post->ID )
   );
-    $del_recent_posts = new WP_Query($args);
-
-        while ($del_recent_posts->have_posts()) : $del_recent_posts->the_post(); ?>
+    $recent_posts = new WP_Query($args);
+        while ($recent_posts->have_posts()) : $recent_posts->the_post(); ?>
             <li>
                 <a href="<?php esc_url(the_permalink()); ?>">
-                    <?php the_post_thumbnail('folk_recent_thumbs'); ?>
+                    <?php echo '<a href="' . get_permalink() . '"' ?>
+                      <?php the_post_thumbnail('folk_recent_thumbs'); ?>
                 </a>
                 <h4>
                     <a href="<?php esc_url(the_permalink()); ?>">
@@ -48,29 +48,22 @@ function delicious_recent_posts() {
 }
 
 function my_recent_posts() {
-// $args = array(
-// 	'numberposts' => 10,
-// 	'offset' => 0,
-// 	'category' => 0,
-// 	'orderby' => 'post_date',
-// 	'order' => 'DESC',
-// 	'include' => '',
-// 	'exclude' => '',
-// 	'meta_key' => '',
-// 	'meta_value' =>'',
-// 	'post_type' => 'post',
-// 	'post_status' => 'draft, publish, future, pending, private',
-// 	'suppress_filters' => true
-// );
-//
-// $recent_posts = wp_get_recent_posts( $args, ARRAY_A );
-//
-
-$args = array( 'numberposts' => '5', 'post__not_in' => array( get_the_ID() ) );
+echo '<div id="recent_posts"><div class="grid-sizer"></div>';
+$args = array(
+  'numberposts' => '15',
+  'post__not_in' => array( get_the_ID() )
+ );
 	$recent_posts = wp_get_recent_posts( $args );
-	foreach( $recent_posts as $recent ){
-		echo '<li><a href="' . get_permalink($recent["ID"]) . '">' .   $recent["post_title"].'</a> </li> ';
-	}
+	foreach( $recent_posts as $recent ) :
+    $id = $recent["ID"];
+    if ( has_post_thumbnail($id)) : ?>
+    <div class="recent-item">
+      <a href="<?php echo get_permalink($id); ?>">
+        <?php echo get_the_post_thumbnail($id,'thumbnail'); ?>
+      </a></div>
+       <?php endif;
+       //		echo '<li><a href="' . get_permalink($recent["ID"]) . '">' .   $recent["post_title"].'</a> </li> ';
+	endforeach;
 	wp_reset_query();
 }
 
@@ -79,7 +72,6 @@ $folk_font = array();
 array_push( $folk_font, 'Special+Elite');
 array_push( $folk_font, 'Rajdhani');
 $folk_fonts = implode("|", $folk_font);
-
 wp_register_style( 'folk-fonts', '//fonts.googleapis.com/css?family='.$folk_fonts.'&display=swap');
 wp_enqueue_style( 'folk-fonts' );
 }

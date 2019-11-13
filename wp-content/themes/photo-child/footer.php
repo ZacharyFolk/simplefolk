@@ -61,7 +61,7 @@ $footer_column = $photograph_settings['photograph_footer_column_section'];
 		</div><!-- end .wrap -->
 	</div> <!-- end .widget-wrap -->
 	<?php } ?>
-	<div class="site-info"  <?php if($photograph_settings['photograph_img-upload-footer-image'] !=''){?>style="background-image:url('<?php echo esc_url($photograph_settings['photograph_img-upload-footer-image']); ?>');" <?php } ?>>
+	<div class="site-info">
 		<div class="wrap">
 			<div class="copyright-wrap clearfix">
 				<?php

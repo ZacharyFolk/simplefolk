@@ -36,5 +36,3 @@ if( 'default' == $layout ) { //Settings from customizer
 			echo '</aside><!-- end #secondary -->';
 		}
 	}
-
-echo my_recent_posts();
