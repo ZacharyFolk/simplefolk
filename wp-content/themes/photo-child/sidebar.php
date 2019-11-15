@@ -35,7 +35,7 @@ echo'</li>';
 endif;
  ?>
 </ul>
-
+<h2>Recent Posts</h2>
 <?php
 echo my_recent_posts();
  ?>

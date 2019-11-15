@@ -44,7 +44,7 @@ $photograph_settings = photograph_get_theme_options(); ?>
 								); ?>
 					</div> <!-- end .entry-meta -->
 				<?php	} ?>
-				
+
 			</div><!-- end .entry-thumb -->
 		<?php } ?>
 		<div class="entry-details">
@@ -69,7 +69,7 @@ $photograph_settings = photograph_get_theme_options(); ?>
 				} ?>
 				<h2 class="entry-title"> <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"> <?php the_title();?> </a> </h2> <!-- end.entry-title -->
 			</header><!-- end .entry-header -->
-			
+
 			<div class="entry-content">
 				<?php if($content_display == 'excerptblog_display'):
 						the_excerpt(); ?>
@@ -103,7 +103,7 @@ $photograph_settings = photograph_get_theme_options(); ?>
 		</div><!-- end .entry-details -->
 	</div><!-- end .post-featured-gallery-wrap -->
 							
-	<?php wp_link_pages( array( 
+	<?php wp_link_pages( array(
 			'before'            => '<div style="clear: both;"></div><div class="pagination clearfix">'.esc_html__( 'Pages:', 'photograph' ),
 			'after'             => '</div>',
 			'link_before'       => '<span>',

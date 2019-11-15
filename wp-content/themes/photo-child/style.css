@@ -16,31 +16,69 @@ All files, unless otherwise stated, are released under the GNU General Public Li
 version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 ==================================================
 */
+
+/* OVERRIDE */
+
+.blog .page-header,
+.archive .page-header {
+	display: block;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 30px;
+	margin-bottom: 20px;
+	clear: both;
+}
+
 #content {
   padding: 0
 }
 
 @media only screen and (max-width: 767px) {
   #content {
-    padding-top: 0!important; /* todo : clean up parent files */
+    padding-top: 0 !important;
+    /* todo : clean up parent files */
   }
 }
+
 #primary, #secondary {
-    margin-bottom: 0!important;
-  }
+  margin-bottom: 0 !important;
+}
+
 #secondary {
   border: 0;
   padding-left: 10px;
 }
-#colophon{
-margin-top: 50px;
+
+#colophon {
+  margin-top: 50px;
 }
+
+/* * {
+  margin: 0;
+  padding: 0;
+}
+
+.main-post-image {
+  display: grid;
+  height: 100%;
+} */
+
+.main-post-image img {
+  width: 100%;
+height: auto;
+margin-left: auto;
+margin-right: auto;
+display: block;
+}
+
 .site-info .copyright {
-    color: #000;
-    font-size: 12px;
-    line-height: 1.666;
-    text-align: right;
-  }
+  color: #000;
+  font-size: 12px;
+  line-height: 1.666;
+  text-align: right;
+}
+
 a {
   color: #000;
   text-decoration: underline;
@@ -122,7 +160,12 @@ h6 {
   margin-top: 0;
   margin-bottom: 15px;
 }
-
-h1, p {
+.page-header h1 { display: inline-block;}
+.tag-description { display: inline-block; margin: 0 0 0 10px; font-style: italic;}
+.tag-description p { margin: 0;}
+h1 {
+  font-size: 23px;
+}
+h1,h2, p {
   font-family: "Special Elite", sans-serif;
 }

@@ -1,12 +1,27 @@
 <?php
+// $args = array(
+// 	'smallest'                  => 12,
+// 	'largest'                   => 12,
+// 	'unit'                      => 'pt',
+// 	'number'                    => 45,
+// 	'format'                    => 'list',
+// 	'separator'                 => "\n",
+// 	'orderby'                   => 'name',
+// 	'order'                     => 'ASC',
+// 	'exclude'                   => null,
+// 	'include'                   => null,
+// //	'topic_count_text_callback' => default_topic_count_text,
+// 	'link'                      => 'view',
+// 	'taxonomy'                  => 'post_tag',
+// 	'echo'                      => true,
+// 	'show_count'                  => 1,
+//   	'child_of'                  => null, // see Note!
+//   );
+//  wp_tag_cloud( $args ); ?>
+
+<?php
 /**
- * The template for displaying archive pages
- *
- * Learn more: http://codex.wordpress.org/Template_Hierarchy
- *
- * @package Theme Freesia
- * @subpackage Photograph
- * @since Photograph 1.0
+ * The template for displaying tag pages
  */
 
 get_header();
@@ -43,9 +58,10 @@ if($photograph_blog_column_gallery_layout == '2'){
 	} ?>
 <div class="wrap">
 	<header class="page-header">
+    <h1><?php echo 	single_term_title( 'Tagged with: ', false ); ?></h1>
 		<?php
-			the_archive_title( '<h1 class="page-title">', '</h1>' );
-			the_archive_description( '<div class="taxonomy-description">', '</div>' );
+
+			the_archive_description( '<div class="tag-description">', '</div>' );
 		photograph_breadcrumb(); ?>
 	</header><!-- .page-header -->
 	<div id="primary" class="content-area">

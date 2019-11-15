@@ -39,7 +39,7 @@ $photograph_display_page_single_featured_image = $photograph_settings['photograp
 					<?php the_content(); ?>
 				</div> <!-- entry-content clearfix-->
 				<?php
-				wp_link_pages( array( 
+				wp_link_pages( array(
 						'before'            => '<div style="clear: both;"></div><div class="pagination clearfix">'.esc_html__( 'Pages:', 'photograph' ),
 						'after'             => '</div>',
 						'link_before'       => '<span>',

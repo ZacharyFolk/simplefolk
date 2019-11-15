@@ -29,10 +29,8 @@ while( have_posts() ) {
 		<main id="main" class="site-main">
 			<article id="post-<?php the_ID(); ?>" <?php post_class();?>>
 				<?php if(has_post_thumbnail() && $photograph_display_page_single_featured_image == 0 ){ ?>
-					<div class="entry-thumb">
-						<figure class="entry-thumb-content">
+					<div class="main-post-image">
 							<?php the_post_thumbnail(); ?>
-						</figure>
 					</div>
 				<?php }
 				 ?>
