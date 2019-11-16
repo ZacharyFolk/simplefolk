@@ -166,6 +166,19 @@ h6 {
 h1 {
   font-size: 23px;
 }
-h1,h2, p {
+h1,h2, p, .main-navigation a {
   font-family: "Special Elite", sans-serif;
+
+}
+.main-navigation a {
+text-transform: none;
+}
+.nav-menu {
+    position: relative;
+    top: 75%;
+    transform: translateY(-50%);
+    text-align: left;
+}
+.main-navigation a:hover, .main-navigation ul li.current-menu-item a, .main-navigation ul li.current_page_ancestor a, .main-navigation ul li.current-menu-ancestor a, .main-navigation ul li.current_page_item a, .main-navigation ul li:hover > a, .main-navigation li.current-menu-ancestor.menu-item-has-children > a:after {
+    color: #f9efcb;
 }
