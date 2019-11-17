@@ -18,7 +18,8 @@ version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 */
 
 /* OVERRIDE */
-
+/* .wrap, #main, #primary {max-width: 100%; width: 100%;} */
+#photos_page.wrap, #photos_page #main, #photos_page #primary {max-width: 100%; width: 100%;}
 .blog .page-header,
 .archive .page-header {
 	display: block;
@@ -27,9 +28,18 @@ version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 	margin-right: auto;
 	margin-top: 30px;
 	margin-bottom: 20px;
-	clear: both;
 }
 
+
+#photos_page .page-header, .blog .page-header, .archive .page-header {
+    display: block;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 0;
+    padding: 20px;
+}
 #content {
   padding: 0
 }
@@ -166,7 +176,7 @@ h6 {
 h1 {
   font-size: 23px;
 }
-h1,h2, p, .main-navigation a {
+h1,h2, p, .main-navigation a, .details-link {
   font-family: "Special Elite", sans-serif;
 
 }
@@ -182,3 +192,5 @@ text-transform: none;
 .main-navigation a:hover, .main-navigation ul li.current-menu-item a, .main-navigation ul li.current_page_ancestor a, .main-navigation ul li.current-menu-ancestor a, .main-navigation ul li.current_page_item a, .main-navigation ul li:hover > a, .main-navigation li.current-menu-ancestor.menu-item-has-children > a:after {
     color: #f9efcb;
 }
+#photos_page h2.page-title {float: left; margin-bottom: 0; }
+.details-link {float: left; margin: 5px 0 0 10px; cursor: pointer; text-decoration: underline; }

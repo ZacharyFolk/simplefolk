@@ -39,9 +39,9 @@ $photograph_settings = photograph_get_theme_options(); ?>
 
 			</div><!-- end .entry-thumb -->
 		<?php } ?>
-		<div class="entry-details">
+	
+		<div class="entry-details" style="display:none">
 			<header class="entry-header">
-
 				<h2 class="entry-title"> <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"> <?php the_title();?> </a> </h2> <!-- end.entry-title -->
 			</header><!-- end .entry-header -->
 
@@ -55,7 +55,7 @@ $photograph_settings = photograph_get_theme_options(); ?>
 
 			<div class="entry-footer">
 					<div class="entry-meta">
-						<?php 
+						<?php
 
 							if(!empty($tag_list)){ ?>
 									<span class="tag-links">

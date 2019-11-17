@@ -24,7 +24,7 @@ get_header(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 			<div class="entry-content clearfix">
 				<?php the_content();
-					wp_link_pages( array( 
+					wp_link_pages( array(
 					'before'            => '<div style="clear: both;"></div><div class="pagination clearfix">'.esc_html__( 'Pages:', 'photograph' ),
 					'after'             => '</div>',
 					'link_before'       => '<span>',

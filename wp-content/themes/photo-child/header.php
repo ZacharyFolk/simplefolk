@@ -1,3 +1,12 @@
+<?php
+/**
+ * Displays the header content
+ *
+ * @package Theme Freesia
+ * @subpackage Photograph
+ * @since Photograph 1.0
+ */
+?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <?php
@@ -57,74 +66,15 @@ wp_head(); ?>
 								</nav> <!-- end #site-navigation -->
 							<?php }
 							$photograph_side_menu = $photograph_settings['photograph_side_menu'];
-							$search_form = $photograph_settings['photograph_search_custom_header'];
-							if( (1 != $photograph_settings['photograph_disable_main_menu']) || (1 != $search_form) ){  ?>
+							$search_form = $photograph_settings['photograph_search_custom_header']; ?>
 								<div class="right-toggle">
-									<?php if($photograph_settings['photograph_disable_main_menu']==0){ ?>
 									<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
 										<span class="line-bar"></span>
 								  	</button>
-								  	<!-- end .menu-toggle -->
-								  	<?php }
-								  	if (1 != $search_form) { ?>
-									<button type="button" id="search-toggle" class="header-search"></button>
-									<?php }
-									if(1 != $photograph_side_menu){ ?>
-									<button type="button" class="show-menu-toggle">
-										<span class="sn-text"><?php _e('Menu Button','photograph'); ?></span>
-										<span class="bars"></span>
-								  	</button>
-								  	<?php } ?>
 								</div>
-								<!-- end .right-toggle -->
-								<?php
-							} ?>
-					</div> <!-- end .main-header -->
-				</div> <!-- end #sticky-header -->
-			</div> <!-- end .top-header -->
-			<?php if (1 != $search_form) { ?>
-				<div id="search-box" class="clearfix">
-					<button type="button" class="search-x"></button>
-						<?php get_search_form();?>
+					</div>
 				</div>
-			<?php }
-
-			$photograph_side_menu = $photograph_settings['photograph_side_menu'];
-			if(1 != $photograph_side_menu){ ?>
-				<aside class="side-menu-wrap" role="complementary">
-					<div class="side-menu">
-				  		<button type="button" class="hide-menu-toggle">
-				  		<span class="screen-reader-text"><?php esc_html_e('Close Side Menu','photograph');?></span>		<span class="bars"></span>
-					  	</button>
-
-						<?php do_action ('photograph_new_site_branding');
-
-						if (has_nav_menu('side-nav-menu') || (has_nav_menu( 'social-link' ) && $photograph_settings['photograph_side_menu_social_icons'] == 0 ) || is_active_sidebar( 'photograph_side_menu' ) ):
-
-							if (has_nav_menu('side-nav-menu')) {
-								$args = array(
-									'theme_location' => 'side-nav-menu',
-									'container'      => '',
-									'items_wrap'     => '<ul class="side-menu-list">%3$s</ul>',
-									); ?>
-							<nav class="side-nav-wrap" role="navigation" aria-label="<?php esc_html_e('Sidebar Menu','photograph');?>">
-								<?php wp_nav_menu($args); ?>
-							</nav><!-- end .side-nav-wrap -->
-							<?php }
-							if($photograph_settings['photograph_side_menu_social_icons'] == 0):
-								do_action('photograph_social_links');
-							endif;
-
-							if( is_active_sidebar( 'photograph_side_menu' )) {
-								echo '<div class="side-widget-tray">';
-									dynamic_sidebar( 'photograph_side_menu' );
-								echo '</div> <!-- end .side-widget-tray -->';
-							}
-						endif; ?>
-					</div><!-- end .side-menu -->
-				</aside><!-- end .side-menu-wrap -->
-				<?php
-			} ?>
+			</div>
 		</div><!-- end .header-wrap -->
 		<?php
 		if($photograph_settings['photograph_top_social_icons'] == 0):
