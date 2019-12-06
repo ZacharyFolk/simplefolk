@@ -171,7 +171,7 @@ h6 {
   margin-bottom: 15px;
 }
 .page-header h1 { display: inline-block;}
-.tag-description { display: inline-block; margin: 0 0 0 10px; font-style: italic;}
+.tag-description {  margin: 0 0 0 5px; font-style: italic; float: left; width: 100%;}
 .tag-description p { margin: 0;}
 h1 {
   font-size: 23px;
@@ -192,5 +192,14 @@ text-transform: none;
 .main-navigation a:hover, .main-navigation ul li.current-menu-item a, .main-navigation ul li.current_page_ancestor a, .main-navigation ul li.current-menu-ancestor a, .main-navigation ul li.current_page_item a, .main-navigation ul li:hover > a, .main-navigation li.current-menu-ancestor.menu-item-has-children > a:after {
     color: #f9efcb;
 }
-#photos_page h2.page-title {float: left; margin-bottom: 0; }
+#photos_page h2.page-title, body.tag h2.page-title {float: left; margin-bottom: 0; }
 .details-link {float: left; margin: 5px 0 0 10px; cursor: pointer; text-decoration: underline; }
+
+.contact-template .contact-content {
+	background-image: url('./assets/images/tiles/5-dots.png');
+	background-repeat: repeat;
+}
+.contact-template .contact-content .wrap {
+    padding: 100px 0;
+    width: 70%;
+}

@@ -76,5 +76,6 @@ $image_attributes = wp_get_attachment_image_src($attachment_id,'full'); ?>
 		</div><!-- end .googlemaps_widget -->
 	<?php endif;  ?>
 </div><!-- end .contact-content -->
+
 <?php
 get_footer();

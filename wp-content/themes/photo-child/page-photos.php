@@ -42,10 +42,10 @@ if($photograph_blog_column_gallery_layout == '2'){
 	}?>
 <div id="photos_page" class="wrap">
 	<header class="page-header">
-		<h2 class="page-title"><?php single_post_title();?></h2><span class="details-link" data-toggle-on="hide details" data-toggle-off="view details">view details</span>
-		<!-- .page-title -->
-		<?php photograph_breadcrumb(); ?><!-- .breadcrumb -->
-	</header><!-- .page-header -->
+		<h2 class="page-title"><?php single_post_title();?></h2>
+    <span class="details-link" data-toggle-on="hide details" data-toggle-off="view details">view details</span>
+		<?php photograph_breadcrumb(); ?>
+	</header>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
 			<div class="container post-featured-gallery <?php echo esc_attr($blog_gallery_col) .' '. esc_attr($blog_gallery_border) .' '. esc_attr($blog_gallery_text_content). ' '. esc_attr($blog_gallery_box_layout); ?>">

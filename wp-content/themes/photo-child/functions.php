@@ -22,6 +22,7 @@ function remove_meta_entry_format() {
 }
 add_image_size( 'folk_recent_thumbs', 55, 55, true );
 
+add_image_size( 'tag_thumbs', 200, 200, array( 'left', 'top' ) );
 
 function delicious_recent_posts() {
   $args = array(
