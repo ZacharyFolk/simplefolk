@@ -8,7 +8,6 @@
  <div id="photos_page" class="wrap">
  	<header class="page-header">
  		<h2 class="page-title"><?php single_post_title();?></h2>
-     <span class="details-link" data-toggle-on="hide details" data-toggle-off="view details">view details</span>
  		<?php photograph_breadcrumb(); ?>
  	</header>
   <div id="primary" class="content-area">
