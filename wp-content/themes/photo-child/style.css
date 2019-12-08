@@ -192,13 +192,14 @@ text-transform: none;
 .main-navigation a:hover, .main-navigation ul li.current-menu-item a, .main-navigation ul li.current_page_ancestor a, .main-navigation ul li.current-menu-ancestor a, .main-navigation ul li.current_page_item a, .main-navigation ul li:hover > a, .main-navigation li.current-menu-ancestor.menu-item-has-children > a:after {
     color: #f9efcb;
 }
+
 #photos_page h2.page-title, body.tag h2.page-title {float: left; margin-bottom: 0; }
 .details-link {float: left; margin: 5px 0 0 10px; cursor: pointer; text-decoration: underline; }
 
 .contact-template .contact-content {
-	background-image: url('./assets/images/tiles/5-dots.png');
-	background-repeat: repeat;
+	background: repeat url('./assets/images/tiles/5-dots.png');
 }
+
 .contact-template .contact-content .wrap {
     padding: 100px 0;
     width: 70%;

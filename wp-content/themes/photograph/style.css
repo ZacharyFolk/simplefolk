@@ -4360,8 +4360,7 @@ input.search-field {
 /* #About Us page
 ================================================== */
 
-.about-template .about-contant,
-.contact-template .contact-content {
+.about-template .about-contant{
 	background-attachment: fixed;
 	background-color: #747474;
 	background-position: center center;
@@ -4387,10 +4386,7 @@ input.search-field {
 	margin: 0 auto;
 }
 
-.contact-template .contact-content .wrap {
-	padding: 100px 0;
-	width: 70%;
-}
+
 
 .contact-template #primary {
 	width: 60%;
