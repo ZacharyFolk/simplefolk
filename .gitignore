@@ -3,3 +3,7 @@ wp-config.php
 wp-content/uploads/
 wp-admin/
 xmlrpc.php
+# photo copies from watermark plugin
+wp-content/ew-backup
+wp-content/ai1wm-backups/
+wp-includes/

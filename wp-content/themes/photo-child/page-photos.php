@@ -41,10 +41,10 @@ if($photograph_blog_column_gallery_layout == '2'){
 		$blog_gallery_box_layout='box-gallery-post';
 	}?>
 <div id="photos_page" class="wrap">
-	<header class="page-header">
+	<!-- <header class="page-header">
 		<h2 class="page-title"><?php single_post_title();?></h2>
-		<?php photograph_breadcrumb(); ?>
-	</header>
+		<?php // photograph_breadcrumb(); ?>
+	</header> -->
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
 			<div class="container post-featured-gallery <?php echo esc_attr($blog_gallery_col) .' '. esc_attr($blog_gallery_border) .' '. esc_attr($blog_gallery_text_content). ' '. esc_attr($blog_gallery_box_layout); ?>">
@@ -64,5 +64,6 @@ if($photograph_blog_column_gallery_layout == '2'){
 		</main><!-- end #main -->
 	</div> <!-- #primary -->
 </div><!-- end .wrap -->
+
 <?php
 get_footer();

@@ -204,3 +204,9 @@ text-transform: none;
     padding: 100px 0;
     width: 70%;
 }
+.post-featured-gallery:not(.no-posts-border) .post-featured-item .post-featured-gallery-wrap {
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.20);
+}
+.post-featured-gallery:not(.no-posts-border) .post-featured-item:hover .post-featured-gallery-wrap {
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.60);
+}
