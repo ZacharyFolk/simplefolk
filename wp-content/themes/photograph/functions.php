@@ -51,12 +51,12 @@ function photograph_setup() {
 	// Add support for responsive embeds.
 	add_theme_support( 'responsive-embeds' );
 
-	/* 
-	* Enable support for custom logo. 
+	/*
+	* Enable support for custom logo.
 	*
-	*/ 
+	*/
 	add_theme_support( 'custom-logo', array(
-		'flex-width' => true, 
+		'flex-width' => true,
 		'flex-height' => true,
 	) );
 
@@ -67,7 +67,7 @@ function photograph_setup() {
 		) );
 	add_theme_support( 'align-wide' );
 
-	//Indicate widget sidebars can use selective refresh in the Customizer. 
+	//Indicate widget sidebars can use selective refresh in the Customizer.
 	add_theme_support( 'customize-selective-refresh-widgets' );
 
 	/*
@@ -96,7 +96,7 @@ function photograph_setup() {
 /**
  * Load WooCommerce compatibility files.
  */
-	
+
 require get_template_directory() . '/woocommerce/functions.php';
 
 
@@ -173,10 +173,10 @@ function photograph_customize_register( $wp_customize ) {
 				)
 			)
 		);
-	}	
+	}
 	$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
 	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
-		
+
 	if ( isset( $wp_customize->selective_refresh ) ) {
 		$wp_customize->selective_refresh->add_partial( 'blogname', array(
 			'selector' => '.site-title a',
@@ -189,7 +189,7 @@ function photograph_customize_register( $wp_customize ) {
 			'render_callback' => 'photograph_customize_partial_blogdescription',
 		) );
 	}
-	
+
 	require get_template_directory() . '/inc/customizer/functions/design-options.php';
 	require get_template_directory() . '/inc/customizer/functions/theme-options.php';
 	require get_template_directory() . '/inc/customizer/functions/color-options.php' ;
@@ -203,22 +203,22 @@ if(!class_exists('Photograph_Plus_Features')){
 	}
 }
 
-/** 
-* Render the site title for the selective refresh partial. 
-* @see photograph_customize_register() 
-* @return void 
-*/ 
-function photograph_customize_partial_blogname() { 
-bloginfo( 'name' ); 
-} 
+/**
+* Render the site title for the selective refresh partial.
+* @see photograph_customize_register()
+* @return void
+*/
+function photograph_customize_partial_blogname() {
+bloginfo( 'name' );
+}
 
-/** 
-* Render the site tagline for the selective refresh partial. 
-* @see photograph_customize_register() 
-* @return void 
-*/ 
-function photograph_customize_partial_blogdescription() { 
-bloginfo( 'description' ); 
+/**
+* Render the site tagline for the selective refresh partial.
+* @see photograph_customize_register()
+* @return void
+*/
+function photograph_customize_partial_blogdescription() {
+bloginfo( 'description' );
 }
 add_action( 'customize_register', 'photograph_customize_register' );
 /******************* Photograph Header Display *************************/
@@ -244,7 +244,7 @@ if ($photograph_header_display == 'header_logo' || $photograph_header_display ==
 				$site_description = get_bloginfo( 'description', 'display' );
 				if ($site_description){?>
 					<div id="site-description"> <?php bloginfo('description');?> </div> <!-- end #site-description -->
-			
+
 		<?php }
 		echo '</div></div>'; // end #site-branding
 		}
@@ -252,44 +252,20 @@ if ($photograph_header_display == 'header_logo' || $photograph_header_display ==
 				<div class="advertisement-box">
 					<?php dynamic_sidebar( 'photograph_header_banner' ); ?>
 				</div> <!-- end .advertisement-box -->
-			<?php } 
+			<?php }
 		}
 }
 /************** Site Branding *************************************/
 add_action('photograph_site_branding','photograph_header_display');
 
-if ( ! function_exists( 'photograph_the_custom_logo' ) ) : 
- 	/** 
- 	 * Displays the optional custom logo. 
- 	 * Does nothing if the custom logo is not available. 
- 	 */ 
- 	function photograph_the_custom_logo() { 
-		if ( function_exists( 'the_custom_logo' ) ) { 
-			the_custom_logo(); 
+if ( ! function_exists( 'photograph_the_custom_logo' ) ) :
+ 	/**
+ 	 * Displays the optional custom logo.
+ 	 * Does nothing if the custom logo is not available.
+ 	 */
+ 	function photograph_the_custom_logo() {
+		if ( function_exists( 'the_custom_logo' ) ) {
+			the_custom_logo();
 		}
- 	} 
+ 	}
 endif;
-
-/************** Site Branding for sticky header and side menu sidebar *************************************/
-add_action('photograph_new_site_branding','photograph_stite_branding_for_stickyheader_sidesidebar');
-
-	function photograph_stite_branding_for_stickyheader_sidesidebar(){ 
-		$photograph_settings = photograph_get_theme_options(); ?>
-		<div id="site-branding">
-			<?php	
-			$photograph_header_display = $photograph_settings['photograph_header_display'];
-			if ($photograph_header_display == 'header_logo' || $photograph_header_display == 'show_both') {
-				photograph_the_custom_logo(); 
-			}
-
-			if ($photograph_header_display == 'header_text' || $photograph_header_display == 'show_both') { ?>
-			<div id="site-detail">
-				<div id="site-title">
-					<a href="<?php echo esc_url(home_url('/'));?>" title="<?php echo esc_attr(get_bloginfo('name', 'display'));?>" rel="home"> <?php bloginfo('name');?> </a>
-				</div>
-				<!-- end #site-title -->
-				<div id="site-description"><?php bloginfo('description');?></div> <!-- end #site-description -->
-			</div><!-- end #site-detail -->
-			<?php } ?>
-		</div> <!-- end #site-branding -->
-	<?php }

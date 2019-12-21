@@ -164,22 +164,7 @@ function photograph_video_category_sliders() {
 						}
 
 				}
-				if($photograph_settings['photograph_video_category'] !='') { ?>
-					<?php while ($query->have_posts()):$query->the_post(); ?>
-						<div class="vid-thumb-content">
-							<div class="vid-thumb-text">
-								<h2 class="vid-thumb-title"><a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
-								<!-- .vid-thumb-title -->
-								<?php if ( ( get_the_excerpt() !='' ) ): ?>
-									<span class="vid-thumb-text-area"><?php the_excerpt(); ?></span>
-									<!-- end .vid-thumb-text -->
-								<?php endif; ?>
-							</div>
-							<!-- end .vid-thumb-text-content -->
-						</div>
-						<!-- end .vid-thumb-content -->
-					<?php endwhile;
-				} ?>
+		 ?>
 				<?php
 				if($photograph_slider_video_display=='video') {
 					echo	'</div> <!-- end .vid-thumb-bg -->';
