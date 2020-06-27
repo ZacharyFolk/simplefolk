@@ -50,9 +50,10 @@ if($photograph_blog_column_gallery_layout == '2'){
 	</header><!-- .page-header -->
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-			<?php
+			<div class="container post-featured-gallery <?php echo esc_attr($blog_gallery_col) .' '. esc_attr($blog_gallery_border) .' '. esc_attr($blog_gallery_text_content). ' '. esc_attr($blog_gallery_box_layout); ?>">
+			<?php 
 			if( have_posts() ) { ?>
-				<div class="container post-featured-gallery <?php echo esc_attr($blog_gallery_col) .' '. esc_attr($blog_gallery_border) .' '. esc_attr($blog_gallery_text_content). ' '. esc_attr($blog_gallery_box_layout); ?>">
+				
 					<?php	while(have_posts() ) {
 							the_post();
 							get_template_part( 'content', get_post_format() );

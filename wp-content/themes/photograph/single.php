@@ -22,7 +22,7 @@ while( have_posts() ) {
 	<div <?php post_class('single-post-title'); ?>>
 		<header class="entry-header">
 			<h1 class="entry-title"><?php the_title();?></h1> <!-- end.entry-title -->
-				
+
 				<?php if($photograph_entry_meta_single !='hide'){
 					echo  '<div class="entry-meta">';
 					if($photograph_post_author != 1){
@@ -34,7 +34,7 @@ while( have_posts() ) {
 										esc_attr( get_the_time(get_option( 'date_format' )) ),
 										esc_attr( get_the_time(get_option( 'date_format' )) )
 									);
-					} 
+					}
 					if ( comments_open()  && $photograph_post_comments !=1) { ?>
 							<span class="comments">
 							<?php comments_popup_link( __( '<i class="fa fa-comment-o"></i> No Comments', 'photograph' ), __( '<i class="fa fa-comment-o"></i> 1 Comment', 'photograph' ), __( '<i class="fa fa-comment-o"></i> % Comments', 'photograph' ), '', __( 'Comments Off', 'photograph' ) ); ?> </span>
@@ -50,8 +50,8 @@ while( have_posts() ) {
 
 					if($photograph_post_category !=1){
 						do_action('photograph_post_categories_list_id');
-					}		
-					
+					}
+
 					if(!empty($tag_list)){ ?>
 						<span class="tag-links">
 							<?php   echo get_the_tag_list(); ?>
@@ -66,7 +66,7 @@ while( have_posts() ) {
 <div class="wrap">
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-		
+
 			<article id="post-<?php the_ID(); ?>" <?php post_class();?>>
 				<?php if(has_post_thumbnail() && $photograph_display_page_single_featured_image == 0 ){ ?>
 					<div class="entry-thumb">
@@ -76,11 +76,11 @@ while( have_posts() ) {
 					</div> <!-- end .entry-thumb -->
 				<?php }
 				 ?>
-				
+
 				<div class="entry-content">
-					<?php the_content(); ?>			
+					<?php the_content(); ?>
 				</div><!-- end .entry-content -->
-				<?php wp_link_pages( array( 
+				<?php wp_link_pages( array(
 					'before'            => '<div style="clear: both;"></div><div class="pagination clearfix">'.esc_html__( 'Pages:', 'photograph' ),
 					'after'             => '</div>',
 					'link_before'       => '<span>',

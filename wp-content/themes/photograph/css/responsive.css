@@ -551,6 +551,7 @@
 	}
 }
 
+
 /* All Mobile Screen ( smaller than 768px )
 ================================================== */
 @media only screen and (max-width: 767px) {
@@ -560,7 +561,16 @@
 		font-size: 26px;
 		line-height: 1.231;
 	}
-	
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p {
+		margin-bottom: 10px;
+	}
 
 	hr {
 		margin-bottom: 30px;

@@ -20,6 +20,6 @@ $photograph_settings = photograph_get_theme_options(); ?>
 		<h2 class="entry-title"> <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"> <?php the_title();?> </a> </h2> <!-- end.entry-title -->
 	</header><!-- end .entry-header -->
 	<div class="entry-summary">
-			<?php the_excerpt(); ?>
+			<?php the_excerpt(); ?>		
 	</div><!-- end .entry-content -->
 </article><!-- end .post -->

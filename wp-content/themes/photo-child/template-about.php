@@ -1,12 +1,6 @@
 <?php
 /**
- * Template Name: Aboutz Us Template
- *
- * Displays the About Us page template.
- *
- * @package Theme Freesia
- * @subpackage Photograph
- * @since Photograph 1.0
+ * Template Name: Aboutz Template
  */
 get_header();
 $attachment_id = get_post_thumbnail_id();
@@ -22,19 +16,17 @@ $image_attributes = wp_get_attachment_image_src($attachment_id,'full'); ?>
 								while( have_posts() ) {
 									the_post();
 									the_content();
+              echo do_shortcode( '[contact-form-7 id="38" title="Contact"]' );
 									comments_template();
 								}
 							} else { ?>
 							<h2 class="entry-title"> <?php esc_html_e( 'No Posts Found.', 'photograph' ); ?> </h2>
 							<?php } ?>
+
 					</div> <!-- end #entry-content -->
 				</article>
 			</main> <!-- end #main -->
 		</div> <!-- #primary -->
 	</div><!-- end .wrap -->
 </div><!-- end .about-content -->
-
-<aside id="secondary" class="widget-area">
-	<?php echo do_shortcode( '[contact-form-7 id="18" title="Contact"]' ); ?>
-</aside>
 <?php get_footer();

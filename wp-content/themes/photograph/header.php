@@ -20,7 +20,7 @@ $photograph_settings = photograph_get_theme_options(); ?>
 wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
-	<?php 
+	<?php
 	if ( function_exists( 'wp_body_open' ) ) {
 
 		wp_body_open();
@@ -34,7 +34,7 @@ wp_head(); ?>
 		<a href="<?php echo esc_url(home_url('/'));?>" rel="home"><img src="<?php header_image(); ?>" class="header-image" width="<?php echo esc_attr(get_custom_header()->width);?>" height="<?php echo esc_attr(get_custom_header()->height);?>" alt="<?php echo esc_attr(get_bloginfo('name', 'display'));?>"> </a>
 	<?php endif; ?>
 		<div class="header-wrap">
-			
+
 			<!-- Top Header============================================= -->
 			<div class="top-header">
 
@@ -77,7 +77,7 @@ wp_head(); ?>
 								  	<?php }
 								  	if (1 != $search_form) { ?>
 									<button type="button" id="search-toggle" class="header-search"></button>
-									<?php } 
+									<?php }
 									if(1 != $photograph_side_menu){ ?>
 									<button type="button" class="show-menu-toggle">
 										<span class="sn-text"><?php _e('Menu Button','photograph'); ?></span>
@@ -109,8 +109,8 @@ wp_head(); ?>
 						<?php do_action ('photograph_new_site_branding');
 
 						if (has_nav_menu('side-nav-menu') || (has_nav_menu( 'social-link' ) && $photograph_settings['photograph_side_menu_social_icons'] == 0 ) || is_active_sidebar( 'photograph_side_menu' ) ):
-							
-							if (has_nav_menu('side-nav-menu')) { 
+
+							if (has_nav_menu('side-nav-menu')) {
 								$args = array(
 									'theme_location' => 'side-nav-menu',
 									'container'      => '',
@@ -128,14 +128,14 @@ wp_head(); ?>
 								echo '<div class="side-widget-tray">';
 									dynamic_sidebar( 'photograph_side_menu' );
 								echo '</div> <!-- end .side-widget-tray -->';
-							} 
+							}
 						endif; ?>
 					</div><!-- end .side-menu -->
 				</aside><!-- end .side-menu-wrap -->
-				<?php 
+				<?php
 			} ?>
 		</div><!-- end .header-wrap -->
-		<?php 
+		<?php
 		if($photograph_settings['photograph_top_social_icons'] == 0):
 			echo '<div class="header-social-block">';
 				do_action('photograph_social_links');
@@ -156,7 +156,7 @@ wp_head(); ?>
 		} else { ?>
 		<!-- Main Slider ============================================= -->
 		<?php
-			
+
 			if ($photograph_enable_slider=='frontpage'|| $photograph_enable_slider=='enitresite'){
 				 if(is_front_page() && ($photograph_enable_slider=='frontpage') ) {
 
@@ -177,7 +177,7 @@ wp_head(); ?>
 						}
 
 				 	}
-					
+
 				}
 				if($photograph_enable_slider=='enitresite'){
 
@@ -201,14 +201,17 @@ wp_head(); ?>
 						}
 				 	}
 
-					
+
 				}
 			} ?>
 
 		<?php } ?>
-		<button type="button" class="scroll-down" type="button"><span><?php esc_html_e('menu','photograph');?></span><span></span><span></span></button><!-- Scroll Down Button -->
+
+		<button type="button" class="scroll-down" type="button"><span><?php esc_html_e('menu','photograph');?></span><span></span><span></span></button>
+
+
+		<!-- Scroll Down Button -->
 	</header> <!-- end #masthead -->
 	<!-- Main Page Start ============================================= -->
 	<div id="site-content-contain" class="site-content-contain">
 		<div id="content" class="site-content">
-		

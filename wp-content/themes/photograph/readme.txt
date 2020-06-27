@@ -2,9 +2,9 @@
 Contributors: themefreesia
 Tags: threaded-comments, right-sidebar, custom-background, custom-colors, custom-header, custom-logo, custom-menu, editor-style, featured-images, flexible-header, post-formats, sticky-post, theme-options, translation-ready, photography, blog, portfolio
 Requires at least: 5.0
-Tested up to: 5.2.2
+Tested up to: 5.3.1
 Requires PHP: 5.6
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 License: GNU General Public License version 3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -137,6 +137,14 @@ All the theme files and other un-specified scripts (customizer-custom-scripts.js
 =================================================================================
 
 == CHANGE LOG ==
+= 1.2.4 =
+	- Fix - WooCommerce search button issue fixed
+			- div issue on archive page fixed
+			- Style css viewport issue fixed
+	- Update - flexslider js updated
+				- admin css removed
+				- required php file version added
+
 = 1.2.3 =
 	- Fix - Footer not display issue fixed
 

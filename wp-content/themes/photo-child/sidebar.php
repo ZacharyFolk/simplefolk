@@ -7,8 +7,7 @@ $content = apply_filters('the_content', get_post_field('post_content', $id));
 
 <aside id="secondary" class="widget-area">
 
-      			<h1 class="entry-title"><?php the_title();?></h1>
-            <p><?php the_content();?></p>
+
 
 <?php echo get_the_tag_list('<p>Tags: ',', ','</p>'); ?>
 

@@ -38,8 +38,10 @@ wp_head(); ?>
 			<!-- Top Header============================================= -->
 			<div class="top-header">
 
-				<!-- Main Header============================================= -->
-				<div id="sticky-header" class="clearfix">
+				<!-- Main Header=============================================
+			       * removed id="sticky-header"
+					 -->
+				<div  class="clearfix">
 					<div class="main-header clearfix">
 						<?php do_action('photograph_site_branding'); ?>
 
@@ -77,76 +79,12 @@ wp_head(); ?>
 			</div>
 		</div><!-- end .header-wrap -->
 		<?php
-		if($photograph_settings['photograph_top_social_icons'] == 0):
-			echo '<div class="header-social-block">';
-				do_action('photograph_social_links');
-			echo '</div>'.'<!-- end .header-social-block -->';
-		endif;
 
-		$photograph_enable_slider = $photograph_settings['photograph_enable_slider'];
-		if (($photograph_settings['photograph_slider_video_display'] == 'video') && ($photograph_enable_slider=='frontpage'|| $photograph_enable_slider=='enitresite') ){
-			if(is_front_page() && ($photograph_enable_slider=='frontpage') ) { ?>
+			if(is_front_page() ) { ?>
 				<!-- Video and image header ============================================= -->
 				<?php photograph_video_category_sliders();
 
-			} elseif($photograph_enable_slider=='enitresite'){
-
-				photograph_video_category_sliders();
-
-			}
-		} else { ?>
-		<!-- Main Slider ============================================= -->
-		<?php
-
-			if ($photograph_enable_slider=='frontpage'|| $photograph_enable_slider=='enitresite'){
-				 if(is_front_page() && ($photograph_enable_slider=='frontpage') ) {
-
-				 	if(is_active_sidebar( 'slider_section' )){
-
-				 		dynamic_sidebar( 'slider_section' );
-
-				 	} else {
-
-				 		if($photograph_settings['photograph_slider_type'] == 'default_slider') {
-							photograph_category_sliders();
-
-						} else {
-
-							if(class_exists('Photograph_Plus_Features')):
-								do_action('photograph_image_sliders');
-							endif;
-						}
-
-				 	}
-
-				}
-				if($photograph_enable_slider=='enitresite'){
-
-					if(is_active_sidebar( 'slider_section' )){
-
-				 		dynamic_sidebar( 'slider_section' );
-
-				 	} else {
-
-				 		if($photograph_settings['photograph_slider_type'] == 'default_slider') {
-
-								photograph_category_sliders();
-
-						} else {
-
-							if(class_exists('Photograph_Plus_Features')):
-
-								do_action('photograph_image_sliders');
-
-							endif;
-						}
-				 	}
-
-
-				}
-			} ?>
-
-		<?php } ?>
+		} ?>
 		<button type="button" class="scroll-down" type="button"><span><?php esc_html_e('menu','photograph');?></span><span></span><span></span></button><!-- Scroll Down Button -->
 	</header> <!-- end #masthead -->
 	<!-- Main Page Start ============================================= -->

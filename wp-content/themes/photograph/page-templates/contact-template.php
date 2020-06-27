@@ -44,7 +44,7 @@ $image_attributes = wp_get_attachment_image_src($attachment_id,'full'); ?>
 				</article>
 			</main> <!-- end #main -->
 		</div> <!-- #primary -->
-		<?php
+		<?php 
 		if( 'default' == $layout ) { //Settings from customizer
 			if(($photograph_settings['photograph_sidebar_layout_options'] != 'nosidebar') && ($photograph_settings['photograph_sidebar_layout_options'] != 'fullwidth')){ ?>
 		<aside id="secondary" class="widget-area">
@@ -57,7 +57,7 @@ $image_attributes = wp_get_attachment_image_src($attachment_id,'full'); ?>
 			if ( is_active_sidebar( 'photograph_contact_page_sidebar' ) ) :
 				dynamic_sidebar( 'photograph_contact_page_sidebar' );
 			endif;?>
-			<?php
+			<?php 
 			if( 'default' == $layout ) { //Settings from customizer
 				if(($photograph_settings['photograph_sidebar_layout_options'] != 'nosidebar') && ($photograph_settings['photograph_sidebar_layout_options'] != 'fullwidth')): ?>
 		</aside><!-- end #secondary -->
@@ -65,7 +65,7 @@ $image_attributes = wp_get_attachment_image_src($attachment_id,'full'); ?>
 			}else{ // for page/post
 				if(($layout != 'no-sidebar') && ($layout != 'full-width')){
 					echo '</aside><!-- end #secondary -->';
-				}
+				} 
 			} ?>
 	</div><!-- end .wrap -->
 	<?php if ( is_active_sidebar( 'photograph_form_for_contact_page' ) ) : ?>

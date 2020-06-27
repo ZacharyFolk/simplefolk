@@ -20,6 +20,7 @@ $photograph_settings = photograph_get_theme_options(); ?>
 		$format = get_post_format();
 		$photograph_post_category = $photograph_settings['photograph_post_category'];
 		 ?>
+
 		<?php if( has_post_thumbnail() && $photograph_blog_post_image == 'on') { ?>
 			<div class="entry-thumb">
 				<figure class="entry-thumb-content">
@@ -30,7 +31,10 @@ $photograph_settings = photograph_get_theme_options(); ?>
 				</figure><!-- end.post-featured-image  -->
 				<?php if ( current_theme_supports( 'post-formats', $format ) ) { ?>
 					<div class="entry-meta">
-								<?php	printf( '<span class="entry-format"><a href="%1$s">%2$s</a></span>',
+								<?php
+
+
+								printf( '<span class="entry-format"><a href="%1$s">%2$s</a></span>',
 									esc_url( get_post_format_link( $format ) ),
 									esc_attr(get_post_format_string( $format ))
 								); ?>

@@ -269,3 +269,27 @@ if ( ! function_exists( 'photograph_the_custom_logo' ) ) :
 		}
  	}
 endif;
+
+/************** Site Branding for sticky header and side menu sidebar *************************************/
+add_action('photograph_new_site_branding','photograph_stite_branding_for_stickyheader_sidesidebar');
+
+	function photograph_stite_branding_for_stickyheader_sidesidebar(){
+		$photograph_settings = photograph_get_theme_options(); ?>
+		<div id="site-branding">
+			<?php
+			$photograph_header_display = $photograph_settings['photograph_header_display'];
+			if ($photograph_header_display == 'header_logo' || $photograph_header_display == 'show_both') {
+				photograph_the_custom_logo();
+			}
+
+			if ($photograph_header_display == 'header_text' || $photograph_header_display == 'show_both') { ?>
+			<div id="site-detail">
+				<div id="site-title">
+					<a href="<?php echo esc_url(home_url('/'));?>" title="<?php echo esc_attr(get_bloginfo('name', 'display'));?>" rel="home"> <?php bloginfo('name');?> </a>
+				</div>
+				<!-- end #site-title -->
+				<div id="site-description"><?php bloginfo('description');?></div> <!-- end #site-description -->
+			</div><!-- end #site-detail -->
+			<?php } ?>
+		</div> <!-- end #site-branding -->
+	<?php }

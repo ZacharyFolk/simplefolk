@@ -4,7 +4,9 @@ Theme URI: https://themefreesia.com/themes/Photograph
 Author: Theme Freesia
 Author URI: https://themefreesia.com
 Description: Photograph is a WordPress theme exclusively built for photographer, blogger, portfolio, photography agency or photo studio websites. It is clean, super flexible, fully responsive designs, amazing new features, complete 1-click website demos and lifetime free updates. Photograph design can be used for any type of website. This Photograph theme with awesome video tells story about how photograph has positive impact in many person's life. It consists Contact Us Template, Gallery Template Photograph Template, widgets and Sidebar. Get free support at https://tickets.themefreesia.com/ and View free demo sites at https://demo.themefreesia.com/photograph
-Version: 1.2.3
+Version: 1.2.4
+Requires at least: 5.0
+Requires PHP: 5.6
 Text Domain: photograph
 License: GNU General Public License version 3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -131,23 +133,6 @@ embed,
 iframe,
 object {
 	max-width: 100%;
-}
-
-/* Internet Explorer 10 fix */
-@-webkit-viewport {
-	width: device-width;
-}
-@-moz-viewport {
-	width: device-width;
-}
-@-ms-viewport {
-	width: device-width;
-}
-@-o-viewport {
-	width: device-width;
-}
-@viewport {
-	width: device-width;
 }
 
 /* Other fixes*/
@@ -1601,63 +1586,6 @@ img#wpstats {
 	float: left;
 }
 
-#sticky-header {
-	background-color: #171717;
-	float: left;
-	-webkit-transition: all 300ms ease-out 0s;
-	-moz-transition: all 300ms ease-out 0s;
-	-o-transition: all 300ms ease-out 0s;
-	-ms-transition: all 300ms ease-out 0s;
-	transition: all 300ms ease-out 0s;
-	width: 100%;
-	z-index: 999;
-}
-
-.vid-thumb #sticky-header,
-.sld-plus #sticky-header {
-	background-color: transparent;
-	background: -moz-linear-gradient(top, rgba(23,23,23, 1) 0%, rgba(23,23,23, 0) 100%);
-	background: -webkit-linear-gradient(top, rgba(23,23,23, 1) 0%, rgba(23,23,23, 0) 100%);
-	background: linear-gradient(to bottom, rgba(23,23,23, 1) 0%, rgba(23,23,23, 0) 100%);
-	padding: 20px 0 30px;
-}
-
-.is-sticky #sticky-header {
-	background: none;
-	background-color: rgba(0, 0, 0, 0.7);
-	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-  	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-}
-
-.main-header {
-	display: flex;
-	position: relative;
-	transition: all 300ms;
-}
-
-.is-sticky #sticky-header,
-.vid-thumb .is-sticky #sticky-header,
-.sld-plus .is-sticky #sticky-header {
-	padding: 0;
-}
-
-@media only screen and (max-width: 767px) {
-	.is-sticky #sticky-header {
-		background-color: #222;
-	}
-}
-
-.boxed-layout #sticky-header,
-.boxed-layout-small #sticky-header {
-	width: 100%;
-	transition: none;
-}
-
-.boxed-layout .is-sticky #sticky-header,
-.boxed-layout-small .is-sticky #sticky-header {
-	width: inherit;
-}
 
 /* ----- Header Widget Title ----- */
 .top-bar .widget-title {
@@ -2215,7 +2143,9 @@ body.archive:not(.post-type-archive-product) #primary,
 	position: relative;
 }
 
-
+.entry-header {
+	padding-bottom: 5px;
+}
 
 .post {
 	margin-bottom: 50px;
@@ -2366,7 +2296,10 @@ body:not(.single) .has-post-thumbnail .entry-footer .entry-meta .entry-format {
 
 /* #Entry Content
 ================================================== */
-
+.entry-content {
+	display: block;
+	margin: 0 0 20px;
+}
 
 .entry-content p:last-child {
 	margin-bottom: 10px;
@@ -4360,7 +4293,8 @@ input.search-field {
 /* #About Us page
 ================================================== */
 
-.about-template .about-contant{
+.about-template .about-contant,
+.contact-template .contact-content {
 	background-attachment: fixed;
 	background-color: #747474;
 	background-position: center center;
@@ -4386,7 +4320,10 @@ input.search-field {
 	margin: 0 auto;
 }
 
-
+.contact-template .contact-content .wrap {
+	padding: 100px 0;
+	width: 70%;
+}
 
 .contact-template #primary {
 	width: 60%;
@@ -5164,15 +5101,11 @@ div.bbp-template-notice, div.indicator-hint {
 	width: calc(100% - 95px);
 }
 
-.woocommerce .woocommerce-product-search input[type="submit"] {
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
-	border-radius: 0;
-	padding: 9px 15px;
-}
-
-.woocommerce-product-search button {
+.woocommerce .woocommerce-product-search button[type="submit"] {
+	cursor: pointer;
 	height: 40px;
+	padding: 0 15px;
+	margin-left: -1px;
 }
 
 .woocommerce .tagcloud a {
