@@ -1,5 +1,5 @@
 jQuery( function() {
-		
+
 		jQuery('.header-search').click( function(){
 			jQuery('#search-box').addClass('show-search-box');
 		});
@@ -19,7 +19,9 @@ jQuery( function() {
 
 		// Scroll Down
 		jQuery(function() {
-			jQuery('.scroll-down').click (function() {
+			jQuery('.menu-item-634 a').click (function(e) {
+				console.log('click latest link');
+				e.preventDefault();
 			  jQuery('html, body').animate({scrollTop: jQuery('.site-content-contain').offset().top - jQuery('.main-header').height()}, 900, 'swing');
 			  return false;
 			});
@@ -37,7 +39,7 @@ jQuery( function() {
 			if ( ! button ) {
 				return;
 			}
-			
+
 			menu = togglenav.find( '.menu' );
 			if ( ! menu || ! menu.children().length ) {
 				button.hide();
@@ -62,7 +64,7 @@ jQuery( function() {
 			if ( ! button ) {
 				return;
 			}
-			
+
 			menu = togglenav.find( '.top-menu' );
 			if ( ! menu || ! menu.children().length ) {
 				button.hide();
@@ -82,10 +84,10 @@ jQuery( function() {
 		    //apply toggleable classes
 		    jQuery(".side-menu").fadeToggle('slow');
 		    jQuery(".side-menu").addClass("show");
-		    jQuery(".page-overlay").toggleClass("side-menu-open"); 
-		    jQuery("#page").addClass("side-content-open");  
+		    jQuery(".page-overlay").toggleClass("side-menu-open");
+		    jQuery("#page").addClass("side-content-open");
 		  });
-		  
+
 		  jQuery(".hide-menu-toggle, .page-overlay").click( function() {
 		    jQuery(".side-menu").removeClass("show");
 		    jQuery(".page-overlay").removeClass("side-menu-open");

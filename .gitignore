@@ -5,7 +5,9 @@ wp-content/upgrade/
 wp-content/ew_backup/
 wp-content/themes/twentytwenty
 wp-content/themes/index.php
+wp-includes/
 wp-admin/
+info/
 xmlrpc.php
 # photo copies from watermark plugin
 wp-content/ew-backup

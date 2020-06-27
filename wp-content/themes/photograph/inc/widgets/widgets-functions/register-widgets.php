@@ -45,6 +45,15 @@ function photograph_widgets_init() {
 			'before_title' => '<h3 class="widget-title">',
 			'after_title' => '</h3>',
 		));
+		register_sidebar(array(
+				'name' => __('About Page Sidebar', 'photograph'),
+				'id' => 'about_page_sidebar',
+				'description' => __('Shows widgets on About Page Template.', 'photograph'),
+				'before_widget' => '<aside id="%1$s" class="widget widget_contact">',
+				'after_widget' => '</aside>',
+				'before_title' => '<h3 class="widget-title">',
+				'after_title' => '</h3>',
+			));
 	register_sidebar(array(
 			'name' => __('Iframe Code For Google Maps', 'photograph'),
 			'id' => 'photograph_form_for_contact_page',
