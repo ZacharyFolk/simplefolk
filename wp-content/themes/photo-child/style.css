@@ -5,7 +5,7 @@ Author: Zachary Folk
 Author URI: https://folkphotography.com
 Template: photograph
 Description: Child theme of Photograph created by https://themefreesia.com/photograph
-Version: 1.0.7
+Version: 1.0.1
 Text Domain: photograph
 License: GNU General Public License version 3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -17,10 +17,8 @@ version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 ==================================================
 */
 
-body { background: url('assets/images/tiles/so-white.png')  repeat 0 0;}
 /* OVERRIDE */
-/* .wrap, #main, #primary {max-width: 100%; width: 100%;} */
-#photos_page.wrap, #photos_page #main, #photos_page #primary {max-width: 100%; width: 100%;}
+
 .blog .page-header,
 .archive .page-header {
 	display: block;
@@ -29,18 +27,9 @@ body { background: url('assets/images/tiles/so-white.png')  repeat 0 0;}
 	margin-right: auto;
 	margin-top: 30px;
 	margin-bottom: 20px;
+	clear: both;
 }
 
-
-#photos_page .page-header, .blog .page-header, .archive .page-header {
-    display: block;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-    margin-bottom: 0;
-    padding: 20px;
-}
 #content {
   padding: 0
 }
@@ -64,72 +53,7 @@ body { background: url('assets/images/tiles/so-white.png')  repeat 0 0;}
 #colophon {
   margin-top: 50px;
 }
-body.single-post #primary {
-	margin: 0 5%;
-	width: 90%;
-	padding: 0;
-}
-body.single-post #primary article.post {
-	display: block;
-}
-.previous-post, .next-post {
-	font-size: 10vw;
-	line-height: 80vh;
-	width: 20%;
-	position: absolute;
-	padding: 0 5%;
-	-webkit-text-stroke: 1px #fff;
-}
 
-.previous-post {
-	text-align: left;
-	left: 0;
-}
-.next-post {
-    right: 0;
-    text-align: right;
-}
-a:link[rel="prev"],a:link[rel="next"]
-{
-	text-decoration: none;
-	transition:opacity 0.8s;
-	opacity: 5%;
-}
-a:hover[rel="prev"],a:hover[rel="next"]
-{
-	font-weight: normal;
-	transition:opacity 0.5s;
-	opacity: 55%;
-}
-a[rel="next"]:link{
-
-}
-.main-post-image a{
-	display: grid;
-	outline: none;
-    height: 100%;
-}
-.main-post-image img {
-	cursor: zoom-in;
-max-width: 100%;
-max-height: 80vh;
-margin: auto;
-
-}
-
-.main-post-image img
-{
-	-webkit-box-shadow: 0 10px 6px -6px #777;
-	   -moz-box-shadow: 0 10px 6px -6px #777;
-	        box-shadow: 0 10px 6px -6px #777;
-}
-
-.img-meta {
-display: grid;
-margin: 20px auto;
-max-width: 382px;
-text-align: right;
-}
 /* * {
   margin: 0;
   padding: 0;
@@ -140,7 +64,13 @@ text-align: right;
   height: 100%;
 } */
 
-
+.main-post-image img {
+  width: 100%;
+height: auto;
+margin-left: auto;
+margin-right: auto;
+display: block;
+}
 
 .site-info .copyright {
   color: #000;
@@ -160,8 +90,8 @@ a:hover {
 }
 
 .custom-logo-link .custom-logo {
-  height: 30px;
-  margin: 8px 0;
+  height: 50px;
+  margin: 10px 0;
 }
 
 .side-menu-wrap .custom-logo {
@@ -231,103 +161,11 @@ h6 {
   margin-bottom: 15px;
 }
 .page-header h1 { display: inline-block;}
-.tag-description {  margin: 0 0 0 5px; font-style: italic; float: left; width: 100%;}
+.tag-description { display: inline-block; margin: 0 0 0 10px; font-style: italic;}
 .tag-description p { margin: 0;}
 h1 {
   font-size: 23px;
 }
-h1,h2, p, .main-navigation a, .details-link, .previous-post, .next-post {
+h1,h2, p {
   font-family: "Special Elite", sans-serif;
-
-}
-.main-navigation a {
-text-transform: none;
-}
-.nav-menu {
-    position: relative;
-    top: 65%;
-    transform: translateY(-50%);
-    text-align: left;
-}
-.main-navigation a:hover, .main-navigation ul li.current-menu-item a, .main-navigation ul li.current_page_ancestor a, .main-navigation ul li.current-menu-ancestor a, .main-navigation ul li.current_page_item a, .main-navigation ul li:hover > a, .main-navigation li.current-menu-ancestor.menu-item-has-children > a:after {
-    color: #f9efcb;
-}
-
-#photos_page h2.page-title, body.tag h2.page-title {float: left; margin-bottom: 0; }
-.details-link {float: left; margin: 5px 0 0 10px; cursor: pointer; text-decoration: underline; }
-
-.contact-template .contact-content {
-	background: repeat url('./assets/images/tiles/5-dots.png');
-}
-
-.contact-template .contact-content .wrap {
-    padding: 100px 0;
-    width: 70%;
-}
-.post-featured-gallery:not(.no-posts-border) .post-featured-item .post-featured-gallery-wrap {
-    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.20);
-}
-.post-featured-gallery:not(.no-posts-border) .post-featured-item:hover .post-featured-gallery-wrap {
-    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.60);
-}
-
-
-
-#sticky-header {
-	background-color: #171717;
-	float: left;
-	-webkit-transition: all 300ms ease-out 0s;
-	-moz-transition: all 300ms ease-out 0s;
-	-o-transition: all 300ms ease-out 0s;
-	-ms-transition: all 300ms ease-out 0s;
-	transition: all 300ms ease-out 0s;
-	width: 100%;
-	z-index: 999;
-}
-
-.vid-thumb #sticky-header,
-.sld-plus #sticky-header {
-	background-color: transparent;
-	background: -moz-linear-gradient(top, rgba(23,23,23, 1) 0%, rgba(23,23,23, 0) 100%);
-	background: -webkit-linear-gradient(top, rgba(23,23,23, 1) 0%, rgba(23,23,23, 0) 100%);
-	background: linear-gradient(to bottom, rgba(23,23,23, 1) 0%, rgba(23,23,23, 0) 100%);
-	padding: 20px 0 30px;
-}
-
-.is-sticky #sticky-header {
-	background: none;
-	background-color: rgba(0, 0, 0, 0.1);
-	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-  	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-}
-
-.main-header {
-	display: flex;
-	position: relative;
-	transition: all 300ms;
-	background-color: #171717;
-}
-
-.is-sticky #sticky-header,
-.vid-thumb .is-sticky #sticky-header,
-.sld-plus .is-sticky #sticky-header {
-	padding: 0;
-}
-
-@media only screen and (max-width: 767px) {
-	.is-sticky #sticky-header {
-		background-color: #222;
-	}
-}
-
-.boxed-layout #sticky-header,
-.boxed-layout-small #sticky-header {
-	width: 100%;
-	transition: none;
-}
-
-.boxed-layout .is-sticky #sticky-header,
-.boxed-layout-small .is-sticky #sticky-header {
-	width: inherit;
 }

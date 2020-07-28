@@ -14,7 +14,6 @@ $photograph_settings = photograph_get_theme_options();
 $photograph_feature_tab_title = $photograph_settings['photograph_feature_tab_title'];
 $photograph_disable_feature_tab_category = $photograph_settings['photograph_disable_feature_tab_category'];
 $photograph_total_feature_tab_tag = $photograph_settings['photograph_total_feature_tab_tag'];
-$photograph_column_gallery_layout = $photograph_settings['photograph_column_gallery_layout'];
 $photograph_hide_gallery_border = $photograph_settings['photograph_hide_gallery_border'];
 $photograph_hide_show_gallery_title = $photograph_settings['photograph_hide_show_gallery_title'];
 $photograph_gallery_layout = $photograph_settings['photograph_gallery_layout'];
@@ -53,16 +52,15 @@ if($photograph_gallery_box =='box-gallery'){
 <main id="main" class="site-main" role="main">
 	<?php if($photograph_disable_feature_tab_category !=1){
 	 ?>
-		<div class="featured-gallery-wrap <?php echo esc_attr($gallery_title).' ' . esc_attr($border_class). ' '. esc_attr($gray_scale). ' ' .esc_attr($gallery_box);  ?>">
+		<div class="featured-gallery-wrap fuck <?php echo esc_attr($gallery_title).' ' . esc_attr($border_class). ' '. esc_attr($gray_scale). ' ' .esc_attr($gallery_box);  ?>">
 			<div class="featured-gallery-content <?php echo esc_attr($gallery_layout); ?> clearfix">
 				<div class="featured-gallery-header">
-					<?php if($photograph_feature_tab_title !=''){ ?>
-						<h2 class="featured-gallery-title freesia-animation fadeInDown"><?php echo esc_html($photograph_feature_tab_title); ?></h2>
-					<?php } ?>
+					<?php // if($photograph_feature_tab_title !=''){ ?>
+						<!-- <h2 class="featured-gallery-title freesia-animation fadeInDown"><?php // echo esc_html($photograph_feature_tab_title); ?></h2> -->
+					<?php // } ?>
 					<div class="filters filter-button freesia-animation fadeInDown">
 						<div>
 							<?php
-
 							$photograph_list_tab_tags = array();
 							for($i=1; $i<=$photograph_total_feature_tab_tag; $i++){
 								if( isset ( $photograph_settings['photograph_featured_tab_tag_' . $i] ) && $photograph_settings['photograph_featured_tab_tag_' . $i] !='' ){
@@ -92,16 +90,7 @@ if($photograph_gallery_box =='box-gallery'){
 					</div>
 				</div>
 
-				<?php if($photograph_column_gallery_layout == '2'){
-					$category_gallery_col='2';
-				} elseif ($photograph_column_gallery_layout == '3'){
-					$category_gallery_col='3';
-				}elseif ($photograph_column_gallery_layout == '4'){
-					$category_gallery_col='4';
-				} else {
-					$category_gallery_col='5';
-				}?>
-				<div class="featured-gallery gallery-col-<?php echo absint($category_gallery_col); ?>">
+				<div class="featured-gallery gallery-col-5">
 					<?php
 					$get_featured_posts = new WP_Query( array(
 							'posts_per_page' => intval($potograph_total_posts_display),
