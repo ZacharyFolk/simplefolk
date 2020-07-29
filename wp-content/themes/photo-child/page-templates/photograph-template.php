@@ -76,7 +76,7 @@ if($photograph_gallery_box =='box-gallery'){
 									if($i==1){
 
 										if($photograph_settings['photograph_feature_tab_all_text'] !=''){  ?>
-										<button type="button" class="active" data-category="*"><?php echo esc_attr($photograph_settings['photograph_feature_tab_all_text']); ?></button>
+										<button type="button" class="active" data-category="*">Latest</button>
 										<button type="button" data-category=".tag-<?php echo esc_attr($photograph_tag_list); ?>"><?php echo esc_attr($post_tags->name); ?></button>
 										<?php } else { ?>
 										<button type="button" class="active" data-category=".tag-<?php echo esc_attr($photograph_tag_list); ?>"><?php echo esc_attr($post_tags->name); ?></button>
@@ -106,9 +106,16 @@ if($photograph_gallery_box =='box-gallery'){
 										<div class="post-gallery-wrap freesia-animation fadeInUp">
 											<?php if(has_post_thumbnail()){ ?>
 												<div class="featured-image-content">
-														<a data-title="<?php the_title_attribute(); ?>" href="<?php echo esc_url(get_permalink()); ?>" >
-														<?php the_post_thumbnail(); ?>
-														</a>
+														<!-- <a data-title="<?php //the_title_attribute(); ?>" href="<?php //echo esc_url(get_permalink()); ?>" >
+														<?php// the_post_thumbnail(); ?>
+														</a> -->
+														<a class="popup-image"
+														data-fancybox="images"
+														data-title="<?php the_title_attribute(); ?>"
+														data-caption="<?php the_title_attribute(); ?>"
+														href="<?php echo esc_url($image_attributes[0]); ?>" >
+															<?php the_post_thumbnail(); ?>
+															</a>
 												</div>
 											<?php }
 										 ?>

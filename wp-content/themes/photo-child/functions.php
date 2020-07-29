@@ -16,9 +16,40 @@ add_image_size( 'tag_thumbs', 85, 45, true );
 //var_dump(get_stylesheet_directory());
 // this also works
 //var_dump(get_theme_file_path());
+// display a random image for home page
 
+function get_random_image_src(){
+// collection is from gallery category
+  $query = new WP_Query(array(
+					'posts_per_page' =>  1,
+					'orderby' => 'rand',
+					'post_type'					=> 'post',
+					'category_name' => esc_attr('gallery'),
+				));
+        while ($query->have_posts()):$query->the_post();
+            $attachment_id = get_post_thumbnail_id();
+            $image_attributes = wp_get_attachment_image_src($attachment_id,'full');
+            return esc_url($image_attributes[0]);
+          endwhile;
+}
 
- require get_theme_file_path() . '/inc/settings/asset-functions.php';
+function random_home() {
+	$query = new WP_Query(array(
+					'posts_per_page' =>  1,
+					'orderby' => 'rand',
+					'post_type'					=> 'post',
+					'category_name' => esc_attr('gallery'),
+				));
+        while ($query->have_posts()):$query->the_post();
+						$attachment_id = get_post_thumbnail_id();
+						$image_attributes = wp_get_attachment_image_src($attachment_id,'full'); ?>
+						<div class="vid-thumb-bg jarallax"
+            title="<?php the_title_attribute(); ?>"
+            data-jarallax style="background-image:url('<?php echo esc_url($image_attributes[0]); ?>');">
+          <?php endwhile; ?>
+        <?php } ?>
+<?php
+require get_theme_file_path() . '/inc/settings/asset-functions.php';
 function my_recent_posts() {
 echo '<div id="recent_posts"><div class="grid-sizer"></div>';
 $args = array(
@@ -84,6 +115,9 @@ function manage_img_column($column_name, $post_id) {
  }
  return $column_name;
 }
+
+
+
 /* Copying over from /inc/settings/photograph-functions.php
 
 /*************************** ENQUEING STYLES AND SCRIPTS ****************************************/

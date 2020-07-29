@@ -17,20 +17,22 @@ wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
 	<?php
+	// echo get_random_image();
 	if ( function_exists( 'wp_body_open' ) ) {
 		wp_body_open();
 	} ?>
 <div id="page" class="site">
-	<a class="skip-link screen-reader-text" href="#site-content-contain"><?php esc_html_e('Skip to content','photograph');?></a>
-	<!-- Masthead ============================================= -->
+<a class="scroll-down" href="#" title="View latest posts">
 	<header id="masthead" class="site-header clearfix" role="banner">
 		<?php
 			if(is_front_page() ) { ?>
-				<!-- Video and image header ============================================= -->
-				<?php photograph_video_category_sliders();
+				<?php random_home();
 		} ?>
-		<button type="button" class="scroll-down" type="button"><span><?php esc_html_e('menu','photograph');?></span><span></span><span></span></button><!-- Scroll Down Button -->
-	</header> <!-- end #masthead -->
-	<!-- Main Page Start ============================================= -->
+		<button type="button" class="scroll-down" type="button">
+			<span><?php esc_html_e('menu','photograph');?></span><span></span><span></span></button>
+	</header>
+	</a>
+
+
 	<div id="site-content-contain" class="site-content-contain">
 		<div id="content" class="site-content">
