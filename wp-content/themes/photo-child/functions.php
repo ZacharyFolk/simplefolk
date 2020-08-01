@@ -7,9 +7,19 @@ function photo_child_enqueue_styles() {
         array( $parent_style ),
         wp_get_theme()->get('Version')
     );
+    wp_enqueue_style('fancybox-css', get_stylesheet_directory_uri().'/assets/fancybox/css/3.5.7/jquery.fancybox.css');
+    wp_enqueue_script('photograph-fancybox-settings', get_template_directory_uri().'/assets/fancybox/js/fancybox-settings.js', array('fancybox'), false, true);
+    wp_enqueue_script('jquery-jarallax', get_template_directory_uri().'/assets/jarallax/jarallax.js', array('jquery'), false, true);
+    wp_enqueue_script('imagesloaded-pkgd', get_template_directory_uri().'/js/imagesloaded.pkgd.min.js', array('jquery'), false, true);
+    wp_enqueue_script('isotope', get_template_directory_uri().'/js/isotope.pkgd.min.js', array('jquery'), false, true);
+  	wp_enqueue_script('photograph-isotope-setting', get_template_directory_uri().'/js/isotope-setting.js', array('isotope'), false, true);
+    wp_enqueue_script('fancybox', get_stylesheet_directory_uri().'/assets/fancybox/js/3.5.7/jquery.fancybox.min.js', array('jquery'), false, true);
+    wp_enqueue_script('scrolling', get_stylesheet_directory_uri().'/assets/scripts/scrolling.js', array('jquery'), false, true);
+
 }
 add_action( 'wp_enqueue_scripts', 'photo_child_enqueue_styles' );
 add_image_size( 'tag_thumbs', 85, 45, true );
+add_image_size( 'admin_thumbs', 150, 100, true );
 
 // note : have to use STYLESHEETPATH here because TEMPLATEPATH returns the parent
 // var_dump(get_template_directory());
@@ -45,7 +55,8 @@ function random_home() {
 						$image_attributes = wp_get_attachment_image_src($attachment_id,'full'); ?>
 						<div class="vid-thumb-bg jarallax"
             title="<?php the_title_attribute(); ?>"
-            data-jarallax style="background-image:url('<?php echo esc_url($image_attributes[0]); ?>');">
+            data-jarallax
+            style="background-image:url('<?php echo esc_url($image_attributes[0]); ?>');">
           <?php endwhile; ?>
         <?php } ?>
 <?php
@@ -111,7 +122,7 @@ function add_img_column($columns) {
 
 function manage_img_column($column_name, $post_id) {
  if( $column_name == 'img' ) {
-  echo get_the_post_thumbnail($post_id, 'thumbnail');
+  echo get_the_post_thumbnail($post_id, 'admin_thumbs');
  }
  return $column_name;
 }

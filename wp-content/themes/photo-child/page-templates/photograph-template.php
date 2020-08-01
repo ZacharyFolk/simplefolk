@@ -111,6 +111,7 @@ if($photograph_gallery_box =='box-gallery'){
 														</a> -->
 														<a class="popup-image"
 														data-fancybox="images"
+														data-perma="<?php echo esc_url(get_permalink()); ?>"
 														data-title="<?php the_title_attribute(); ?>"
 														data-caption="<?php the_title_attribute(); ?>"
 														href="<?php echo esc_url($image_attributes[0]); ?>" >
