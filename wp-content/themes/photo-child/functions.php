@@ -26,8 +26,11 @@ add_image_size( 'admin_thumbs', 150, 100, true );
 //var_dump(get_stylesheet_directory());
 // this also works
 //var_dump(get_theme_file_path());
-// display a random image for home page
 
+// set up admin customize panel
+add_theme_support( 'custom-logo' );
+
+// display a random image for home page
 function get_random_image_src(){
 // collection is from gallery category
   $query = new WP_Query(array(

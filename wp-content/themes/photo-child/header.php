@@ -22,16 +22,33 @@ wp_head(); ?>
 		wp_body_open();
 	} ?>
 <div id="page" class="site">
-<a class="scroll-down" href="#" title="View latest posts">
 	<header id="masthead" class="site-header clearfix" role="banner">
 		<?php
 			if(is_front_page() ) { ?>
 				<?php random_home();
 		} ?>
+		<div class="main-nav-wrap">
+
+		<nav id="site-navigation" class="main-navigation clearfix" role="navigation">
+			<span class="home-link">
+				<?php echo (is_front_page()) ? 'Zachary Folk Photography' : '<a href="https://folkphotography.com">Zachary Folk Photography</a>';  ?>
+			</span>
+
+		<?php
+			$args = array(
+			'theme_location' => 'primary',
+			'container'      => '',
+			'items_wrap'     => '<ul id="primary-menu" class="menu nav-menu">%3$s</ul>',
+			); ?>
+			<?php wp_nav_menu($args);
+ ?>
+		</nav>
+
+	</div>
 		<button type="button" class="scroll-down" type="button">
 			<span><?php esc_html_e('menu','photograph');?></span><span></span><span></span></button>
 	</header>
-	</a>
+
 
 
 	<div id="site-content-contain" class="site-content-contain">

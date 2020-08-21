@@ -5,7 +5,7 @@ Author: Zachary Folk
 Author URI: https://folkphotography.com
 Template: photograph
 Description: Child theme of Photograph created by https://themefreesia.com/photograph
-Version: 1.0.1
+Version: 1.0.7
 Text Domain: photograph
 License: GNU General Public License version 3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -17,8 +17,32 @@ version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 ==================================================
 */
 
-/* OVERRIDE */
+body { background: url('assets/images/tiles/so-white.png')  repeat 0 0;}
 
+.main-nav-wrap {
+	background: #e0e0e0;
+	width: 100%;
+}
+.main-navigation {
+	max-width: 1200px;
+    display: block;
+    margin: 0 auto;
+    padding: 10px 0;
+}
+.home-link {
+	float: left;
+}
+ul.nav-menu {
+	width: 60%;
+text-align: right;
+float: right;
+}
+ul.nav-menu li {
+display: inline-block;
+margin-left: 20px;}
+/* OVERRIDE */
+/* .wrap, #main, #primary {max-width: 100%; width: 100%;} */
+#photos_page.wrap, #photos_page #main, #photos_page #primary {max-width: 100%; width: 100%;}
 .blog .page-header,
 .archive .page-header {
 	display: block;
@@ -27,9 +51,18 @@ version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 	margin-right: auto;
 	margin-top: 30px;
 	margin-bottom: 20px;
-	clear: both;
 }
 
+
+#photos_page .page-header, .blog .page-header, .archive .page-header {
+    display: block;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 0;
+    padding: 20px;
+}
 #content {
   padding: 0
 }
@@ -53,7 +86,72 @@ version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 #colophon {
   margin-top: 50px;
 }
+body.single-post #primary {
+	margin: 0 5%;
+	width: 90%;
+	padding: 0;
+}
+body.single-post #primary article.post {
+	display: block;
+}
+.previous-post, .next-post {
+	font-size: 10vw;
+	line-height: 80vh;
+	width: 20%;
+	position: absolute;
+	padding: 0 5%;
+	-webkit-text-stroke: 1px #fff;
+}
 
+.previous-post {
+	text-align: left;
+	left: 0;
+}
+.next-post {
+    right: 0;
+    text-align: right;
+}
+a:link[rel="prev"],a:link[rel="next"]
+{
+	text-decoration: none;
+	transition:opacity 0.8s;
+	opacity: 5%;
+}
+a:hover[rel="prev"],a:hover[rel="next"]
+{
+	font-weight: normal;
+	transition:opacity 0.5s;
+	opacity: 55%;
+}
+a[rel="next"]:link{
+
+}
+.main-post-image a{
+	display: grid;
+	outline: none;
+    height: 100%;
+}
+.main-post-image img {
+	cursor: zoom-in;
+max-width: 100%;
+max-height: 80vh;
+margin: auto;
+
+}
+
+.main-post-image img
+{
+	-webkit-box-shadow: 0 10px 6px -6px #777;
+	   -moz-box-shadow: 0 10px 6px -6px #777;
+	        box-shadow: 0 10px 6px -6px #777;
+}
+
+.img-meta {
+display: grid;
+margin: 20px auto;
+max-width: 382px;
+text-align: right;
+}
 /* * {
   margin: 0;
   padding: 0;
@@ -64,13 +162,7 @@ version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
   height: 100%;
 } */
 
-.main-post-image img {
-  width: 100%;
-height: auto;
-margin-left: auto;
-margin-right: auto;
-display: block;
-}
+
 
 .site-info .copyright {
   color: #000;
@@ -90,8 +182,8 @@ a:hover {
 }
 
 .custom-logo-link .custom-logo {
-  height: 50px;
-  margin: 10px 0;
+  height: 45px;
+  margin: 12px 0;
 }
 
 .side-menu-wrap .custom-logo {
@@ -161,11 +253,26 @@ h6 {
   margin-bottom: 15px;
 }
 .page-header h1 { display: inline-block;}
-.tag-description { display: inline-block; margin: 0 0 0 10px; font-style: italic;}
+.tag-description {  margin: 0 0 0 5px; font-style: italic; float: left; width: 100%;}
 .tag-description p { margin: 0;}
 h1 {
   font-size: 23px;
 }
-h1,h2, p {
+h1,h2, p, .main-navigation a, .details-link, .previous-post, .next-post {
   font-family: "Special Elite", sans-serif;
+}
+
+.contact-template .contact-content {
+	background: repeat url('./assets/images/tiles/5-dots.png');
+}
+
+.contact-template .contact-content .wrap {
+    padding: 100px 0;
+    width: 70%;
+}
+.post-featured-gallery:not(.no-posts-border) .post-featured-item .post-featured-gallery-wrap {
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.20);
+}
+.post-featured-gallery:not(.no-posts-border) .post-featured-item:hover .post-featured-gallery-wrap {
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.60);
 }
