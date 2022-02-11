@@ -13,6 +13,10 @@ xmlrpc.php
 wp-content/ew-backup
 wp-content/ai1wm-backups/
 wp-includes/
+<<<<<<< HEAD
+=======
+.htaccess
+>>>>>>> origin/master
 config
 description
 favicon.gif
@@ -37,4 +41,15 @@ wp-blog-header.php
 wp-load.php
 wp-content/themes/photograph/
 wp-content/themes/photo-child/assets/
+<<<<<<< HEAD
 /test
+=======
+.ftpquota
+.htaccess.bk
+403.shtml
+404.shtml
+robots.txt
+wp-content/themes/photo-fusion/
+wp-content/themes/twentytwentyone/
+wp-content/themes/twentytwentytwo/
+>>>>>>> origin/master
