@@ -38,3 +38,11 @@ wp-blog-header.php
 wp-load.php
 wp-content/themes/photograph/
 wp-content/themes/photo-child/assets/
+.ftpquota
+.htaccess.bk
+403.shtml
+404.shtml
+robots.txt
+wp-content/themes/photo-fusion/
+wp-content/themes/twentytwentyone/
+wp-content/themes/twentytwentytwo/
