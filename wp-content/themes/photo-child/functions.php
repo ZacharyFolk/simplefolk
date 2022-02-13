@@ -59,11 +59,12 @@ function get_random_image_src($cat = 'uncategorized')
   endwhile;
 }
 
-///////////////////////////////////////////////////////
-//                                                   //
+////////////////////////////////////////////////
+//                                            //
 //    Sidebar Thumbs from current category    //
-//                                                   //
-///////////////////////////////////////////////////////
+//                                            //
+////////////////////////////////////////////////
+
 
 function this_cats_thumbs($postID) // pass $id from function to get current category, TODO : use of these ids probably redundant and confusing
 {
@@ -153,12 +154,11 @@ function disable_wp_auto_p($content)
 add_filter('the_content', 'disable_wp_auto_p', 0);
 
 
-//////////////////////////////////////////////////////////////////
-//                                                              //
+//////////////////////////////////////////////////////
+//                                                  //
 //    Add featured post image in admin post list    //
-//     add_filter('manage_posts_columns', 'add_img_column');    //
-//                                                              //
-//////////////////////////////////////////////////////////////////
+//                                                  //
+//////////////////////////////////////////////////////
 
 add_filter('manage_posts_custom_column', 'manage_img_column', 10, 2);
 
@@ -175,7 +175,6 @@ function manage_img_column($column_name, $post_id)
   }
   return $column_name;
 }
-
 
 
 ///////////////////////////////////////////////////////////////////////////////////////
