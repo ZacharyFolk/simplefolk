@@ -5,7 +5,7 @@ Author: Zachary Folk
 Author URI: https://folkphotography.com
 Template: photograph
 Description: Child theme of Photograph created by https://themefreesia.com/photograph
-Version: 1.0.7
+Version: 1.0.9
 Text Domain: photograph
 License: GNU General Public License version 3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -19,7 +19,42 @@ version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 body {
   background: url('assets/images/tiles/so-white.png') repeat 0 0;
 }
+/* fonts */
 
+body {
+  font-family: 'Merriweather', serif;
+  font-size: 1.2em;
+}
+
+p {
+  margin: 0 0 10px;
+}
+h1,
+h2,
+h3 {
+  font-family: 'Zen Maru Gothic', sans-serif;
+}
+
+button,
+input {
+  font-family: 'Space Mono', monospace;
+}
+a:link,
+a:visited {
+  color: #744623;
+}
+a:hover {
+  color: #d8803d;
+  text-decoration: underline;
+}
+
+#site-title {
+  text-transform: uppercase;
+  font-weight: 800;
+}
+#site-title a:hover {
+  text-decoration: none;
+}
 .main-nav-wrap {
   background: #212121;
   width: 100%;
@@ -57,6 +92,10 @@ ul.nav-menu li {
 }
 
 /* OVERRIDE */
+
+#primary {
+  margin-bottom: 0 !important;
+}
 /* .wrap, #main, #primary {max-width: 100%; width: 100%;} */
 #photos_page.wrap,
 #photos_page #main,
@@ -86,19 +125,18 @@ ul.nav-menu li {
   margin-bottom: 0;
   padding: 20px;
 }
-
+/* 
 #content {
   padding: 0;
-}
+} */
 
-@media only screen and (max-width: 767px) {
+/* @media only screen and (max-width: 767px) {
   #content {
     padding-top: 0 !important;
-    /* todo : clean up parent files */
-  }
-}
+    
+}*/
 
-#primary,
+/* #primary,
 #secondary {
   margin-bottom: 0 !important;
 }
@@ -106,13 +144,13 @@ ul.nav-menu li {
 #secondary {
   border: 0;
   padding-left: 10px;
-}
+} */
 
 #colophon {
   margin-top: 50px;
 }
 
-body.single-post #primary {
+/* body.single-post #primary {
   margin: 0 5%;
   width: 90%;
   padding: 0;
@@ -120,7 +158,7 @@ body.single-post #primary {
 
 body.single-post #primary article.post {
   display: block;
-}
+} */
 
 .previous-post,
 .next-post {
@@ -142,7 +180,7 @@ body.single-post #primary article.post {
   text-align: right;
 }
 
-a:link[rel='prev'],
+/* a:link[rel='prev'],
 a:link[rel='next'] {
   text-decoration: none;
   transition: opacity 0.8s;
@@ -154,10 +192,7 @@ a:hover[rel='next'] {
   font-weight: normal;
   transition: opacity 0.5s;
   opacity: 55%;
-}
-
-a[rel='next']:link {
-}
+} */
 
 .main-post-image a {
   display: grid;
@@ -201,16 +236,6 @@ a[rel='next']:link {
   text-align: right;
 }
 
-a {
-  color: #000;
-  text-decoration: underline;
-}
-
-a:hover {
-  font-weight: 800;
-  text-decoration: underline;
-}
-
 .custom-logo-link .custom-logo {
   height: 45px;
   margin: 12px 0;
@@ -236,11 +261,61 @@ a:hover {
   transform: rotate(0deg);
 }
 
-#page {
-  background-color: #ffffff;
+/* SINGLE POST */
+
+.single-cat-link {
+  text-align: right;
+  border-bottom: 1px solid #b3b3b3;
+  padding-bottom: 10px;
 }
 
-.featured-gallery .featured-item {
+#crumbs {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  font-family: 'Zen Maru Gothic';
+  text-transform: uppercase;
+}
+
+#photo_tag_container {
+  margin-bottom: 10px;
+}
+.cat-heading {
+  border-bottom: 1px solid #b3b3b3;
+  padding-bottom: 5px;
+}
+/* extra container to give clean box - revealed in JS @sidebar.php */
+#cat_thumbs_wrap {
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+#recent_posts {
+  display: none;
+  width: 100%;
+}
+
+.recent-item {
+  margin-bottom: 5px;
+}
+
+.grid-sizer,
+.recent-item {
+  float: left;
+  width: 32%;
+}
+
+.recent-item img {
+  /*  border: 1px solid #000; */
+  opacity: 0.8;
+  transition: opacity 0.25s ease-in-out;
+  -moz-transition: opacity 0.25s ease-in-out;
+  -webkit-transition: opacity 0.25s ease-in-out;
+}
+
+.recent-item img:hover {
+  opacity: 1;
+}
+/* .featured-gallery .featured-item {
   padding: 0;
   float: left;
 }
@@ -250,7 +325,7 @@ a:hover {
   margin-left: auto;
   margin-right: auto;
   clear: both;
-}
+} */
 
 .filter-button ul li:hover,
 .filter-button ul li.active {
@@ -267,10 +342,6 @@ a:hover {
   font-size: 17px;
   line-height: 17px;
   top: 90%;
-}
-
-.featured-text-content .featured-title a:hover {
-  text-decoration: underline;
 }
 
 h1,
@@ -308,7 +379,7 @@ h1 {
   font-size: 23px;
 }
 
-h1,
+/* h1,
 h2,
 p,
 .main-navigation a,
@@ -316,9 +387,9 @@ p,
 .previous-post,
 .next-post {
   font-family: 'Special Elite', sans-serif;
-}
+} */
 
-.contact-template .contact-content {
+/* .contact-template .contact-content {
   background: repeat url('./assets/images/tiles/5-dots.png');
 }
 
@@ -343,15 +414,15 @@ p,
   opacity: 1;
   -webkit-transition: opacity 1s, -webkit-transform 1s;
   /* transition: opacity 1s,-webkit-transform 1s; */
-  /* transition: opacity 1s,transform 1s; */
-  transition: opacity 1s, transform 1s, -webkit-transform 1s;
-}
+/* transition: opacity 1s,transform 1s; */
+/* transition: opacity 1s, transform 1s, -webkit-transform 1s;
+} */
 
-.featured-gallery .featured-image-content:hover img {
+/* .featured-gallery .featured-image-content:hover img {
   opacity: 0.9;
   -webkit-transform: scale3d(1.1, 1.1, 1);
   transform: scale3d(1.1, 1.1, 1);
-}
+} 
 
 .popup-image {
   position: relative;
@@ -430,7 +501,6 @@ p,
   color: #fff;
 }
 
-/* Feature Gallery Layout 2 */
 
 .fg-layout-2 .featured-gallery {
   margin: 0 10px;
@@ -452,4 +522,4 @@ p,
 .fg-layout-2 .featured-gallery {
   float: right;
   width: 75%;
-}
+} */

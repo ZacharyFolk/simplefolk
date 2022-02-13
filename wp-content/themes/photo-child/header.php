@@ -1,13 +1,3 @@
-<?php
-
-/**
- * Displays the header content
- *
- * @package Theme Freesia
- * @subpackage Photograph
- * @since Photograph 1.0
- */
-?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <?php

@@ -17,6 +17,7 @@ function photo_child_enqueue_styles()
   wp_enqueue_script('photograph-isotope-setting', get_template_directory_uri() . '/js/isotope-setting.js', array('isotope'), false, true);
   wp_enqueue_script('fancybox', get_stylesheet_directory_uri() . '/assets/fancybox/js/3.5.7/jquery.fancybox.min.js', array('jquery'), false, true);
   wp_enqueue_script('scrolling', get_stylesheet_directory_uri() . '/assets/scripts/scrolling.js', array('jquery'), false, true);
+  wp_enqueue_script('horizMasonry', get_stylesheet_directory_uri() . '/assets/scripts/masonryHorizontal.js', array('jquery'), false, true);
 }
 add_action('wp_enqueue_scripts', 'photo_child_enqueue_styles');
 add_image_size('tag_thumbs', 85, 45, true);
@@ -33,6 +34,14 @@ add_theme_support('custom-logo');
 
 add_theme_support('post-thumbnails');
 
+// get Google fonts 
+
+function wpb_add_google_fonts()
+{
+  wp_enqueue_style('wpb-google-fonts', 'https://fonts.googleapis.com/css2?family=Merriweather&family=Space+Mono&family=Zen+Maru+Gothic&display=swap', false);
+}
+
+add_action('wp_enqueue_scripts', 'wpb_add_google_fonts');
 
 // display a random image for home page
 function get_random_image_src()
@@ -67,11 +76,15 @@ function random_home()
   <?php } ?>
   <?php
   require get_theme_file_path() . '/inc/settings/asset-functions.php';
-  function my_recent_posts()
+
+  /*======== Single Sidebar Thumbs from current category ===================*/
+
+  function this_cats_thumbs($postID) // pass $id from function to get current category, TODO : use of these ids probably redundant and confusing
   {
     echo '<div id="recent_posts"><div class="grid-sizer"></div>';
     $args = array(
-      'numberposts' => '15',
+      'category__in' => wp_get_post_categories($postID),
+      'numberposts' => '9',
       'post__not_in' => array(get_the_ID())
     );
     $recent_posts = wp_get_recent_posts($args);
@@ -87,8 +100,23 @@ function random_home()
     //		echo '<li><a href="' . get_permalink($recent["ID"]) . '">' .   $recent["post_title"].'</a> </li> ';
     endforeach;
     wp_reset_query();
+    echo '</div>'; // end recent_posts
   }
 
+  function get_cat_link()
+  {
+    $the_cat = get_the_category();
+    $category_name = $the_cat[0]->cat_name;
+    $category_link = get_category_link($the_cat[0]->cat_ID);
+    echo '<div class="single-cat-link">View all of the <a href="' . $category_link . '">' . $category_name . ' collection &gt; &gt;</a></div>';
+  }
+
+  function cat_thumb_heading()
+  {
+    $the_cat = get_the_category();
+    $category_name = $the_cat[0]->cat_name;
+    echo $category_name;
+  }
   function add_font()
   {
     $folk_font = array();
@@ -150,6 +178,137 @@ function random_home()
     return array_slice($terms, 0, 1);
   }
 
+
+  /* Filter to prepend tags with # */
+
+  function hashed_tags()
+  {
+    $post_tags = get_the_tags();
+    $prefix = '#';
+    $separator = ' ';
+    $output = '';
+
+    if (!empty($post_tags)) {
+      foreach ($post_tags as $tag) {
+        $output .= '<a href="' . esc_attr(get_tag_link($tag->term_id)) . '">' . $prefix . __($tag->name) . '</a>' . $separator;
+      }
+    }
+
+    return trim($output, $separator);
+  }
+
+
+  /*======== BREADCRUMBS ===================*/
+
+  function the_breadcrumb()
+  {
+    $showOnHome = 0; // 1 - show breadcrumbs on the homepage, 0 - don't show
+    $delimiter = '&raquo;'; // delimiter between crumbs
+    $home = 'Home'; // text for the 'Home' link
+    $showCurrent = 1; // 1 - show current post/page title in breadcrumbs, 0 - don't show
+    $before = '<span class="current">'; // tag before the current crumb
+    $after = '</span>'; // tag after the current crumb
+
+    global $post;
+    $homeLink = get_bloginfo('url');
+    if (is_home() || is_front_page()) {
+      if ($showOnHome == 1) {
+        echo '<div id="crumbs"><a href="' . $homeLink . '">' . $home . '</a></div>';
+      }
+    } else {
+      echo '<div id="crumbs"><a href="' . $homeLink . '">' . $home . '</a> ' . $delimiter . ' ';
+      if (is_category()) {
+        $thisCat = get_category(get_query_var('cat'), false);
+        if ($thisCat->parent != 0) {
+          echo get_category_parents($thisCat->parent, true, ' ' . $delimiter . ' ');
+        }
+        echo $before . 'Archive by category "' . single_cat_title('', false) . '"' . $after;
+      } elseif (is_search()) {
+        echo $before . 'Search results for "' . get_search_query() . '"' . $after;
+      } elseif (is_day()) {
+        echo '<a href="' . get_year_link(get_the_time('Y')) . '">' . get_the_time('Y') . '</a> ' . $delimiter . ' ';
+        echo '<a href="' . get_month_link(get_the_time('Y'), get_the_time('m')) . '">' . get_the_time('F') . '</a> ' . $delimiter . ' ';
+        echo $before . get_the_time('d') . $after;
+      } elseif (is_month()) {
+        echo '<a href="' . get_year_link(get_the_time('Y')) . '">' . get_the_time('Y') . '</a> ' . $delimiter . ' ';
+        echo $before . get_the_time('F') . $after;
+      } elseif (is_year()) {
+        echo $before . get_the_time('Y') . $after;
+      } elseif (is_single() && !is_attachment()) {
+        if (get_post_type() != 'post') {
+          $post_type = get_post_type_object(get_post_type());
+          $slug = $post_type->rewrite;
+          echo '<a href="' . $homeLink . '/' . $slug['slug'] . '/">' . $post_type->labels->singular_name . '</a>';
+          if ($showCurrent == 1) {
+            echo ' ' . $delimiter . ' ' . $before . get_the_title() . $after;
+          }
+        } else {
+          $cat = get_the_category();
+          $cat = $cat[0];
+          $cats = get_category_parents($cat, true, ' ' . $delimiter . ' ');
+          if ($showCurrent == 0) {
+            $cats = preg_replace("#^(.+)\s$delimiter\s$#", "$1", $cats);
+          }
+          echo $cats;
+          if ($showCurrent == 1) {
+            echo $before . get_the_title() . $after;
+          }
+        }
+      } elseif (!is_single() && !is_page() && get_post_type() != 'post' && !is_404()) {
+        $post_type = get_post_type_object(get_post_type());
+        echo $before . $post_type->labels->singular_name . $after;
+      } elseif (is_attachment()) {
+        $parent = get_post($post->post_parent);
+        $cat = get_the_category($parent->ID);
+        $cat = $cat[0];
+        echo get_category_parents($cat, true, ' ' . $delimiter . ' ');
+        echo '<a href="' . get_permalink($parent) . '">' . $parent->post_title . '</a>';
+        if ($showCurrent == 1) {
+          echo ' ' . $delimiter . ' ' . $before . get_the_title() . $after;
+        }
+      } elseif (is_page() && !$post->post_parent) {
+        if ($showCurrent == 1) {
+          echo $before . get_the_title() . $after;
+        }
+      } elseif (is_page() && $post->post_parent) {
+        $parent_id  = $post->post_parent;
+        $breadcrumbs = array();
+        while ($parent_id) {
+          $page = get_page($parent_id);
+          $breadcrumbs[] = '<a href="' . get_permalink($page->ID) . '">' . get_the_title($page->ID) . '</a>';
+          $parent_id  = $page->post_parent;
+        }
+        $breadcrumbs = array_reverse($breadcrumbs);
+        for ($i = 0; $i < count($breadcrumbs); $i++) {
+          echo $breadcrumbs[$i];
+          if ($i != count($breadcrumbs) - 1) {
+            echo ' ' . $delimiter . ' ';
+          }
+        }
+        if ($showCurrent == 1) {
+          echo ' ' . $delimiter . ' ' . $before . get_the_title() . $after;
+        }
+      } elseif (is_tag()) {
+        echo $before . 'Posts tagged "' . single_tag_title('', false) . '"' . $after;
+      } elseif (is_author()) {
+        global $author;
+        $userdata = get_userdata($author);
+        echo $before . 'Articles posted by ' . $userdata->display_name . $after;
+      } elseif (is_404()) {
+        echo $before . 'Error 404' . $after;
+      }
+      if (get_query_var('paged')) {
+        if (is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author()) {
+          echo ' (';
+        }
+        echo __('Page') . ' ' . get_query_var('paged');
+        if (is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author()) {
+          echo ')';
+        }
+      }
+      echo '</div>';
+    }
+  } // end the_breadcrumb()
 
   /* Copying over from /inc/settings/photograph-functions.php
 
