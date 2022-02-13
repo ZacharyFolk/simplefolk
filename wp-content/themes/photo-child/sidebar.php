@@ -24,7 +24,6 @@ $photograph_post_category = $photograph_settings['photograph_post_category'];
     echo get_cat_link();
   endif;
   ?>
-
 </aside>
 
 <script>
