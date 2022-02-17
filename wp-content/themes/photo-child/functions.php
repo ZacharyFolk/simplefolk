@@ -31,7 +31,6 @@ add_image_size('admin_thumbs', 150, 100, true);
 
 // set up admin customize panel
 add_theme_support('custom-logo');
-
 add_theme_support('post-thumbnails');
 
 // get Google fonts 

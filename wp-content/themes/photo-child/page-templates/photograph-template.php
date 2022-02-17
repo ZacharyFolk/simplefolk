@@ -74,8 +74,10 @@ if ($photograph_gallery_box == 'box-gallery') {
                                 }
                             }
                             $i = 1;
+                            var_dump($photograph_list_tab_tags);
 
                             foreach ($photograph_list_tab_tags as $photograph_tag_list) :
+                                var_dump($photograph_tag_list);
                                 $post_tags = get_term_by('slug', $photograph_tag_list, 'post_tag');
                                 if ($i == 1) {
 
