@@ -541,7 +541,7 @@ p,
 ================================================== */
 
 .featured-gallery-header {
-  text-align: center;
+  text-align: left;
   width: 100%;
 }
 
@@ -550,10 +550,18 @@ p,
   font-size: 30px;
   line-height: 37px;
   margin-top: 60px;
+  border-bottom: 1px solid #e0e0e0;
+  width: 95%;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  margin-left: 1em;
+  text-transform: uppercase;
+  padding: 0 20px 20px 0;
 }
 
 .filter-button {
-  text-align: center;
+  margin-left: 30px;
+  text-align: left;
   width: 100%;
 }
 
@@ -580,7 +588,7 @@ p,
 }
 
 .featured-gallery-wrap {
-  padding-bottom: 60px;
+  padding: 0 50px 0;
 }
 
 .featured-gallery {
