@@ -14,6 +14,7 @@ get_header();
                 <?php
                 $all_cats = get_categories();
                 foreach ($all_cats as $cat) :
+                    echo '<a href="/' . $cat->slug . '" title="View all photos from the project ' . strtolower($cat->name) . '">';
                 ?>
                     <article class="post-featured-item">
                         <div class="post-featured-gallery-wrap main-archive-container">
@@ -27,11 +28,13 @@ get_header();
                             <div class="box-content">
                                 <?php
                                 echo  get_random_image_src($cat->slug);
-                                echo  '<p>' . $cat->description . ' <a href="/' . $cat->slug . '" title="View all photos from the project ' . strtolower($cat->name) . '"><br />View More &gt; &gt; </a></p>';
+                                echo  '<p>' . $cat->description . '</p>';
+
                                 ?>
                             </div>
                         </div>
                     </article>
+                    </a>
                 <?php endforeach; ?>
             </div>
         </main>
