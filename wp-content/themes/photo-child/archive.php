@@ -41,9 +41,10 @@ if ($photograph_blog_gallery_box_layout == 'box-gallery-post') {
     $blog_gallery_box_layout = 'box-gallery-post';
 } ?>
 <div class="wrap">
+    <?php echo the_breadcrumb(); ?>
     <header class="page-header">
         <?php
-        the_archive_title('<h1 class="page-title">', '</h1>');
+        // the_archive_title('<h1 class="page-title">', '</h1>');
         the_archive_description('<div class="taxonomy-description">', '</div>');
         photograph_breadcrumb(); ?>
     </header><!-- .page-header -->

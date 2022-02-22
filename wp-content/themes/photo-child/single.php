@@ -17,10 +17,12 @@ $photograph_post_category = $photograph_settings['photograph_post_category'];
 $photograph_post_author = $photograph_settings['photograph_post_author'];
 $photograph_post_date = $photograph_settings['photograph_post_date'];
 $photograph_post_comments = $photograph_settings['photograph_post_comments'];
+
+echo the_breadcrumb();
+
 while (have_posts()) {
     the_post(); ?>
     <div class="wrap">
-        <?php echo the_breadcrumb(); ?>
     </div>
     <div class="wrap">
         <div id="primary" class="content-area">
@@ -36,6 +38,7 @@ while (have_posts()) {
                         </div>
                     <?php }
                     ?>
+                    <?php the_content(); ?>
                 </article>
             </main>
         </div>

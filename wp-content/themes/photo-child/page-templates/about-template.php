@@ -6,7 +6,7 @@
 get_header();
 $attachment_id = get_post_thumbnail_id();
 $image_attributes = wp_get_attachment_image_src($attachment_id, 'full'); ?>
-<div <?php post_class('about-contant');
+<div <?php post_class('about-content');
 		if (has_post_thumbnail()) { ?> style="background-image:url('<?php echo esc_url($image_attributes[0]); ?>');" <?php } ?>>
 	<div class="wrap" style="margin-top: 50px;">
 		<div id="primary" class="content-area">

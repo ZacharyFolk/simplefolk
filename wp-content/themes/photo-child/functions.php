@@ -18,6 +18,7 @@ function photo_child_enqueue_styles()
   wp_enqueue_script('fancybox', get_stylesheet_directory_uri() . '/assets/fancybox/js/3.5.7/jquery.fancybox.min.js', array('jquery'), false, true);
   wp_enqueue_script('scrolling', get_stylesheet_directory_uri() . '/assets/scripts/scrolling.js', array('jquery'), false, true);
   wp_enqueue_script('horizMasonry', get_stylesheet_directory_uri() . '/assets/scripts/masonryHorizontal.js', array('jquery'), false, true);
+  wp_enqueue_style('responsive-styles', get_stylesheet_directory_uri() . '/css/mobile.css');
 }
 add_action('wp_enqueue_scripts', 'photo_child_enqueue_styles');
 add_image_size('tag_thumbs', 85, 45, true);
@@ -33,8 +34,16 @@ add_image_size('admin_thumbs', 150, 100, true);
 add_theme_support('custom-logo');
 add_theme_support('post-thumbnails');
 
-// get Google fonts 
 
+
+///////////////////////////
+//                       //
+//    Set image sizes    //
+//                       //
+///////////////////////////
+
+
+add_image_size('cat-squares', 300, 300, TRUE);
 
 
 //////////////////////////////////
@@ -48,14 +57,41 @@ function get_random_image_src($cat = 'uncategorized')
   $query = new WP_Query(array(
     'posts_per_page' =>  1,
     'orderby' => 'rand',
-    'post_type'          => 'post',
+    'post_type' => 'post',
     'category_name' => esc_attr($cat),
   ));
   while ($query->have_posts()) : $query->the_post();
-    $attachment_id = get_post_thumbnail_id();
-    $image_attributes = wp_get_attachment_image_src($attachment_id, 'full');
-    return esc_url($image_attributes[0]);
+    $id = get_the_ID();
+    if (has_post_thumbnail($id)) :
+      echo get_the_post_thumbnail($id, 'post-thumbnail');
+    endif;
   endwhile;
+}
+
+
+function get_random_img_src_by_tag($tag = '')
+{
+  if ($tag) {
+    $args = array(
+      'post_type' => 'post',
+      'posts_per_page' => 1,
+      'orderby' => 'rand',
+      'tax_query' => array(
+        array(
+          'taxonomy' => 'post_tag',
+          'field'    => 'name',
+          'terms'    => $tag,
+        ),
+      ),
+    );
+    $query = new WP_Query($args);
+    while ($query->have_posts()) : $query->the_post();
+      $id = get_the_ID();
+      if (has_post_thumbnail($id)) :
+        echo get_the_post_thumbnail($id, 'post-thumbnail');
+      endif;
+    endwhile;
+  }
 }
 
 ////////////////////////////////////////////////
@@ -98,16 +134,21 @@ function this_cats_thumbs($postID) // pass $id from function to get current cate
 function get_cat_link()
 {
   $the_cat = get_the_category();
-  $category_name = $the_cat[0]->cat_name;
-  $category_link = get_category_link($the_cat[0]->cat_ID);
-  echo '<div class="single-cat-link">View all of the <a href="' . $category_link . '">' . $category_name . ' collection &gt; &gt;</a></div>';
+  if ($the_cat) :
+
+    $category_name = $the_cat[0]->cat_name;
+    $category_link = get_category_link($the_cat[0]->cat_ID);
+    echo '<div class="single-cat-link">View all of the <a href="' . $category_link . '">' . $category_name . ' collection &gt; &gt;</a></div>';
+  endif;
 }
 
 function cat_thumb_heading()
 {
   $the_cat = get_the_category();
-  $category_name = $the_cat[0]->cat_name;
-  echo $category_name;
+  if ($the_cat) :
+    $category_name = $the_cat[0]->cat_name;
+    echo $category_name;
+  endif;
 }
 
 /////////////////////////////
@@ -229,20 +270,22 @@ function the_breadcrumb()
   $before = '<span class="current">'; // tag before the current crumb
   $after = '</span>'; // tag after the current crumb
 
+
+
   global $post;
   $homeLink = get_bloginfo('url');
   if (is_home() || is_front_page()) {
     if ($showOnHome == 1) {
       echo '<div id="crumbs"><a href="' . $homeLink . '">' . $home . '</a></div>';
     }
-  } else {
+  } else { // Category Pages
     echo '<div id="crumbs"><a href="' . $homeLink . '">' . $home . '</a> ' . $delimiter . ' ';
     if (is_category()) {
       $thisCat = get_category(get_query_var('cat'), false);
       if ($thisCat->parent != 0) {
         echo get_category_parents($thisCat->parent, true, ' ' . $delimiter . ' ');
       }
-      echo $before . 'Archive by category "' . single_cat_title('', false) . '"' . $after;
+      echo $before . '<a href="/projects/"> Projects</a> ' . $delimiter . ' ' . single_cat_title('', false) . $after;
     } elseif (is_search()) {
       echo $before . 'Search results for "' . get_search_query() . '"' . $after;
     } elseif (is_day()) {
@@ -278,14 +321,14 @@ function the_breadcrumb()
       $post_type = get_post_type_object(get_post_type());
       echo $before . $post_type->labels->singular_name . $after;
     } elseif (is_attachment()) {
-      $parent = get_post($post->post_parent);
-      $cat = get_the_category($parent->ID);
-      $cat = $cat[0];
-      echo get_category_parents($cat, true, ' ' . $delimiter . ' ');
-      echo '<a href="' . get_permalink($parent) . '">' . $parent->post_title . '</a>';
-      if ($showCurrent == 1) {
-        echo ' ' . $delimiter . ' ' . $before . get_the_title() . $after;
-      }
+      // $parent = get_post($post->post_parent);
+      // $cat = get_the_category($parent->ID);
+      // $cat = $cat[0];
+      // echo get_category_parents($cat, true, ' ' . $delimiter . ' ');
+      // echo '<a href="' . get_permalink($parent) . '">' . $parent->post_title . '</a>';
+      // if ($showCurrent == 1) {
+      //   echo ' ' . $delimiter . ' ' . $before . get_the_title() . $after;
+      // }
     } elseif (is_page() && !$post->post_parent) {
       if ($showCurrent == 1) {
         echo $before . get_the_title() . $after;
@@ -309,7 +352,7 @@ function the_breadcrumb()
         echo ' ' . $delimiter . ' ' . $before . get_the_title() . $after;
       }
     } elseif (is_tag()) {
-      echo $before . 'Posts tagged "' . single_tag_title('', false) . '"' . $after;
+      echo $before . '<a href="/tags/" title="View all of the tags"> Tags </a>'  . $delimiter . ' ' .  single_tag_title('', false)  . $after;
     } elseif (is_author()) {
       global $author;
       $userdata = get_userdata($author);
@@ -434,4 +477,6 @@ function the_breadcrumb()
 //   }
 // }
 // add_action( 'wp_enqueue_scripts', 'selective_load' );
+
+
 ?>

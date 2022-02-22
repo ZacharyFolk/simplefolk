@@ -9,10 +9,11 @@ $photograph_post_category = $photograph_settings['photograph_post_category'];
 ?>
 
 <aside id="secondary" class="widget-area">
+  Hi... sidebar.php
   <?php
   if ($id) : ?>
     <h1 class="entry-title"><?php the_title(); ?></h1>
-    <p><?php the_content(); ?></p>
+    <p><?php echo get_post_meta($post->ID, 'Photo Caption', true); ?></p>
     <div id="photo_tag_container">
       Tags : <?php echo hashed_tags(); ?>
     </div>
