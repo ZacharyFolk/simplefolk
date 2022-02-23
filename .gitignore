@@ -50,3 +50,5 @@ wp-content/themes/twentytwentytwo/
 wp-content/themes/pixgraphy/
 wheel/
 wp-content/debug.log
+wp-content/maintenance.php
+wp-content/maintenance/
