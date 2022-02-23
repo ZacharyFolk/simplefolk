@@ -14,7 +14,7 @@ get_header();
                 <?php
                 $all_cats = get_categories();
                 foreach ($all_cats as $cat) :
-                    echo '<a href="/' . $cat->slug . '" title="View all photos from the project ' . strtolower($cat->name) . '">';
+                    echo '<a href="/projects/' . $cat->slug . '" title="View all photos from the project ' . strtolower($cat->name) . '">';
                 ?>
                     <article class="post-featured-item">
                         <div class="post-featured-gallery-wrap main-archive-container">

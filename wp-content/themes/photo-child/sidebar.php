@@ -25,7 +25,7 @@ $photograph_post_category = $photograph_settings['photograph_post_category'];
     </div>
     <h3 class="cat-heading"><?php echo cat_thumb_heading(); ?></h3>
   <?php
-    echo '<div id="cat_thumbs_wrap">';
+    echo '<div id="cat_thumbs">';
     echo this_cats_thumbs($id);
     echo '</div>';
     echo get_cat_link();
@@ -56,10 +56,7 @@ $photograph_post_category = $photograph_settings['photograph_post_category'];
 
   });
 
-  // callback used to set new height of container with hidden overflow
-  $container.on('arrangeComplete', function(event) {
-    jQuery('#cat_thumbs_wrap').height(350);
-  });
+
 
 
   (function() {
