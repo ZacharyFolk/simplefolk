@@ -8,49 +8,17 @@
  * @package photo-child
  */
 
-get_header();
-$photograph_settings = photograph_get_theme_options();
-$photograph_blog_column_gallery_layout = $photograph_settings['photograph_blog_column_gallery_layout'];
-$photograph_blog_gallery_border = $photograph_settings['photograph_blog_gallery_border'];
-$photograph_blog_gallery_text_content = $photograph_settings['photograph_blog_gallery_text_content'];
-$photograph_blog_gallery_box_layout = $photograph_settings['photograph_blog_gallery_box_layout'];
-$blog_gallery_col = '';
-$blog_gallery_border = '';
-$blog_gallery_text_content = '';
-$blog_gallery_box_layout = '';
-
-if ($photograph_blog_column_gallery_layout == '2') {
-    $blog_gallery_col = 'post-gallery-col-2';
-} elseif ($photograph_blog_column_gallery_layout == '3') {
-    $blog_gallery_col = 'post-gallery-col-3';
-} elseif ($photograph_blog_column_gallery_layout == '4') {
-    $blog_gallery_col = 'post-gallery-col-4';
-} else {
-    $blog_gallery_col = 'post-gallery-col-5';
-}
-
-if ($photograph_blog_gallery_border == 'hide') {
-    $blog_gallery_border = 'no-posts-border';
-}
-
-if ($photograph_blog_gallery_text_content == 'show-on-hover') {
-    $blog_gallery_text_content = 'text-hover-presentation';
-}
-
-if ($photograph_blog_gallery_box_layout == 'box-gallery-post') {
-    $blog_gallery_box_layout = 'box-gallery-post';
-} ?>
+get_header(); ?>
 <div class="wrap">
     <?php echo the_breadcrumb(); ?>
     <header class="page-header">
         <?php
-        // the_archive_title('<h1 class="page-title">', '</h1>');
         the_archive_description('<div class="taxonomy-description">', '</div>');
-        photograph_breadcrumb(); ?>
-    </header><!-- .page-header -->
+        ?>
+    </header>
     <div id="primary" class="content-area">
         <main id="main" class="site-main" role="main">
-            <div class="container post-featured-gallery <?php echo esc_attr($blog_gallery_col) . ' ' . esc_attr($blog_gallery_border) . ' ' . esc_attr($blog_gallery_text_content) . ' ' . esc_attr($blog_gallery_box_layout); ?>">
+            <div class="container post-featured-gallery post-gallery-col-4">
                 <?php
                 if (have_posts()) { ?>
 
@@ -61,10 +29,10 @@ if ($photograph_blog_gallery_box_layout == 'box-gallery-post') {
                 } else { ?>
                     <h2 class="entry-title"> <?php esc_html_e('No Posts Found.', 'photograph'); ?> </h2>
                 <?php } ?>
-            </div> <!-- end .container -->
+            </div>
             <?php get_template_part('pagination', 'none'); ?>
-        </main><!-- end #main -->
-    </div> <!-- #primary -->
-</div><!-- end .wrap -->
+        </main>
+    </div>
+</div>
 <?php
 get_footer();

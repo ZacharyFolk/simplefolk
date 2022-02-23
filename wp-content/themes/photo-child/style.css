@@ -381,7 +381,7 @@ a:hover[rel='next'] {
 }
 
 #crumbs {
-  margin: 20px 0 20px 20px;
+  margin: 20px 0;
   font-size: 1.2em;
   font-family: 'Zen Maru Gothic';
   text-transform: uppercase;
@@ -488,6 +488,10 @@ h1.photo-title {
 
 h1 {
   font-size: 23px;
+}
+
+#secondary {
+  padding-top: 40px;
 }
 
 /* *******************************************
