@@ -36,7 +36,8 @@ wp-trackback.php
 index.php
 wp-blog-header.php
 wp-load.php
-wp-content/themes/photograph/
+wp-content/themes/photograph/*
+!wp-content/themes/photograph/functions.php
 wp-content/themes/photo-child/assets/
 .ftpquota
 .htaccess.bk
