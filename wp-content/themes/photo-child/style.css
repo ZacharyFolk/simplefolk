@@ -381,7 +381,7 @@ a:hover[rel='next'] {
 }
 
 #crumbs {
-  margin: 20px 0;
+  margin: 20px 0 20px 30px;
   font-size: 1.2em;
   font-family: 'Zen Maru Gothic';
   text-transform: uppercase;
@@ -455,7 +455,7 @@ a:hover[rel='next'] {
   top: 90%;
 }
 
-h1,
+/* h1,
 h2,
 h3,
 h4,
@@ -465,7 +465,7 @@ h6 {
   font-weight: 600;
   margin-top: 0;
   margin-bottom: 15px;
-}
+} */
 
 .page-header h1 {
   display: inline-block;
