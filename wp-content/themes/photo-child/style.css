@@ -16,6 +16,146 @@ All files, unless otherwise stated, are released under the GNU General Public Li
 version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 ==================================================
 */
+
+
+/* ************************
+*                         *
+*    Table of Contents    *
+*                         *
+************************ */
+/*
+  # Colors
+
+
+*/
+
+
+
+
+/* **************
+*               *
+*    #Colors    *
+*               *
+************** */
+
+
+body, button, input, select, textarea {
+  color: rgb(187, 179, 167);
+}
+#page {
+  background-color: rgb(36, 37, 37);
+}
+a:link,
+a:visited {
+  color: rgb(212, 171, 137);
+}
+a:hover {
+  color: rbg(209, 141, 88);
+  text-decoration: underline;
+}
+.page-header { 
+  /* archive pages */
+  background-color: rgb(41, 43, 43);
+  border-top: 1px solid rgb(67, 69, 70);
+  border-bottom: 1px solid rgb(67, 69, 70);
+}
+
+
+
+
+
+
+/* *********************
+*                      *
+*    Archive Pages     * 
+*                      *
+********************* */
+
+.page-header {
+  padding: 0 40px;
+}
+.page-header  {
+  font-size: .9em;
+}
+
+#crumbs {
+  margin: 20px 0 20px 60px;
+  font-size: 1em;
+  font-family: 'Zen Maru Gothic';
+  text-transform: uppercase;
+}
+
+.main-archive-container {
+  border: 1px solid #e0e0e0;
+}
+
+.box-heading {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: rgb(250, 250, 250);
+  border-bottom: 1px solid #dcdcdc;
+}
+
+.box-heading h2 {
+  padding: 10px 0 12px 20px;
+  /* text-transform: uppercase; */
+  color: #161616;
+  text-transform: capitalize;
+  font-family: 'Zen Maru Gothic';
+}
+
+.box-content {
+  background-color: rgb(243, 243, 243);
+  padding: 20px;
+}
+.box-content p {
+  width: 90%;
+  margin: 0 0 0 30px;
+  font-size: .8em;
+}
+
+.post-tags{ padding: 0 40px;
+  font-family: 'Reenie Beanie', cursive;  
+  text-transform: lowercase;
+  text-align: right;
+}
+
+
+
+
+
+
+
+.cat-gallery {
+  display: flex;
+  flex-direction: column;
+}
+
+.cat-gallery img {
+  padding: 20px;
+  background-color: #ffff;
+  border: 1px solid #e0e0e0;
+  margin: 20px 20px 10px;
+  display: block;
+  position: relative;
+}
+
+.cat-gallery h2 {
+  width: 100%;
+  background: #3a3a3a;
+  color: #fff;
+  margin: 0;
+  padding: 10px 0 15px 20px;
+  text-transform: uppercase;
+}
+.cat-gallery p {
+  padding: 10px 30px 20px;
+}
+
+
+
+
 body {
   background: url('assets/images/tiles/so-white.png') repeat 0 0;
 }
@@ -39,14 +179,7 @@ button,
 input {
   font-family: 'Space Mono', monospace;
 }
-a:link,
-a:visited {
-  color: #744623;
-}
-a:hover {
-  color: #d8803d;
-  text-decoration: underline;
-}
+
 
 #site-title {
   text-transform: uppercase;
@@ -108,86 +241,6 @@ ul.nav-menu li {
 .vid-thumb #sticky-header {
   background-color: #000;
 }
-/* *********************
-*                      *
-*    Archive Pages     *
-*                      *
-********************* */
-
-.main-archive-container {
-  border: 1px solid #e0e0e0;
-}
-
-.box-heading {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  border-bottom: 1px solid #e0e0e0;
-  background-color: #fff;
-}
-
-.box-col {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.box-heading h2 {
-  padding: 10px 0 0 20px;
-  /* text-transform: uppercase; */
-  color: #505050;
-  text-transform: capitalize;
-}
-
-.box-col-2 {
-  flex: 1;
-  flex-direction: column;
-  align-items: flex-end;
-  padding: 15px 15px 0 0;
-}
-
-.box-content {
-  padding: 0 0 20px;
-}
-
-.box-content img {
-  /* width: 80%;
-  margin: 20px 10%; */
-  background-color: #fff;
-  border-top: 0;
-  padding: 20px;
-}
-
-.box-content p {
-  width: 80%;
-  margin: 20px auto;
-}
-
-.cat-gallery {
-  display: flex;
-  flex-direction: column;
-}
-
-.cat-gallery img {
-  padding: 20px;
-  background-color: #ffff;
-  border: 1px solid #e0e0e0;
-  margin: 20px 20px 10px;
-  display: block;
-  position: relative;
-}
-
-.cat-gallery h2 {
-  width: 100%;
-  background: #3a3a3a;
-  color: #fff;
-  margin: 0;
-  padding: 10px 0 15px 20px;
-  text-transform: uppercase;
-}
-.cat-gallery p {
-  padding: 10px 30px 20px;
-}
 
 /* **************
 *               *
@@ -195,13 +248,8 @@ ul.nav-menu li {
 *               *
 ************** */
 
-.page-header {
-  border-top: 1px solid #e0e0e0;
-  border-bottom: 1px solid #e0e0e0;
-}
-.page-header p {
-  margin: 0;
-}
+
+
 /* OVERRIDE */
 
 #primary {
@@ -380,12 +428,7 @@ a:hover[rel='next'] {
   padding-bottom: 10px;
 }
 
-#crumbs {
-  margin: 20px 0 20px 30px;
-  font-size: 1.2em;
-  font-family: 'Zen Maru Gothic';
-  text-transform: uppercase;
-}
+
 
 #photo_tag_container {
   margin-bottom: 10px;
@@ -881,3 +924,5 @@ h1 {
   margin-right: auto;
   clear: both;
 }
+
+

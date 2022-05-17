@@ -160,7 +160,7 @@ function cat_thumb_heading()
 
 function wpb_add_google_fonts()
 {
-  wp_enqueue_style('wpb-google-fonts', 'https://fonts.googleapis.com/css2?family=Merriweather&family=Special+Elite&family=Rajdhani&family=Space+Mono&family=Zen+Maru+Gothic&display=swap', false);
+  wp_enqueue_style('wpb-google-fonts', 'https://fonts.googleapis.com/css2?family=Merriweather&family=Special+Elite&family=Rajdhani&family=Reenie+Beanie&family=Space+Mono&family=Zen+Maru+Gothic&display=swap', false);
 }
 add_action('wp_enqueue_scripts', 'wpb_add_google_fonts');
 
@@ -246,7 +246,7 @@ function hashed_tags()
 
   if (!empty($post_tags)) {
     foreach ($post_tags as $tag) {
-      $output .= '<a href="' . esc_attr(get_tag_link($tag->term_id)) . '">' . $prefix . __($tag->name) . '</a>' . $separator;
+      $output .= '<a title="View all photos with the tag ' . $tag->name . '"  href="' . esc_attr(get_tag_link($tag->term_id)) . '">' . $prefix . __($tag->name) . '</a>' . $separator;
     }
   }
 
@@ -276,7 +276,7 @@ function the_breadcrumb()
   $homeLink = get_bloginfo('url');
   if (is_home() || is_front_page()) {
     if ($showOnHome == 1) {
-      echo '<div id="crumbs"><a href="' . $homeLink . '">' . $home . '</a></div>';
+      echo '<div id="crumbs" class="breadcrumb"><a href="' . $homeLink . '">' . $home . '</a></div>';
     }
   } else { // Category Pages
     echo '<div id="crumbs"><a href="' . $homeLink . '">' . $home . '</a> ' . $delimiter . ' ';
