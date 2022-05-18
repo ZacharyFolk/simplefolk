@@ -47,73 +47,12 @@ function photograph_setup() {
 		'social-link'  => __( 'Add Social Icons Only', 'photograph' ),
 	) );
 
-
-	// Add support for responsive embeds.
-	add_theme_support( 'responsive-embeds' );
-
-	/* 
-	* Enable support for custom logo. 
-	*
-	*/ 
-	add_theme_support( 'custom-logo', array(
-		'flex-width' => true, 
-		'flex-height' => true,
-	) );
-
-	add_theme_support( 'gutenberg', array(
-			'colors' => array(
-				'#fd513b',
-			),
-		) );
-	add_theme_support( 'align-wide' );
-
-	//Indicate widget sidebars can use selective refresh in the Customizer. 
-	add_theme_support( 'customize-selective-refresh-widgets' );
-
-	/*
-	 * Switch default core markup for comment form, and comments
-	 * to output valid HTML5.
-	 */
-	add_theme_support( 'html5', array(
-		'comment-form', 'comment-list', 'gallery', 'caption',
-	) );
-
-	add_image_size( 'photograph-popular-post', 75, 75, true );
-
-	/**
-	 * Add support for the Aside Post Formats
-	 */
-	add_theme_support( 'post-formats', array( 'aside', 'gallery', 'link', 'image', 'quote', 'video', 'audio', 'chat' ) );
-
-	// Set up the WordPress core custom background feature.
-	add_theme_support( 'custom-background', apply_filters( 'photograph_custom_background_args', array(
-		'default-color' => 'ffffff',
-		'default-image' => '',
-	) ) );
-
-	add_editor_style( array( 'css/editor-style.css') );
-
-/**
- * Load WooCommerce compatibility files.
- */
-	
-require get_template_directory() . '/woocommerce/functions.php';
-
-
 }
 endif; // photograph_setup
+
 add_action( 'after_setup_theme', 'photograph_setup' );
 
-/***************************************************************************************/
-function photograph_content_width() {
-	if ( is_page_template( 'page-templates/gallery-template.php' ) || is_attachment() ) {
-		global $content_width;
-		$content_width = 1920;
-	}
-}
-add_action( 'template_redirect', 'photograph_content_width' );
 
-/***************************************************************************************/
 if(!function_exists('photograph_get_theme_options')):
 	function photograph_get_theme_options() {
 	    return wp_parse_args(  get_option( 'photograph_theme_options', array() ), photograph_get_option_defaults_values() );
@@ -139,41 +78,7 @@ require get_template_directory() . '/inc/customizer/functions/sanitize-functions
 require get_template_directory() . '/inc/customizer/functions/register-panel.php';
 
 function photograph_customize_register( $wp_customize ) {
-		if(!class_exists('Photograph_Plus_Features')  && !class_exists('Webart_Customize_upgrade') && !class_exists('Wedding_photos_Customize_upgrade'))  {
-		class Photograph_Customize_upgrade extends WP_Customize_Control {
-			public function render_content() { ?>
-				<a title="<?php esc_attr_e( 'Review Us', 'photograph' ); ?>" href="<?php echo esc_url( 'https://wordpress.org/support/view/theme-reviews/photograph/' ); ?>" target="_blank" id="about_photograph">
-				<?php esc_html_e( 'Review Us', 'photograph' ); ?>
-				</a><br/>
-				<a href="<?php echo esc_url( 'https://themefreesia.com/theme-instruction/photograph/' ); ?>" title="<?php esc_attr_e( 'Theme Instructions', 'photograph' ); ?>" target="_blank" id="about_photograph">
-				<?php esc_html_e( 'Theme Instructions', 'photograph' ); ?>
-				</a><br/>
-				<a href="<?php echo esc_url( 'https://tickets.themefreesia.com/' ); ?>" title="<?php esc_attr_e( 'Support Tickets', 'photograph' ); ?>" target="_blank" id="about_photograph">
-				<?php esc_html_e( 'Forum', 'photograph' ); ?>
-				</a><br/>
-			<?php
-			}
-		}
-		$wp_customize->add_section('photograph_upgrade_links', array(
-			'title'					=> __('Important Links', 'photograph'),
-			'priority'				=> 1000,
-		));
-		$wp_customize->add_setting( 'photograph_upgrade_links', array(
-			'default'				=> false,
-			'capability'			=> 'edit_theme_options',
-			'sanitize_callback'	=> 'wp_filter_nohtml_kses',
-		));
-		$wp_customize->add_control(
-			new Photograph_Customize_upgrade(
-			$wp_customize,
-			'photograph_upgrade_links',
-				array(
-					'section'				=> 'photograph_upgrade_links',
-					'settings'				=> 'photograph_upgrade_links',
-				)
-			)
-		);
-	}	
+
 	$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
 	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
 		
