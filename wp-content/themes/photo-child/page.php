@@ -2,9 +2,7 @@
 /**
  * The template for displaying all pages.
  *
- * @package Theme Freesia
- * @subpackage Photograph
- * @since Photograph 1.0
+ * @package Photo Child
  */
 
 get_header();
@@ -19,7 +17,6 @@ $photograph_display_page_single_featured_image = $photograph_settings['photograp
 			<h1 class="page-title"><?php the_title();?></h1>
 			<!-- .page-title -->
 		<?php endif; ?>
-		<?php photograph_breadcrumb(); ?><!-- .breadcrumb -->
 	</header><!-- .page-header -->
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
