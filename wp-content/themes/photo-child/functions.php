@@ -158,11 +158,25 @@ function cat_thumb_heading()
 /////////////////////////////
 
 
-function wpb_add_google_fonts()
+// $photograph_googlefont = array();
+// 	array_push( $photograph_googlefont, 'Roboto');
+// 	array_push( $photograph_googlefont, 'Rajdhani');
+// 	$photograph_googlefonts = implode("|", $photograph_googlefont);
+
+	// wp_register_style( 'photograph-google-fonts', '//fonts.googleapis.com/css?family='.$photograph_googlefonts .':300,400,400i,500,600,700');
+	// wp_enqueue_style( 'photograph-google-fonts' );
+	// if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+	// 	wp_enqueue_script( 'comment-reply' );
+	// }
+
+  
+function add_google_fonts()
 {
-  wp_enqueue_style('wpb-google-fonts', 'https://fonts.googleapis.com/css2?family=Merriweather&family=Special+Elite&family=Rajdhani&family=Reenie+Beanie&family=Space+Mono&family=Zen+Maru+Gothic&display=swap', false);
+  wp_enqueue_style('google-fonts', 
+  'https://fonts.googleapis.com/css2?family=Merriweather&family=Roboto&family=Rajdhani&family=Special+Elite&family=Rajdhani&family=Reenie+Beanie&family=Space+Mono&family=Allerta+Stencil&family=Koulen&family=Zen+Maru+Gothic&display=swap', 
+  array(), null );
 }
-add_action('wp_enqueue_scripts', 'wpb_add_google_fonts');
+add_action('wp_enqueue_scripts', 'add_google_fonts');
 
 
 
@@ -409,14 +423,7 @@ function the_breadcrumb()
 // 	if( $photograph_settings['photograph_responsive'] == 'on' ) {
 // 		wp_enqueue_style('photograph-responsive', get_template_directory_uri().'/css/responsive.css');
 // 	}
-// 	/********* Adding Multiple Fonts ********************/
-// 	// $photograph_googlefont = array();
-// 	// array_push( $photograph_googlefont, 'Roboto');
-// 	// array_push( $photograph_googlefont, 'Rajdhani');
-// 	// $photograph_googlefonts = implode("|", $photograph_googlefont);
-// 	//
-// 	// wp_register_style( 'photograph-google-fonts', '//fonts.googleapis.com/css?family='.$photograph_googlefonts .':300,400,400i,500,600,700');
-// 	// wp_enqueue_style( 'photograph-google-fonts' );
+
 // 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 // 		wp_enqueue_script( 'comment-reply' );
 // 	}

@@ -13,9 +13,9 @@ get_header(); ?>
     <?php echo the_breadcrumb(); ?>
     <header class="page-header">
         <?php if (is_category()) : ?>
-            <h1>Photos in the project <?php echo strtolower(get_queried_object()->name);  ?></h1>
+            <h1>Collection of photos from the category :  <?php echo strtolower(get_queried_object()->name);  ?></h1>
         <?php else :  // is tags ?>
-        <h1>Photos tagged with <?php echo strtolower(get_queried_object()->name);  ?></h1>
+        <h1>Collection of photos tagged with  #<?php echo strtolower(get_queried_object()->name);  ?></h1>
         <?php endif; ?>
 
         <h2>

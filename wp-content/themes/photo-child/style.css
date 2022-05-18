@@ -72,19 +72,32 @@ a:hover {
 ********************* */
 
 .page-header {
-  padding: 0 40px;
-}
-.page-header  {
+  padding: 10px 60px 6px;
   font-size: .9em;
+  display: block;
+  margin: 0 auto;
+  width: 100%;
 }
-
+.page-header h1 {
+  color: #ddd;
+  font-size: 20px;
+}
+.page-header h2 {
+  font-size: 16px;
+}
 #crumbs {
-  margin: 20px 0 20px 60px;
-  font-size: 1em;
+  margin: 16px 0 16px 60px;
+  font-size: .8em;
   font-family: 'Zen Maru Gothic';
   text-transform: uppercase;
 }
+.archive .page-header {
+  /* temp override */
+  display: block;
+  margin-top: 0;
+  width: 100%;
 
+}
 .main-archive-container {
   border: 1px solid #e0e0e0;
 }
@@ -120,11 +133,6 @@ a:hover {
   text-transform: lowercase;
   text-align: right;
 }
-
-
-
-
-
 
 
 .cat-gallery {
@@ -182,8 +190,9 @@ input {
 
 
 #site-title {
+  font-family: 'Allerta Stencil', sans-serif;
+/* font-family: 'Koulen', cursive; */
   text-transform: uppercase;
-  font-weight: 800;
 }
 #site-title a:hover {
   text-decoration: none;
@@ -263,27 +272,9 @@ ul.nav-menu li {
   width: 100%;
 }
 
-.blog .page-header,
-.archive .page-header {
-  display: block;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 30px;
-  margin-bottom: 20px;
-}
 
-#photos_page .page-header,
-.blog .page-header,
-.archive .page-header {
-  display: block;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-  margin-bottom: 0;
-  padding: 20px;
-}
+
+
 /* 
 #content {
   padding: 0;
