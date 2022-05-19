@@ -47,34 +47,13 @@
 
 					<div class="header-titles">
 
-						<?php
+                    <?php
 							// Site title or logo.
-							// twentytwenty_site_logo();
+							twentytwenty_site_logo();
 
-                            $blog_info    = get_bloginfo( 'name' );
-                            $description  = get_bloginfo( 'description', 'display' );
-
-                        if ( $blog_info ) : ?>
-                        <div class="site-title faux-heading">
-                                <?php if ( is_front_page() && ! is_paged() ) : ?>
-                                    <h1><?php echo esc_html( $blog_info ); ?></h1>
-                                <?php elseif ( is_front_page() && ! is_home() ) : ?>
-                                    <h1><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo esc_html( $blog_info ); ?></a></h1>
-                                <?php else : ?>
-                                    <p><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo esc_html( $blog_info ); ?></a></p>
-                                <?php endif; ?>
-                                </div>
-                            <?php endif;
-
-                            
 							// Site description.
-							// twentytwenty_site_description();
-
-                             if ( $description && true === get_theme_mod( 'display_title_and_tagline', true ) ) : ?>
-                                <p class="site-description">
-                                    <?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput ?>
-                                </p>
-                            <?php endif; ?>
+							twentytwenty_site_description();
+						?>
 
 					</div><!-- .header-titles -->
 
@@ -86,6 +65,7 @@
 							<span class="toggle-text"><?php _e( 'Menu', 'twentytwenty' ); ?></span>
 						</span>
 					</button><!-- .nav-toggle -->
+
 
 				</div><!-- .header-titles-wrapper -->
 

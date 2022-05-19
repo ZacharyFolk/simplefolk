@@ -43,7 +43,6 @@ add_action ('photograph_social_links', 'photograph_social_links_display');
 
 /*************************** ENQUEING STYLES AND SCRIPTS ****************************************/
 function photograph_scripts() {
-	$photograph_settings = photograph_get_theme_options();
 
 
 	// Load the html5 shiv.
@@ -51,16 +50,14 @@ function photograph_scripts() {
 	wp_script_add_data( 'html5', 'conditional', 'lt IE 9' );
 
 	
-	if($photograph_settings['photograph_disable_fancy_box']==0){
 		wp_enqueue_style('fancybox-css', get_template_directory_uri().'/assets/fancybox/css/jquery.fancybox.min.css');
 		wp_enqueue_script('fancybox', get_template_directory_uri().'/assets/fancybox/js/jquery.fancybox.min.js', array('jquery'), false, true);
 		wp_enqueue_script('photograph-fancybox-settings', get_template_directory_uri().'/assets/fancybox/js/fancybox-settings.js', array('fancybox'), false, true);
-	}
+	
 
 
-	if( $photograph_settings['photograph_responsive'] == 'on' ) {
 		wp_enqueue_style('photograph-responsive', get_template_directory_uri().'/css/responsive.css');
-	}
+
 }
 
 add_action( 'wp_enqueue_scripts', 'photograph_scripts' );
