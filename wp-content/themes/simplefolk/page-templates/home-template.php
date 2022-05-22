@@ -4,6 +4,7 @@
  * Template Name: Home Template
  *
  */
+
 get_header();
 
 //////////////////////////////////////////////
@@ -12,20 +13,21 @@ get_header();
 //                                          //
 //////////////////////////////////////////////
 
-$gallery_heading = "Latest Additions";
+$gallery_heading = "Latest Posts";
 $featured_tabs = array ('dogs','night','birds','bears');
 ?>
 
 <main id="main" class="site-main" role="main">
     <?php the_content(); ?>
-    <div class="featured-gallery-wrap show-fgt-hover">
-        <div class="featured-gallery-content clearfix">
+    <div class="featured-gallery-wrap">
+        <div class="featured-gallery-content">
             <div class="featured-gallery-header">
-                <h2 class="featured-gallery-title freesia-animation fadeInDown">
+               
+                <h2 class="featured-gallery-title">
                     <?php echo esc_html($gallery_heading); ?>
-                </h2>
-                <div class="filters filter-button freesia-animation fadeInDown">
-                    <div>
+                </h2> 
+                <div class="filters filter-button">
+
                         <?php
                             $i = 1;
                             foreach ($featured_tabs as $featured_tab) :
@@ -41,9 +43,8 @@ $featured_tabs = array ('dogs','night','birds','bears');
                         <?php endif; 
                         endif;
                                 $i++;
-                            endforeach;
-?>
-                    </div>
+                            endforeach;?>
+                    
                 </div>
             </div>
 

@@ -1,16 +1,15 @@
 /*
-Theme Name:Photo Child
+Theme Name: Simple Folk
 Theme URI: https://folkphotography.com
 Author: Zachary Folk
 Author URI: https://folkphotography.com
-Template: photograph
-Description: Child theme of Photograph created by https://themefreesia.com/photograph
-Version: 1.0.0
-Text Domain: photograph
+Description: A very stripped down, primitive, hopefully eventually functional theme for my photos
+Version: 0.0.1
+Text Domain: simplefolk
 License: GNU General Public License version 3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Tags: threaded-comments, right-sidebar, custom-background, custom-colors, custom-header, custom-logo, custom-menu, editor-style, featured-images, flexible-header, post-formats, sticky-post, theme-options, translation-ready, photography, blog, portfolio
+Tags:  photography, portfolio
 
 All files, unless otherwise stated, are released under the GNU General Public License
 version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
@@ -30,18 +29,36 @@ version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 
 */
 
+/* ************
+*             *
+*    Vars     *
+*             *
+************ */
 
-/* *************
-*              *
-*    Layout    *
-*              *
-************* */
+:root {
+  --color-dark-background: rgb(36,37,37);
+  --color-dark-primary: rgb(12,15,124);
+  --color-dark-secondary: red;
+  --font-family-primary: 'Zen Maru Gothic', sans-serif;
+}
 
 
 
-#page {
-  width: 100%;
-  background-color: #fff;
+
+
+body {
+  background-color: var(--color-dark-background);
+	box-sizing: border-box;
+  font-family: var(--font-family-primary);
+}
+
+.featured-gallery-header
+
+
+
+#site-header {
+	background-color: rgb(13, 13, 13);
+	position: relative;
 }
 
 
@@ -152,16 +169,9 @@ body.archive:not(.post-type-archive-product) #primary,
 }
 
 
-/* **************
-*               *
-*    #Colors    *
-*               *
-************** */
 
 
-body, button, input, select, textarea {
-  color: rgb(187, 179, 167);
-}
+
 #page {
   background-color: rgb(36, 37, 37);
 }
@@ -180,6 +190,95 @@ a:hover {
   border-bottom: 1px solid rgb(67, 69, 70);
 }
 
+.site-title {
+  color: rgb(229, 224, 216);
+}
+
+
+
+/* Header  ----------------------------- */
+
+
+.main-header {
+  display: flex;
+  align-items: center;
+  padding: 0 60px;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  align-content: center;
+}
+
+.site-title {
+  font-family: 'Koulen', cursive;
+  font-weight: 300;
+  font-size: 2.4em;
+  text-transform: uppercase;
+}
+
+
+.main-header .header-nav ul {
+  display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    align-content: center;
+    flex-wrap: nowrap;
+}
+.header-nav li {
+  list-style-type: none;
+  padding: 0 10px;
+}
+.main-navigation  {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 24px;
+  text-transform: uppercase;
+  padding-left: 40px;
+}
+
+
+
+
+
+
+
+#site_detail {
+  display: inline-block;
+    padding: 10px 0;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.site-description {
+	color: #6d6d6d;
+	font-size: 1.8rem;
+	font-weight: 500;
+
+	letter-spacing: -0.0311em;
+	transition: all 0.15s linear;
+}
+
+.site-logo a,
+.site-logo img {
+	display: block;
+}
+
+.header-titles .site-logo .site-logo {
+	margin: 0;
+}
+
+.site-logo img {
+	max-height: 6rem;
+	margin: 0 auto;
+	width: auto;
+}
+
+body:not(.enable-search-modal) .site-logo img {
+	margin: 0;
+}
+
+
+ 
 
 /* *********************
 *                      *
@@ -280,55 +379,14 @@ a:hover {
 
 
 
-body {
-  background: url('assets/images/tiles/so-white.png') repeat 0 0;
-}
-/* fonts */
 
-body {
-  font-family: 'Merriweather', serif;
-  font-size: 1.2em;
-}
-
-p {
-  margin: 0 0 10px;
-}
-h1,
-h2,
-h3 {
-  font-family: 'Zen Maru Gothic', sans-serif;
-}
-
-button,
-input {
-  font-family: 'Space Mono', monospace;
-}
-
-
-#site-title {
-  font-family: 'Allerta Stencil', sans-serif;
-/* font-family: 'Koulen', cursive; */
-  text-transform: uppercase;
-}
 #site-title a:hover {
   text-decoration: none;
 }
 
 
 
-/* **************
-*               *
-*    Header     *
-*               *
-************** */
 
-
-
-/* OVERRIDE */
-
-#primary {
-  margin-bottom: 0 !important;
-}
 /* .wrap, #main, #primary {max-width: 100%; width: 100%;} */
 #photos_page.wrap,
 #photos_page #main,
@@ -339,41 +397,6 @@ input {
 
 
 
-
-/* 
-#content {
-  padding: 0;
-} */
-
-/* @media only screen and (max-width: 767px) {
-  #content {
-    padding-top: 0 !important;
-    
-}*/
-
-/* #primary,
-#secondary {
-  margin-bottom: 0 !important;
-}
-
-#secondary {
-  border: 0;
-  padding-left: 10px;
-} */
-
-#colophon {
-  margin-top: 50px;
-}
-
-/* body.single-post #primary {
-  margin: 0 5%;
-  width: 90%;
-  padding: 0;
-}
-
-body.single-post #primary article.post {
-  display: block;
-} */
 
 .previous-post,
 .next-post {
@@ -395,19 +418,7 @@ body.single-post #primary article.post {
   text-align: right;
 }
 
-/* a:link[rel='prev'],
-a:link[rel='next'] {
-  text-decoration: none;
-  transition: opacity 0.8s;
-  opacity: 5%;
-}
 
-a:hover[rel='prev'],
-a:hover[rel='next'] {
-  font-weight: normal;
-  transition: opacity 0.5s;
-  opacity: 55%;
-} */
 
 .main-post-image a {
   display: grid;
@@ -435,46 +446,6 @@ a:hover[rel='next'] {
   text-align: right;
 }
 
-/* * {
-  margin: 0;
-  padding: 0;
-}
-
-.main-post-image {
-  display: grid;
-  height: 100%;
-} */
-.site-info .copyright {
-  color: #000;
-  font-size: 12px;
-  line-height: 1.666;
-  text-align: right;
-}
-
-.custom-logo-link .custom-logo {
-  height: 45px;
-  margin: 12px 0;
-}
-
-.side-menu-wrap .custom-logo {
-  background-color: transparent;
-}
-
-.page-overlay:before {
-  background-color: #000000;
-}
-
-.side-menu:after {
-  box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.2);
-  content: '';
-  background-color: #4b4b4b;
-  position: absolute;
-  height: 50px;
-  width: 100%;
-  top: 0px;
-  left: 0px;
-  transform: rotate(0deg);
-}
 
 /* SINGLE POST */
 
@@ -525,17 +496,7 @@ a:hover[rel='next'] {
 .recent-item img:hover {
   opacity: 1;
 }
-/* .featured-gallery .featured-item {
-  padding: 0;
-  float: left;
-}
 
-.featured-gallery-content {
-  width: 86%;
-  margin-left: auto;
-  margin-right: auto;
-  clear: both;
-} */
 
 .filter-button ul li:hover,
 .filter-button ul li.active {
@@ -593,64 +554,22 @@ h1 {
   padding-top: 40px;
 }
 
-/* *******************************************
-*                                            *
-*    Copied over from parent - to delete     *
-*                                            *
-* ****************************************** */
 
-/* Featured Gallery
-================================================== */
+/* ***********************
+*                        *
+*    Featured Gallery    *
+*                        *
+*********************** */
 
 .featured-gallery-header {
-  text-align: left;
-  width: 100%;
-}
-
-.featured-gallery-title {
-  display: inline-block;
-  font-size: 30px;
-  line-height: 37px;
-  margin-top: 60px;
-  border-bottom: 1px solid #e0e0e0;
-  width: 95%;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-  margin-left: 1em;
-  text-transform: uppercase;
-  padding: 0 20px 20px 0;
-}
-
-.filter-button {
-  margin-left: 30px;
-  text-align: left;
-  width: 100%;
-}
-
-/* Override tag button styles */
-
-.filter-button div {
-  border-bottom: #eee;
-}
-
-.filter-button div button {
-  background-color: #e0e0e0;
-  border: 0.1em solid #000;
-  box-sizing: border-box;
-  text-decoration: none;
-  cursor: pointer;
-  margin: 0 0.3em 0.3em 0;
-  text-transform: uppercase;
-}
-
-.filter-button div button:hover,
-.filter-button div button.active {
-  background-color: #000;
-  color: #ffffff;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 20px;
 }
 
 .featured-gallery-wrap {
-  padding: 0 50px 0;
+  padding: 0 50px;
 }
 
 .featured-gallery {
@@ -730,47 +649,6 @@ h1 {
   z-index: 1;
 }
 
-.featured-gallery
-  .featured-item:nth-child(4n + 1)
-  .featured-text-content:after {
-  background-color: rgba(0, 0, 0, 0);
-}
-
-.featured-gallery
-  .featured-item:nth-child(4n + 2)
-  .featured-text-content:after {
-  background-color: rgba(0, 0, 0, 0.3);
-}
-
-.featured-gallery
-  .featured-item:nth-child(4n + 3)
-  .featured-text-content:after {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.featured-gallery
-  .featured-item:nth-child(4n + 4)
-  .featured-text-content:after {
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
-.featured-gallery
-  .featured-item:nth-child(4n + 5)
-  .featured-text-content:after {
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-.featured-gallery .has-post-thumbnail .featured-text-content:after {
-  content: none;
-}
-
-.featured-gallery .has-post-thumbnail .featured-text-content {
-  opacity: 0;
-  height: 0;
-  padding: 0;
-  position: initial;
-}
-
 .featured-text-content .featured-title {
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 28px;
@@ -786,40 +664,6 @@ h1 {
   color: #fff;
 }
 
-/* Feature Gallery Layout 2 */
-
-.fg-layout-2 .featured-gallery {
-  margin: 0 10px;
-}
-
-.fg-layout-2 .featured-gallery .featured-item {
-  padding: 10px;
-}
-
-.fg-layout-2 .featured-gallery-header {
-  float: left;
-  width: calc(25% - 30px);
-  margin-top: 50px;
-  text-align: right;
-  padding-right: 50px;
-  text-align: right;
-}
-
-.fg-layout-2 .featured-gallery {
-  float: right;
-  width: 75%;
-}
-
-.fg-layout-2 .filter-button {
-  text-align: right;
-  padding: 0;
-}
-
-.fg-layout-2 .filter-button div button {
-  display: block;
-  padding: 10px 0;
-  margin: 0;
-}
 
 /* Show/hide Gallery Title */
 
@@ -984,4 +828,9 @@ h1 {
 
 
 
-
+@media only screen and (max-width: 767px) {
+  .main-header, .main-header .header-nav ul {
+    flex-direction: column
+  }
+  .featured-gallery-wrap {padding: 0 20px}
+ }

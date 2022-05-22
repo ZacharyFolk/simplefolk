@@ -6,8 +6,7 @@
  */
 
 get_header();
-$photograph_settings = photograph_get_theme_options();
-$photograph_display_page_single_featured_image = $photograph_settings['photograph_display_page_single_featured_image'];?>
+?>
 <div class="wrap">
 	<header class="page-header">
 		<?php if ( is_front_page()) : ?>
@@ -25,7 +24,7 @@ $photograph_display_page_single_featured_image = $photograph_settings['photograp
 				while( have_posts() ) {
 					the_post(); ?>
 			<article id="page-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<?php if(has_post_thumbnail() && $photograph_display_page_single_featured_image == 0 ){ ?>
+				<?php if(has_post_thumbnail()  ){ ?>
 					<div class="entry-thumb">
 						<figure class="entry-thumb-content">
 							<?php the_post_thumbnail(); ?>
@@ -37,7 +36,7 @@ $photograph_display_page_single_featured_image = $photograph_settings['photograp
 				</div> <!-- entry-content clearfix-->
 				<?php
 				wp_link_pages( array( 
-						'before'            => '<div style="clear: both;"></div><div class="pagination clearfix">'.esc_html__( 'Pages:', 'photograph' ),
+						'before'            => '<div style="clear: both;"></div><div class="pagination clearfix">'.esc_html__( 'Pages:', 'simplefolk' ),
 						'after'             => '</div>',
 						'link_before'       => '<span>',
 						'link_after'        => '</span>',
@@ -48,7 +47,7 @@ $photograph_display_page_single_featured_image = $photograph_settings['photograp
 			</article>
 			<?php }
 			} else { ?>
-			<h1 class="entry-title"> <?php esc_html_e( 'No Posts Found.', 'photograph' ); ?> </h1>
+			<h1 class="entry-title"> <?php esc_html_e( 'No Posts Found.', 'simplefolk' ); ?> </h1>
 			<?php
 			} ?>
 		</main><!-- end #main -->

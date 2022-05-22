@@ -55,7 +55,7 @@ function photo_child_enqueue_styles()
   // wp_enqueue_script('fancybox', get_stylesheet_directory_uri() . '/assets/fancybox/js/3.5.7/jquery.fancybox.min.js', array('jquery'), false, true);
   // wp_enqueue_script('scrolling', get_stylesheet_directory_uri() . '/assets/scripts/scrolling.js', array('jquery'), false, true);
   wp_enqueue_script('horizMasonry', get_stylesheet_directory_uri() . '/assets/scripts/masonryHorizontal.js', array('jquery'), false, true);
-  // wp_enqueue_style('responsive-styles', get_stylesheet_directory_uri() . '/css/mobile.css');
+  wp_enqueue_style('responsive-styles', CHILD_PATH_CSS . '/mobile.css',array(), CHILD_THEME_VERSION, 'all' );
   wp_enqueue_style('menu', CHILD_PATH_CSS . '/menu2020.css',array(), CHILD_THEME_VERSION, 'all' );
 
 }		
@@ -104,12 +104,17 @@ add_image_size('admin_thumbs', 150, 100, true);
 
 //////////////////////////////////////////////////
 //                                              //
-//    // TODO : set up admin customize panel    //
+//     TODO : set up admin customize panel      //
 //                                              //
 //////////////////////////////////////////////////
 add_theme_support('custom-logo');
 add_theme_support('post-thumbnails');
 
+register_nav_menus( array(
+  'primary' => __( 'Main Menu', 'simplefolk' ),
+  'side-nav-menu' => __( 'Side Menu', 'simplefolk' ),
+  'social-link'  => __( 'Add Social Icons Only', 'simplefolk' ),
+) );
 
 
 ///////////////////////////
@@ -121,6 +126,39 @@ add_theme_support('post-thumbnails');
 
 add_image_size('cat-squares', 300, 300, TRUE);
 
+//////////////////////////
+//                      //
+//    Get site info     //
+//                      //
+//////////////////////////
+/**
+ * Returns the site title and description
+ * TODO : Include option for logo and hook with customizer
+ *
+ * @since .01
+ * @return string The html that contains title and description
+ */
+function get_site_info(){
+  $blog_info    = get_bloginfo( 'name' );
+  $show_title   = ( true === get_theme_mod( 'display_title_and_tagline', true ) );
+  ?>
+<?php if ( $blog_info ): ?>
+
+<?php   if ( is_front_page() && ! is_paged() ) : ?>
+<h1 class="site-title"><?php echo esc_html( $blog_info ); ?></h1>
+<?php elseif ( is_front_page() && ! is_home() ) : ?>
+<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo esc_html( $blog_info ); ?></a>
+</h1>
+<?php else : ?>
+<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo esc_html( $blog_info ); ?></a></p>
+<?php endif; ?>
+<?php endif; 
+}
+
+// TODO : Connect with customizer options and add description
+// $description  = get_bloginfo( 'description', 'display' );
+// if ( $description && true === get_theme_mod( 'display_title_and_tagline', true ) ) :
+// echo $description; // phpcs:ignore WordPress.Security.EscapeOutput 
 
 //////////////////////////////////
 //                              //
@@ -189,11 +227,11 @@ function this_cats_thumbs($postID) // pass $id from function to get current cate
   foreach ($recent_posts as $recent) :
     $id = $recent["ID"];
     if (has_post_thumbnail($id)) : ?>
-      <div class="recent-item">
-        <a href="<?php echo get_permalink($id); ?>">
-          <?php echo get_the_post_thumbnail($id, 'thumbnail'); ?>
-        </a>
-      </div>
+<div class="recent-item">
+    <a href="<?php echo get_permalink($id); ?>">
+        <?php echo get_the_post_thumbnail($id, 'thumbnail'); ?>
+    </a>
+</div>
 <?php endif;
   //		echo '<li><a href="' . get_permalink($recent["ID"]) . '">' .   $recent["post_title"].'</a> </li> ';
   endforeach;
@@ -249,7 +287,7 @@ function cat_thumb_heading()
 function add_google_fonts()
 {
   wp_enqueue_style('google-fonts', 
-  'https://fonts.googleapis.com/css2?family=Merriweather&family=Roboto&family=Rajdhani&family=Special+Elite&family=Rajdhani&family=Reenie+Beanie&family=Space+Mono&family=Allerta+Stencil&family=Koulen&family=Zen+Maru+Gothic&display=swap', 
+  'https://fonts.googleapis.com/css2?family=Merriweather&family=Roboto&family=Rajdhani:wght@600&family=Special+Elite&family=Rajdhani&family=Reenie+Beanie&family=Space+Mono&family=Allerta+Stencil&family=Koulen&family=Zen+Maru+Gothic&display=swap', 
   array(), null );
 }
 add_action('wp_enqueue_scripts', 'add_google_fonts');
@@ -290,22 +328,55 @@ add_filter('the_content', 'disable_wp_auto_p', 0);
 //                                                  //
 //////////////////////////////////////////////////////
 
-add_filter('manage_posts_custom_column', 'manage_img_column', 10, 2);
+/**
+ * Add featured image column to WP admin panel - posts AND pages
+ * See: https://bloggerpilot.com/featured-image-admin/
+ */
 
-function add_img_column($columns)
-{
-  $columns = array_slice($columns, 0, 1, true) + array("img" => "Featured Image") + array_slice($columns, 1, count($columns) - 1, true);
-  return $columns;
+// Set thumbnail size
+add_image_size( 'j0e_admin-featured-image', 60, 60, false );
+
+// Add the posts and pages columns filter. Same function for both.
+add_filter('manage_posts_columns', 'j0e_add_thumbnail_column', 2);
+add_filter('manage_pages_columns', 'j0e_add_thumbnail_column', 2);
+function j0e_add_thumbnail_column($j0e_columns){
+  $j0e_columns['j0e_thumb'] = __('Image');
+  return $j0e_columns;
 }
-
-function manage_img_column($column_name, $post_id)
-{
-  if ($column_name == 'img') {
-    echo get_the_post_thumbnail($post_id, 'admin_thumbs');
+ 
+// Add featured image thumbnail to the WP Admin table.
+add_action('manage_posts_custom_column', 'j0e_show_thumbnail_column', 5, 2);
+add_action('manage_pages_custom_column', 'j0e_show_thumbnail_column', 5, 2);
+function j0e_show_thumbnail_column($j0e_columns, $j0e_id){
+  switch($j0e_columns){
+    case 'j0e_thumb':
+    if( function_exists('the_post_thumbnail') )
+      echo the_post_thumbnail( 'j0e_admin-featured-image' );
+    break;
   }
-  return $column_name;
 }
 
+// Move the new column at the first place.
+add_filter('manage_posts_columns', 'j0e_column_order');
+function j0e_column_order($columns) {
+  $n_columns = array();
+  $move = 'j0e_thumb'; // which column to move
+  $before = 'title'; // move before this column
+
+  foreach($columns as $key => $value) {
+    if ($key==$before){
+      $n_columns[$move] = $move;
+    }
+    $n_columns[$key] = $value;
+  }
+  return $n_columns;
+}
+
+// Format the column width with CSS
+add_action('admin_head', 'j0e_add_admin_styles');
+function j0e_add_admin_styles() {
+  echo '<style>.column-j0e_thumb {width: 60px;}</style>';
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////
 //                                                                                   //
@@ -461,128 +532,6 @@ function the_breadcrumb()
     }
     echo '</div>';
   }
-} // end the_breadcrumb()
-
-////////////////////////////////////
-//                                //
-//    From twentytwenty theme     //
-//                                //
-////////////////////////////////////
-
-/**
- * Logo & Description
- */
-
-/**
- * Displays the site logo, either text or image.
- *
- * @since Twenty Twenty 1.0
- *
- * @param array $args Arguments for displaying the site logo either as an image or text.
- * @param bool  $echo Echo or return the HTML.
- * @return string Compiled HTML based on our arguments.
- */
-function twentytwenty_site_logo( $args = array(), $echo = true ) {
-	$logo       = get_custom_logo();
-	$site_title = get_bloginfo( 'name' );
-	$contents   = '';
-	$classname  = '';
-
-	$defaults = array(
-		'logo'        => '%1$s<span class="screen-reader-text">%2$s</span>',
-		'logo_class'  => 'site-logo',
-		'title'       => '<a href="%1$s">%2$s</a>',
-		'title_class' => 'site-title',
-		'home_wrap'   => '<h1 class="%1$s">%2$s</h1>',
-		'single_wrap' => '<div class="%1$s faux-heading">%2$s</div>',
-		'condition'   => ( is_front_page() || is_home() ) && ! is_page(),
-	);
-
-	$args = wp_parse_args( $args, $defaults );
-
-	/**
-	 * Filters the arguments for `twentytwenty_site_logo()`.
-	 *
-	 * @since Twenty Twenty 1.0
-	 *
-	 * @param array $args     Parsed arguments.
-	 * @param array $defaults Function's default arguments.
-	 */
-	$args = apply_filters( 'twentytwenty_site_logo_args', $args, $defaults );
-
-	if ( has_custom_logo() ) {
-		$contents  = sprintf( $args['logo'], $logo, esc_html( $site_title ) );
-		$classname = $args['logo_class'];
-	} else {
-		$contents  = sprintf( $args['title'], esc_url( get_home_url( null, '/' ) ), esc_html( $site_title ) );
-		$classname = $args['title_class'];
-	}
-
-	$wrap = $args['condition'] ? 'home_wrap' : 'single_wrap';
-
-	$html = sprintf( $args[ $wrap ], $classname, $contents );
-
-	/**
-	 * Filters the arguments for `twentytwenty_site_logo()`.
-	 *
-	 * @since Twenty Twenty 1.0
-	 *
-	 * @param string $html      Compiled HTML based on our arguments.
-	 * @param array  $args      Parsed arguments.
-	 * @param string $classname Class name based on current view, home or single.
-	 * @param string $contents  HTML for site title or logo.
-	 */
-	$html = apply_filters( 'twentytwenty_site_logo', $html, $args, $classname, $contents );
-
-	if ( ! $echo ) {
-		return $html;
-	}
-
-	echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-
-}
-
-
-
-
-/**
- * Displays the site description.
- *
- * @since Twenty Twenty 1.0
- *
- * @param bool $echo Echo or return the html.
- * @return string The HTML to display.
- */
-function twentytwenty_site_description( $echo = true ) {
-	$description = get_bloginfo( 'description' );
-
-	if ( ! $description ) {
-		return;
-	}
-
-	$wrapper = '<div class="site-description">%s</div><!-- .site-description -->';
-
-	$html = sprintf( $wrapper, esc_html( $description ) );
-
-	/**
-	 * Filters the HTML for the site description.
-	 *
-	 * @since Twenty Twenty 1.0
-	 *
-	 * @param string $html        The HTML to display.
-	 * @param string $description Site description via `bloginfo()`.
-	 * @param string $wrapper     The format used in case you want to reuse it in a `sprintf()`.
-	 */
-	$html = apply_filters( 'twentytwenty_site_description', $html, $description, $wrapper );
-
-	if ( ! $echo ) {
-		return $html;
-	}
-
-	echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-}
-
-
-
+} 
 
 ?>

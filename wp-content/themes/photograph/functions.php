@@ -50,7 +50,7 @@ function photograph_setup() {
 }
 endif; // photograph_setup
 
-add_action( 'after_setup_theme', 'photograph_setup' );
+// add_action( 'after_setup_theme', 'photograph_setup' );
 
 
 if(!function_exists('photograph_get_theme_options')):
@@ -61,8 +61,8 @@ endif;
 
 /***************************************************************************************/
 require get_template_directory() . '/inc/customizer/photograph-default-values.php';
-require get_template_directory() . '/inc/settings/photograph-functions.php';
-require get_template_directory() . '/inc/settings/photograph-common-functions.php';
+// require get_template_directory() . '/inc/settings/photograph-functions.php';
+// require get_template_directory() . '/inc/settings/photograph-common-functions.php';
 
 if (!is_child_theme()){
 	require get_template_directory() . '/inc/welcome-notice.php';

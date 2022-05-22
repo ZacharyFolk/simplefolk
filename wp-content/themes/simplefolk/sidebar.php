@@ -2,10 +2,6 @@
 $id = get_the_ID();
 $title = apply_filters('the_content', get_post_field('post_title', $id));
 $content = apply_filters('the_content', get_post_field('post_content', $id));
-$photograph_settings = photograph_get_theme_options();
-
-$photograph_post_category = $photograph_settings['photograph_post_category'];
-
 ?>
 
 <aside id="secondary" class="widget-area">
