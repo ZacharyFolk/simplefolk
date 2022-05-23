@@ -1,11 +1,8 @@
 <?php
 
 /**
- * The template for displaying content.
+ * The template for the content of the card for archive pages 
  *
- * @package Theme Freesia
- * @subpackage Photograph
- * @since Photograph 1.0
  */
 ?>
 <article class="post-featured-item">

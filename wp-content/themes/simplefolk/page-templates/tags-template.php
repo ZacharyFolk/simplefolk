@@ -2,7 +2,6 @@
 
 /**
  * Template Name: Tags Root Template
- * Displays the Tags page
  */
 get_header();
 ?>

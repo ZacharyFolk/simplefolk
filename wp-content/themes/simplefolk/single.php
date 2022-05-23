@@ -3,9 +3,6 @@
 /**
  * The template for displaying all single posts.
  *
- * @package Theme Freesia
- * @subpackage Photograph
- * @since Photograph 1.0
  */
 get_header();
 

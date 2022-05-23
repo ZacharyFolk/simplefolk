@@ -1,8 +1,6 @@
 <?php
 /**
  * The template for displaying all pages.
- *
- * @package Photo Child
  */
 
 get_header();
