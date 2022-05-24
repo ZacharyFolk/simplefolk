@@ -4,7 +4,7 @@ Theme URI: https://folkphotography.com
 Author: Zachary Folk
 Author URI: https://folkphotography.com
 Description: A very stripped down, primitive, hopefully eventually functional theme for my photos
-Version: 0.1.1
+Version: 0.1.2
 Text Domain: simplefolk
 License: GNU General Public License version 3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -464,11 +464,19 @@ button {
   -ms-transition: background-color 500ms linear;
   transition: background-color 500ms linear;
 }
-.featured-text-content {
-  -webkit-transition: opacity 0.75s ease-in-out;
-  -moz-transition: opacity 0.75s ease-in-out;
-  transition: opacity 0.75s ease-in-out;
-}
+
+/* .featured-gallery .featured-image-content img {
+	opacity: 1;
+	-webkit-transition: opacity 1s, -webkit-transform 1s;
+	transition: opacity 1s, transform 1s, -webkit-transform 1s;
+  }
+  
+  .featured-gallery .featured-image-content:hover img {
+	opacity: 0.9;
+	-webkit-transform: scale3d(1.1, 1.1, 1);
+	transform: scale3d(1.1, 1.1, 1);
+  }
+   */
 
 /* *************
 *              *
@@ -979,33 +987,24 @@ footer .copyright {
   .featured-image-content {
 	overflow: hidden;
   }
+  .featured-item {
+    overflow: hidden;
+  }
   .featured-text-content {
     padding: 5px 40px;
     background-color: rgb(0,0,0,.8);
-    position: relative;
-    margin-top: -79px;
+    position: absolute;
+    margin-top: 100px;
     display: flex;
     border-bottom: 5px solid #000;
     border-top: 5px solid #000;
-    opacity: 0;
-    visibility: hidden;
+    width: 100%;
   }
  .featured-item:hover > .featured-text-content {
-   visibility: visible;
-   opacity: 1;
+  margin-top: -79px;
+  transition: 500ms;
  }
-  .featured-gallery .featured-image-content img {
-	opacity: 1;
-	-webkit-transition: opacity 1s, -webkit-transform 1s;
-	transition: opacity 1s, transform 1s, -webkit-transform 1s;
-  }
-  
-  .featured-gallery .featured-image-content:hover img {
-	opacity: 0.9;
-	-webkit-transform: scale3d(1.1, 1.1, 1);
-	transform: scale3d(1.1, 1.1, 1);
-  }
-  
+
   .popup-image {
 	position: relative;
 	display: block;
