@@ -22,22 +22,27 @@ $num_posts = 40;
             <?php echo esc_html($gallery_heading); ?>
         </h2>
         <div class="filter-by-tag">
-            <?php
-            $i = 1;
-            foreach ($featured_tabs as $featured_tab) :
-                $post_tags = get_term_by('slug', $featured_tab, 'post_tag');
-                if ($i == 1) : ?>
-            <button type="button" class="active" data-category="*">All</button>
-            <button type="button"
-                data-category=".tag-<?php echo esc_attr($featured_tab); ?>"><?php echo esc_html($post_tags->name); ?></button>
-            <?php else :
-                    if ($post_tags) : ?>
-            <button type="button"
-                data-category=".tag-<?php echo esc_attr($featured_tab); ?>"><?php echo esc_html($post_tags->name); ?></button>
-            <?php endif;
-                endif;
-                $i++;
-            endforeach; ?>
+            <div class="hashtag-container">
+                #
+            </div>
+            <div class="tag-buttons">
+                <?php
+                $i = 1;
+                foreach ($featured_tabs as $featured_tab) :
+                    $post_tags = get_term_by('slug', $featured_tab, 'post_tag');
+                    if ($i == 1) : ?>
+                <button type="button" class="active" data-category="*">All</button>
+                <button type="button"
+                    data-category=".tag-<?php echo esc_attr($featured_tab); ?>"><?php echo esc_html($post_tags->name); ?></button>
+                <?php else :
+                        if ($post_tags) : ?>
+                <button type="button"
+                    data-category=".tag-<?php echo esc_attr($featured_tab); ?>"><?php echo esc_html($post_tags->name); ?></button>
+                <?php endif;
+                    endif;
+                    $i++;
+                endforeach; ?>
+            </div>
         </div>
     </div>
 
