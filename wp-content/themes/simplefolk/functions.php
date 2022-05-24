@@ -357,10 +357,9 @@ function hashed_tags()
 
   if (!empty($post_tags)) {
     foreach ($post_tags as $tag) {
-      $output .= '<a title="View all photos with the tag ' . $tag->name . '"  href="' . esc_attr(get_tag_link($tag->term_id)) . '">' . $prefix . __($tag->name) . '</a>' . $separator;
+      $output .= '<a title="View all photos with the tag #' . strtolower($tag->name) . '"  href="' . esc_attr(get_tag_link($tag->term_id)) . '">' . $prefix . __($tag->name) . '</a>' . $separator;
     }
   }
-
   return trim($output, $separator);
 }
 
@@ -380,6 +379,7 @@ function the_breadcrumb()
   $showCurrent = 1; // 1 - show current post/page title in breadcrumbs, 0 - don't show
   $before = '<span class="current">'; // tag before the current crumb
   $after = '</span>'; // tag after the current crumb
+  $de = 'yeee';
 
 
 
@@ -396,7 +396,7 @@ function the_breadcrumb()
       if ($thisCat->parent != 0) {
         echo get_category_parents($thisCat->parent, true, ' ' . $delimiter . ' ');
       }
-      echo $before . '<a href="/projects/"> Projects</a> ' . $delimiter . ' ' . single_cat_title('', false) . $after;
+      echo '<a href="/projects/"> Projects</a> ' . $delimiter . $before . ' ' . single_cat_title('', false) . $after;
     } elseif (is_search()) {
       echo $before . 'Search results for "' . get_search_query() . '"' . $after;
     } elseif (is_day()) {
