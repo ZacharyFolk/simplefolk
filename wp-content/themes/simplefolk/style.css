@@ -384,7 +384,6 @@ version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 	display: none;
   }
 
-
 /* *************************
 *                          *
 *    ##additional reset    *
@@ -435,34 +434,50 @@ img {
 /* Fallbacks?  https://caniuse.com/css-variables  */
 
 :root {
-	--color-dark-background: rgb(36,37,37);
-	--color-dark-primary: rgb(12,15,124);
-	--color-dark-secondary: red;
-	--font-family-primary: 'Zen Maru Gothic', sans-serif;
-  }
-  
-  
-/* ***************
-*                *
-*    #Layouts    *
-*                *
-*************** */
-  
-  body {
-	background-color: var(--color-dark-background);
-	  box-sizing: border-box;
-	font-family: var(--font-family-primary);
-  }
+  --dark-background: rgb(13,13,13);
+	--dark-background-2: rgb(36,37,37);
+  --dark-background-3: rgb(53,54,54);
+  --light-link: rgb(235, 163, 109);
+  --light-link-hover: rgb(212,171,137);
+  --off-white: rgb(229, 224, 216);
+  --off-white-2: rgb(187,179,167);
+  --light-button-border: rgb(143, 132, 117); 
+/* fonts */
+  --font-primary: 'Zen Maru Gothic', sans-serif;
 
+  }
   
+  /* ******************
+  *                   *
+  *    #Animations    *
+  *                   *
+  ****************** */
+
+a {
+  -webkit-transition: color 1s;
+  transition: color 1s;
+}
+
+/* *************
+*              *
+*    Colors    *
+*              *
+************* */
+  
+body {
+    background-color: var(--dark-background-2);
+    color: var(--off-white-2);
+	font-family: var(--font-primary);
+}
+
 a:link,
 a:visited {
-  color: rgb(212, 171, 137);
+  color: var(--off-white-2);
 }
 a:hover {
-  color: rgb(209, 141, 88);
-  text-decoration: underline;
+  color: #fff;
 }
+
 .page-header { 
   /* archive pages */
   background-color: rgb(41, 43, 43);
@@ -471,13 +486,41 @@ a:hover {
 }
 
 .site-title {
-  color: rgb(229, 224, 216);
+  color: var(--off-white);
 }
 
 #site-header {
 	background-color: rgb(13, 13, 13);
 	position: relative;
 }
+
+/* **************
+*               *
+*    Buttons    *
+*               *
+************** */
+
+
+button, input {
+  font-family: 'Space Mono', monospace;
+}
+
+button {
+  background-color: var(--dark-background-3);
+  color: var(--off-white-2);
+  cursor: pointer;
+  line-height: 1.5;
+  border: .1em solid var(--light-button-border);
+}
+button:hover, button.active {
+  background-color: var(--dark-background);
+  color: var(--off-white);
+}
+/* ***************
+*                *
+*    #Layouts    *
+*                *
+*************** */
 
 #primary {
   float: left;
@@ -490,44 +533,27 @@ a:hover {
   padding-left: 30px;
   width: 30%;
 }
-
-
-.wide-wrap:after,
-.wrap:after {
-  clear: both;
-  content: '';
-  display: block;
+#primary_full-width {
+  width: 100%;
 }
 
-.wide-wrap {
-  margin: 0 40px;
+footer {
+  border-top: 1px solid var(--dark-background-3);
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  
+}
+footer .copyright {
+  padding: 20px 60px;
 }
 
-.wrap {
-  margin: 0 auto;
-  max-width: 1280px;
-  padding: 0;
-  position: relative;
-}
-
-.inner-wrap {
-  max-width: 978px;
-  margin: 0 auto;
-  overflow: hidden;
-}
-
-#primary .wrap {
-  max-width: 100%;
-}
-
-body.blog .site-content > .wrap,
-body.archive:not(.woocommerce) .site-content > .wrap {
-  max-width: 100%;
-}
-
-
-/* Header  ----------------------------- */
-
+/* **************
+*               *
+*    Header     *
+*               *
+************** */
 
 .main-header {
 	display: flex;
@@ -546,16 +572,23 @@ body.archive:not(.woocommerce) .site-content > .wrap {
 	text-transform: uppercase;
   }
   
-  
-  .main-header .header-nav ul {
-	display: flex;
-	  flex-direction: row;
-	  align-items: baseline;
-	  justify-content: space-between;
-	  align-content: center;
-	  flex-wrap: nowrap;
+  .main-nav {
+    font-size: 1.2em;
+    text-transform: uppercase;
+    font-weight: 300;
   }
-  .header-nav li {
+  .main-nav a:link, .main-nav a:visited, .main-nav a:hover {
+    text-decoration: none;
+  }
+  .main-header .main-nav ul {
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+	justify-content: space-between;
+	align-content: center;
+	flex-wrap: nowrap;
+  }
+  .main-nav li {
 	list-style-type: none;
 	padding: 0 10px;
   }
@@ -600,9 +633,7 @@ body.archive:not(.woocommerce) .site-content > .wrap {
 	width: 100%;
   
   }
-  .main-archive-container {
-	border: 1px solid #e0e0e0;
-  }
+
   
   .box-heading {
 	display: flex;
@@ -621,8 +652,8 @@ body.archive:not(.woocommerce) .site-content > .wrap {
   }
   
   .box-content {
-	background-color: rgb(243, 243, 243);
-	padding: 20px;
+	background-color: white;
+	padding: 10px;
   }
   .box-content p {
 	width: 90%;
@@ -733,18 +764,24 @@ body.archive:not(.woocommerce) .site-content > .wrap {
   *    Featured Gallery    *
   *                        *
   *********************** */
-  
+  .featured-gallery-content{
+    padding: 0 60px;
+  }
   .featured-gallery-header {
 	display: flex;
-	justify-content: flex-start;
+	justify-content: space-between;
 	align-items: center;
-	padding: 0 20px;
   }
   
-  .featured-gallery-wrap {
-	padding: 0 50px;
+  .filter-by-tag {
+    margin-left: 50px; 
   }
-  
+  .filter-by-tag button {
+    text-transform: lowercase;
+    margin-right: 10px;
+    padding: 4px 16px;
+  }
+
   .featured-gallery {
 	margin: 5px;
 	display: block;

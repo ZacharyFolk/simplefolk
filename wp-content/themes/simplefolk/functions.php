@@ -6,15 +6,15 @@
 //                                    //
 ////////////////////////////////////////
 
-define( 'SIMPLE_THEME_VERSION', '0.0.1' );
+define('SIMPLE_THEME_VERSION', '0.0.1');
 
 function photo_child_enqueue_styles()
 {
-  wp_enqueue_style('main',  get_theme_file_uri() . '/style.css',array(), SIMPLE_THEME_VERSION, 'all' );
+  wp_enqueue_style('main',  get_theme_file_uri() . '/style.css', array(), SIMPLE_THEME_VERSION, 'all');
   wp_enqueue_script('imagesloaded-pkgd', get_template_directory_uri() . '/js/imagesloaded.pkgd.min.js', array('jquery'), false, true);
   wp_enqueue_script('isotope', get_template_directory_uri() . '/js/isotope.pkgd.min.js', array('jquery'), false, true);
   wp_enqueue_script('photograph-isotope-setting', get_template_directory_uri() . '/js/isotope-setting.js', array('isotope'), false, true);
-}		
+}
 
 add_action('wp_enqueue_scripts', 'photo_child_enqueue_styles');
 
@@ -25,22 +25,23 @@ add_action('wp_enqueue_scripts', 'photo_child_enqueue_styles');
 //                          //
 //////////////////////////////
 
-function wut($var, $exit = false) {
-	echo '<pre style="font-size:14px;">';
- 
-	if (is_array($var) || is_object($var)) {
-		echo htmlentities(print_r($var, true));
-	} elseif (is_string($var)) {
-		echo "string(" . strlen($var) . ") \"" . htmlentities($var) . "\"\n";
-	} else {
-		var_dump($var);
-	}
- 
-	echo "\n</pre>";
- 
-	if ($exit) {
-		exit;
-	}
+function wut($var, $exit = false)
+{
+  echo '<pre style="font-size:14px;">';
+
+  if (is_array($var) || is_object($var)) {
+    echo htmlentities(print_r($var, true));
+  } elseif (is_string($var)) {
+    echo "string(" . strlen($var) . ") \"" . htmlentities($var) . "\"\n";
+  } else {
+    var_dump($var);
+  }
+
+  echo "\n</pre>";
+
+  if ($exit) {
+    exit;
+  }
 }
 
 //////////////////////////////////////////////////
@@ -51,11 +52,11 @@ function wut($var, $exit = false) {
 add_theme_support('custom-logo');
 add_theme_support('post-thumbnails');
 
-register_nav_menus( array(
-  'primary' => __( 'Main Menu', 'simplefolk' ),
-  'side-nav-menu' => __( 'Side Menu', 'simplefolk' ),
-  'social-link'  => __( 'Add Social Icons Only', 'simplefolk' ),
-) );
+register_nav_menus(array(
+  'primary' => __('Main Menu', 'simplefolk'),
+  'side-nav-menu' => __('Side Menu', 'simplefolk'),
+  'social-link'  => __('Add Social Icons Only', 'simplefolk'),
+));
 
 
 ///////////////////////////
@@ -78,21 +79,22 @@ add_image_size('cat-squares', 300, 300, TRUE);
  * @since .01
  * @return string The html that contains title and description
  */
-function get_site_info(){
-  $blog_info    = get_bloginfo( 'name' );
-  $show_title   = ( true === get_theme_mod( 'display_title_and_tagline', true ) );
-  ?>
-<?php if ( $blog_info ): ?>
+function get_site_info()
+{
+  $blog_info    = get_bloginfo('name');
+  $show_title   = (true === get_theme_mod('display_title_and_tagline', true));
+?>
+<?php if ($blog_info) : ?>
 
-<?php   if ( is_front_page() && ! is_paged() ) : ?>
-<h1 class="site-title"><?php echo esc_html( $blog_info ); ?></h1>
-<?php elseif ( is_front_page() && ! is_home() ) : ?>
-<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo esc_html( $blog_info ); ?></a>
+<?php if (is_front_page() && !is_paged()) : ?>
+<h1 class="site-title"><?php echo esc_html($blog_info); ?></h1>
+<?php elseif (is_front_page() && !is_home()) : ?>
+<h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html($blog_info); ?></a>
 </h1>
 <?php else : ?>
-<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo esc_html( $blog_info ); ?></a></p>
+<p class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html($blog_info); ?></a></p>
 <?php endif; ?>
-<?php endif; 
+<?php endif;
 }
 
 // TODO : Connect with customizer options and add description
@@ -210,12 +212,29 @@ function cat_thumb_heading()
 //    Add custom fonts     //
 //                         //
 /////////////////////////////
-  
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  ________  ______   _______    ______                   __       __            __                          __      __        __                  __                                __        //
+// /        |/      \ /       \  /      \                 /  \     /  |          /  |                        /  |    /  |      /  |                /  |                              /  |       //
+// $$$$$$$$//$$$$$$  |$$$$$$$  |/$$$$$$  |       __       $$  \   /$$ |  ______  $$ |   __   ______         _$$ |_   $$ |____  $$/   _______       $$ |  ______    _______   ______  $$ |       //
+//    $$ |  $$ |  $$ |$$ |  $$ |$$ |  $$ |      /  |      $$$  \ /$$$ | /      \ $$ |  /  | /      \       / $$   |  $$      \ /  | /       |      $$ | /      \  /       | /      \ $$ |       //
+//    $$ |  $$ |  $$ |$$ |  $$ |$$ |  $$ |      $$/       $$$$  /$$$$ | $$$$$$  |$$ |_/$$/ /$$$$$$  |      $$$$$$/   $$$$$$$  |$$ |/$$$$$$$/       $$ |/$$$$$$  |/$$$$$$$/  $$$$$$  |$$ |       //
+//    $$ |  $$ |  $$ |$$ |  $$ |$$ |  $$ |       __       $$ $$ $$/$$ | /    $$ |$$   $$<  $$    $$ |        $$ | __ $$ |  $$ |$$ |$$      \       $$ |$$ |  $$ |$$ |       /    $$ |$$ |       //
+//    $$ |  $$ \__$$ |$$ |__$$ |$$ \__$$ |      /  |      $$ |$$$/ $$ |/$$$$$$$ |$$$$$$  \ $$$$$$$$/         $$ |/  |$$ |  $$ |$$ | $$$$$$  |      $$ |$$ \__$$ |$$ \_____ /$$$$$$$ |$$ |       //
+//    $$ |  $$    $$/ $$    $$/ $$    $$/       $$/       $$ | $/  $$ |$$    $$ |$$ | $$  |$$       |        $$  $$/ $$ |  $$ |$$ |/     $$/       $$ |$$    $$/ $$       |$$    $$ |$$ |       //
+//    $$/    $$$$$$/  $$$$$$$/   $$$$$$/                  $$/      $$/  $$$$$$$/ $$/   $$/  $$$$$$$/          $$$$/  $$/   $$/ $$/ $$$$$$$/        $$/  $$$$$$/   $$$$$$$/  $$$$$$$/ $$/        //
+//                                                                                                                                                                                              //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 function add_google_fonts()
 {
-  wp_enqueue_style('google-fonts', 
-  'https://fonts.googleapis.com/css2?family=Merriweather&family=Roboto&family=Rajdhani:wght@600&family=Special+Elite&family=Rajdhani&family=Reenie+Beanie&family=Space+Mono&family=Allerta+Stencil&family=Koulen&family=Zen+Maru+Gothic&display=swap', 
-  array(), null );
+  wp_enqueue_style(
+    'google-fonts',
+    'https://fonts.googleapis.com/css2?family=Merriweather&family=Roboto&family=Rajdhani:wght@600&family=Special+Elite&family=Rajdhani&family=Reenie+Beanie&family=Space+Mono&family=Allerta+Stencil&family=Koulen&family=Zen+Maru+Gothic&display=swap',
+    array(),
+    null
+  );
 }
 add_action('wp_enqueue_scripts', 'add_google_fonts');
 
@@ -260,37 +279,40 @@ add_filter('the_content', 'disable_wp_auto_p', 0);
  */
 
 // Set thumbnail size
-add_image_size( 'j0e_admin-featured-image', 60, 60, false );
+add_image_size('j0e_admin-featured-image', 60, 60, false);
 
 // Add the posts and pages columns filter. Same function for both.
 add_filter('manage_posts_columns', 'j0e_add_thumbnail_column', 2);
 add_filter('manage_pages_columns', 'j0e_add_thumbnail_column', 2);
-function j0e_add_thumbnail_column($j0e_columns){
+function j0e_add_thumbnail_column($j0e_columns)
+{
   $j0e_columns['j0e_thumb'] = __('Image');
   return $j0e_columns;
 }
- 
+
 // Add featured image thumbnail to the WP Admin table.
 add_action('manage_posts_custom_column', 'j0e_show_thumbnail_column', 5, 2);
 add_action('manage_pages_custom_column', 'j0e_show_thumbnail_column', 5, 2);
-function j0e_show_thumbnail_column($j0e_columns, $j0e_id){
-  switch($j0e_columns){
+function j0e_show_thumbnail_column($j0e_columns, $j0e_id)
+{
+  switch ($j0e_columns) {
     case 'j0e_thumb':
-    if( function_exists('the_post_thumbnail') )
-      echo the_post_thumbnail( 'j0e_admin-featured-image' );
-    break;
+      if (function_exists('the_post_thumbnail'))
+        echo the_post_thumbnail('j0e_admin-featured-image');
+      break;
   }
 }
 
 // Move the new column at the first place.
 add_filter('manage_posts_columns', 'j0e_column_order');
-function j0e_column_order($columns) {
+function j0e_column_order($columns)
+{
   $n_columns = array();
   $move = 'j0e_thumb'; // which column to move
   $before = 'title'; // move before this column
 
-  foreach($columns as $key => $value) {
-    if ($key==$before){
+  foreach ($columns as $key => $value) {
+    if ($key == $before) {
       $n_columns[$move] = $move;
     }
     $n_columns[$key] = $value;
@@ -300,7 +322,8 @@ function j0e_column_order($columns) {
 
 // Format the column width with CSS
 add_action('admin_head', 'j0e_add_admin_styles');
-function j0e_add_admin_styles() {
+function j0e_add_admin_styles()
+{
   echo '<style>.column-j0e_thumb {width: 60px;}</style>';
 }
 
@@ -458,6 +481,6 @@ function the_breadcrumb()
     }
     echo '</div>';
   }
-} 
+}
 
 ?>

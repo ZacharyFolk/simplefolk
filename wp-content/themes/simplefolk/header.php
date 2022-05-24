@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html class="no-js [🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️📸🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️]" <?php language_attributes(); ?>>
+<html class="no-js [🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️📸🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️]"
+    <?php language_attributes(); ?>>
 <?php get_template_part('commentapalooza'); ?>
 
 <head>
@@ -16,25 +17,24 @@
             <div id="site-branding">
                 <?php echo get_site_info(); ?>
             </div>
-        
-                <?php if (has_nav_menu('primary')) : ?>
-                <nav class="header-nav">
-                    <ul>
-                        <?php if (has_nav_menu('primary')) :
-                                wp_nav_menu(
-                                    array(
-                                        'container' => '',
-                                        'theme_location' => 'primary',     
-                                        'items_wrap'     => '%3$s',
-                                    )
-                                );
-                            endif; ?>
-                    </ul>
-                </nav>
-                <?php endif; ?>
-           
+
+            <?php if (has_nav_menu('primary')) : ?>
+            <nav class="main-nav">
+                <ul>
+                    <?php if (has_nav_menu('primary')) :
+                            wp_nav_menu(
+                                array(
+                                    'container' => '',
+                                    'theme_location' => 'primary',
+                                    'items_wrap'     => '%3$s',
+                                )
+                            );
+                        endif; ?>
+                </ul>
+            </nav>
+            <?php endif; ?>
+
         </div>
     </header>
 
-    <div id="site-content-contain" class="site-content-contain">
-        <div id="content" class="site-content">
+    <div id="content" class="site-content">
