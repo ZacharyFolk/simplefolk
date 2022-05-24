@@ -12,29 +12,28 @@
 
 <body <?php body_class(); ?>>
     <?php wp_body_open(); ?>
-    <header id="site-header">
-        <div class="main-header">
-            <div id="site-branding">
-                <?php echo get_site_info(); ?>
-            </div>
-
-            <?php if (has_nav_menu('primary')) : ?>
-            <nav class="main-nav">
-                <ul>
-                    <?php if (has_nav_menu('primary')) :
-                            wp_nav_menu(
-                                array(
-                                    'container' => '',
-                                    'theme_location' => 'primary',
-                                    'items_wrap'     => '%3$s',
-                                )
-                            );
-                        endif; ?>
-                </ul>
-            </nav>
-            <?php endif; ?>
-
+    <section class="top-nav">
+        <div id="site-branding">
+            <?php echo get_site_info(); ?>
         </div>
-    </header>
+        <input id="menu-toggle" type="checkbox" />
+        <label class="menu-button-container" for="menu-toggle">
+            <div class="menu-button"></div>
+        </label>
+
+        <?php if (has_nav_menu('primary')) : ?>
+        <ul class="menu">
+            <?php if (has_nav_menu('primary')) :
+                    wp_nav_menu(
+                        array(
+                            'container' => '',
+                            'theme_location' => 'primary',
+                            'items_wrap'     => '%3$s',
+                        )
+                    );
+                endif; ?>
+        </ul>
+        <?php endif; ?>
+    </section>
 
     <div id="content" class="site-content">
