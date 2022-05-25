@@ -54,34 +54,31 @@ $num_posts = 40;
             'ignore_sticky_posts' =>    'true'
         ));
         while ($get_featured_posts->have_posts()) : $get_featured_posts->the_post();
-            $attachment_id = get_post_thumbnail_id();
-            $image_attributes = wp_get_attachment_image_src($attachment_id, 'full');  ?>
+            $fancy_link = wp_get_attachment_image_src(get_post_thumbnail_id(), 'full');
+        ?>
         <article <?php post_class('featured-item'); ?>>
             <?php if (has_post_thumbnail()) { ?>
             <div class="featured-image-content">
-
-
-                <!--// 
-                        <a class="popup-image" data-fancybox="post-gallery" data-title="<?php // the_title_attribute(); 
-                                                                                        ?>" 
-                        href="<?php // echo esc_url($image_attributes[0]); 
-                                ?>">
-                        <?php //the_post_thumbnail(); 
-                        ?>
-                        </a> 
-                        -->
-
-                <a class="popup-image" data-fancybox="post-gallery" data-title="<?php the_title_attribute(); ?>"
-                    href="<?php echo esc_url(get_permalink()); ?>">
-                    <?php the_post_thumbnail(); ?>
-                </a>
+                <?php the_post_thumbnail(); ?>
             </div>
             <?php } ?>
             <div class="featured-text-content">
                 <h3 class="featured-title">
-                    <a title="<?php the_title_attribute(); ?>"
-                        href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                    <?php the_title(); ?>
                 </h3>
+                <div class="image-tools">
+                    <div class="zoom-button">
+                        <a class="popup-image" title="View the full sized image"
+                            data-title="<?php the_title_attribute(); ?>" data-fancybox="post-gallery"
+                            href="<?php echo $fancy_link[0]; ?>">
+                            <span class="icon-search-plus"></span>
+                        </a>
+                    </div>
+                    <div class="goto-button"> <a
+                            title="<?php the_title_attribute(['before' => 'View the full post for ']); ?>"
+                            href="<?php echo esc_url(get_permalink()); ?>"><span class="icon-mail-forward"></span> </a>
+                    </div>
+                </div>
             </div>
         </article>
         <?php
