@@ -57,11 +57,6 @@ $num_posts = 40;
             $fancy_link = wp_get_attachment_image_src(get_post_thumbnail_id(), 'full');
         ?>
         <article <?php post_class('featured-item'); ?>>
-            <?php if (has_post_thumbnail()) { ?>
-            <div class="featured-image-content">
-                <?php the_post_thumbnail(); ?>
-            </div>
-            <?php } ?>
             <div class="featured-text-content">
                 <h3 class="featured-title">
                     <?php the_title(); ?>
@@ -80,6 +75,12 @@ $num_posts = 40;
                     </div>
                 </div>
             </div>
+            <?php if (has_post_thumbnail()) { ?>
+            <div class="featured-image-content">
+                <?php the_post_thumbnail(); ?>
+            </div>
+            <?php } ?>
+
         </article>
         <?php
         endwhile;

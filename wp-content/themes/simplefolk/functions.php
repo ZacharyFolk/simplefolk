@@ -109,6 +109,14 @@ function get_site_info()
 //                              //
 //////////////////////////////////
 
+/**
+ * Returns a random image from a selected category
+ * @since 0.0.1
+ * @param string $cat Category name to retrieve from, default is 'uncategorized'
+ * @return string HTML generated from get_the_post_thumbnail 
+ * */
+
+
 function get_random_image_src($cat = 'uncategorized')
 {
   $query = new WP_Query(array(
@@ -347,6 +355,13 @@ function my_custom_post_navigation($terms, $object_ids, $taxonomies, $args)
 //                                            //
 ////////////////////////////////////////////////
 
+/**
+ * Retrieves a list of all tags with the '#' symbol prefix
+ * 
+ * @since 0.0.1
+ * @return string HTML of links of hashed tags
+ * */
+
 
 function hashed_tags()
 {
@@ -368,8 +383,11 @@ function hashed_tags()
 //    Breadcrumbs    //
 //                   //
 ///////////////////////
-
-
+/**
+ * Retrieves the breadcrumb for the header
+ * @since 0.0.1
+ * @return string HTML of links and current location
+ */
 
 function the_breadcrumb()
 {

@@ -35,5 +35,7 @@
         </ul>
         <?php endif; ?>
     </section>
-
+    <div id="crumb_wrap">
+        <?php echo the_breadcrumb(); ?>
+    </div>
     <div id="content" class="site-content">

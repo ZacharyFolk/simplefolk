@@ -7,7 +7,6 @@
  */
 
 get_header(); ?>
-<?php echo the_breadcrumb(); ?>
 <header class="page-header">
 
     <?php if (is_category()) :
