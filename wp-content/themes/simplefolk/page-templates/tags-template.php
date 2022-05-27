@@ -13,6 +13,7 @@ get_header();
             foreach ($all_tags as $single_tag) :
                 $tag_name = $single_tag->name;
                 $tag_link =  $single_tag->slug;
+                $tag_description = $single_tag->description;
             ?>
             <article class="archive-card">
                 <div class="archive-wrap">
@@ -26,17 +27,15 @@ get_header();
                     </header>
 
                     <div class="img-wrap">
+                        <a href="<?php echo $tag_link; ?>"
+                            title="View all photos tagged with #<?php echo strtolower($tag_name); ?>" />
                         <?php echo get_random_img_src_by_tag($tag_name); ?>
                     </div>
 
-                    <p><?php echo $single_tag->description; ?></p>
-                    <div class="tag-link">
-                        <a class="buttonish" href="<?php echo $tag_link; ?>">
-                            View all photos tagged with #<?php echo strtolower($tag_name); ?>
-                        </a>
-                    </div>
-
-
+                    <?php if ($tag_description) :
+                            echo '<p>' . $tag_description . '</p>';
+                        endif;
+                        ?>
             </article>
             </a>
             <?php endforeach; ?>

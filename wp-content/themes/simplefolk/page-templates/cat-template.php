@@ -41,10 +41,10 @@ $pre_txt = "View all photos from the project ";
                                 ?>
                         </a>
                     </div>
-                    <p>
-                        <?php echo $desc; ?>
-                        <a href="<?php echo $path; ?>">View all photos from this project. </a>
-                    </p>
+                    <?php if ($desc) :
+                            echo '<p>' . $desc . '</p>';
+                        endif;
+                        ?>
                 </div>
             </article>
             </a>

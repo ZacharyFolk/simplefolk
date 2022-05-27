@@ -46,7 +46,7 @@ $num_posts = 40;
         </div>
     </div>
 
-    <div class="featured-gallery gallery-col-4">
+    <div class="archive-container">
         <?php
         $get_featured_posts = new WP_Query(array(
             'posts_per_page' => $num_posts,
@@ -56,29 +56,15 @@ $num_posts = 40;
         while ($get_featured_posts->have_posts()) : $get_featured_posts->the_post();
             $fancy_link = wp_get_attachment_image_src(get_post_thumbnail_id(), 'full');
         ?>
-        <article <?php post_class('featured-item'); ?>>
-            <div class="featured-text-content">
-                <h3 class="featured-title">
-                    <?php the_title(); ?>
-                </h3>
-                <div class="image-tools">
-                    <div class="zoom-button">
-                        <a class="popup-image" title="View the full sized image"
-                            data-title="<?php the_title_attribute(); ?>" data-fancybox="post-gallery"
-                            href="<?php echo $fancy_link[0]; ?>">
-                            <span class="icon-search-plus"></span>
-                        </a>
-                    </div>
-                    <div class="goto-button"> <a
-                            title="<?php the_title_attribute(['before' => 'View the full post for ']); ?>"
-                            href="<?php echo esc_url(get_permalink()); ?>"><span class="icon-mail-forward"></span> </a>
-                    </div>
-                </div>
-            </div>
+        <article <?php post_class('archive-card'); ?>>
+
             <?php if (has_post_thumbnail()) { ?>
-            <div class="featured-image-content">
+
+            <a title="<?php the_title_attribute(['before' => 'View the full post for ']); ?>"
+                href="<?php echo esc_url(get_permalink()); ?>">
                 <?php the_post_thumbnail(); ?>
-            </div>
+            </a>
+
             <?php } ?>
 
         </article>
