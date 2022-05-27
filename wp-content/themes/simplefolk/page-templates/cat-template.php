@@ -32,13 +32,15 @@ $pre_txt = "View all photos from the project ";
                         </h1>
 
                     </header>
+                    <div class="img-wrap">
 
-                    <a href="<?php echo $path; ?>"
-                        title="View all photos from the project <?php echo strtolower($title); ?>">
-                        <?php
-                            echo  get_random_image_src($slug);
-                            ?>
-                    </a>
+                        <a href="<?php echo $path; ?>"
+                            title="View all photos from the project <?php echo strtolower($title); ?>">
+                            <?php
+                                echo  get_random_image_src($slug);
+                                ?>
+                        </a>
+                    </div>
                     <p>
                         <?php echo $desc; ?>
                         <a href="<?php echo $path; ?>">View all photos from this project. </a>

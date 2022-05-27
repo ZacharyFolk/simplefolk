@@ -19,7 +19,7 @@ get_header(); ?>
 </header>
 <div id="primary_full-width" class="content-area">
     <main id="main" class="site-main" role="main">
-        <div class="container post-featured-gallery post-gallery-col-4">
+        <div class="archive-container">
             <?php
             if (have_posts()) { ?>
             <?php while (have_posts()) {

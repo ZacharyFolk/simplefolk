@@ -19,7 +19,7 @@ get_header();
                     <header>
                         <h1>
 
-                            #<?php echo strtolower($single_tag->name); ?>
+                            #<?php echo ($single_tag->name); ?>
 
                         </h1>
 
@@ -31,8 +31,7 @@ get_header();
 
                     <p><?php echo $single_tag->description; ?></p>
                     <div class="tag-link">
-                        <a class="buttonish" href="<?php echo $tag_link; ?>"
-                            title="View all photos from the project <?php echo strtolower($tag_name); ?>">
+                        <a class="buttonish" href="<?php echo $tag_link; ?>">
                             View all photos tagged with #<?php echo strtolower($tag_name); ?>
                         </a>
                     </div>

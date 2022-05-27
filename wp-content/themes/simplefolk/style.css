@@ -4,7 +4,7 @@ Theme URI: https://folkphotography.com
 Author: Zachary Folk
 Author URI: https://folkphotography.com
 Description: A very stripped down, primitive, hopefully eventually functional theme for my photos
-Version: 0.2.1
+Version: 0.3.1
 Text Domain: simplefolk
 License: GNU General Public License version 3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -448,6 +448,45 @@ img {
 /* fonts */
   --font-primary: 'Zen Maru Gothic', sans-serif;
 
+--dark-surface : #121212;
+
+/* Warm Grey */
+--warm-1: #27241D;
+--warm-2: #423D33;
+--warm-3: #504A40;
+--warm-4: #625D52;
+--warm-5: #857F72;
+--warm-6: #A39E93;
+--warm-7: #B8B2A7;
+--warm-8: #D3CEC4;
+--warm-9: #E8E6E1;
+--warm-10:#FAF9F7;
+
+/* Cool Grey */
+--cool-1: #1F2933;
+--cool-2: #323F4B;
+--cool-3: #3E4C59;
+--cool-4: #52606D;
+--cool-5: #616E7C;
+--cool-6: #7B8794;
+--cool-7: #9AA5B1;
+--cool-8: #CBD2D9;
+--cool-9: #E4E7EB;
+--cool-10:#F5F7FA;
+
+/* Grey Scale */
+--grey-1: #222222;
+--grey-2: #3B3B3B;
+--grey-3: #515151;
+--grey-4: #626262;
+--grey-5: #7E7E7E;
+--grey-6: #9E9E9E;
+--grey-7: #B1B1B1;
+--grey-8: #CFCFCF;
+--grey-9: #E1E1E1;
+--grey-10:#F7F7F7;
+
+
   }
   
   /* ******************
@@ -483,18 +522,24 @@ button {
 	transform: scale3d(1.2, 1.2, 1);
   } */
   
+
+/* *************
+*              *
+*    Fonts     *
+*              *
+************* */
   
+body {
+	font-family: var(--font-primary);
+}
+
+
 /* *************
 *              *
 *    Colors    *
 *              *
 ************* */
-  
-body {
-  background-color: var(--dark-background-2);
-  color: var(--off-white);
-	font-family: var(--font-primary);
-}
+
 
 a:link,
 a:visited {
@@ -504,12 +549,6 @@ a:hover {
   color: #fff;
 }
 
-.page-header { 
-  /* archive pages */
-  background-color: rgb(41, 43, 43);
-  border-top: 1px solid rgb(67, 69, 70);
-  border-bottom: 1px solid rgb(67, 69, 70);
-}
 
 .site-title {
   color: var(--off-white);
@@ -519,6 +558,31 @@ a:hover {
 	background-color: rgb(13, 13, 13);
 	position: relative;
 }
+
+
+
+/* Dark Mode */
+body { 
+  background-color: var(--dark-surface);
+  color: var(--warm-8);
+}
+.archive-wrap {
+  background-color: var(--warm-1);
+}
+.archive-wrap header {
+  background-color: var(--warm-2);
+  border-bottom: 1px solid #000;
+}
+.archive-wrap h1 {
+  color: var(--warm-7);
+}
+.archive-wrap img {
+  border: 2px solid #000;
+  filter: drop-shadow(0 0 0.55rem #000);
+}
+
+/* Light Mode */
+
 
 /* **************
 *               *
@@ -737,16 +801,12 @@ footer .copyright {
 *    Archive Pages     * 
 *                      *
 ********************* */
-
 .page-header {
-	padding: 10px 60px 6px;
-	font-size: .9em;
-	display: block;
-	margin: 0 auto;
-	width: 100%;
-  }
+  padding-left: 60px;
+}
+
   .page-header h1 {
-	font-size: 16px;
+	font-size: 18px;
   font-weight: normal;
   }
 
@@ -1053,10 +1113,7 @@ footer .copyright {
     width: 25%;
   }
 
-  .archive-wrap {
-    background-color: var(--dark-background);
-   
-  }
+
   .archive-container article 
     {
       padding: 10px;
@@ -1067,9 +1124,8 @@ footer .copyright {
   .archive-container header {
     display: flex;
     align-items: center;
-    background-color: var(--dark-background-3);
     justify-content: space-between;
-    padding: 0 1.5em;
+    padding: 0 1em;
   }
   .archive-container h1 {
     margin-right: 1em;
@@ -1077,11 +1133,11 @@ footer .copyright {
     font-weight: normal;
   }
   .archive-container p {
-    padding: 0 4em 2em;
+    padding: 0 1.5em 2em;
   }
-  .archive-container .img-wrap {
-    padding: 3em 4em .5em;
-  }
+  /* .archive-container .img-wrap {
+    padding: 2.5em 2.5em 1em
+  } */
   .tag-link {
     display: flex;
     flex-direction: column;
@@ -1093,13 +1149,14 @@ footer .copyright {
     padding: 10px 20px;
     max-width: 80%;
   }
+  
 
 
-  /* *******************
-  *                    *
-  *    #Mobile View    *
-  *                    *
-  ******************* */
+/* ************************
+*                         *
+*    Responsive Rules     *
+*                         *
+************************ */
 
   @media only screen and (max-width: 767px) {
 	.main-header, .main-header .header-nav ul {
@@ -1116,7 +1173,10 @@ footer .copyright {
     width: 100%;
   }
 
+  #crumbs { margin: 10px 0 10px 20px; }
+  .page-header { padding-left: 20px;}
   .top-nav { padding: 0 20px;}
+
   .featured-gallery-header h2 { width: 90%}
 
   /* home-tags container */
@@ -1146,3 +1206,26 @@ footer .copyright {
   }
    }
   
+   @media only screen and (min-width: 768px) and (max-width: 1400px){
+    .archive-container article {
+      width: 50%;
+    }
+   }
+
+   @media only screen and (min-width: 1401px) and (max-width: 1600px){
+    .archive-container article {
+      width: 33.3%;
+    }
+  }
+
+    @media only screen and (min-width: 1601px) and (max-width: 1900px){
+      .archive-container article {
+        width: 25%;
+      }   
+    }
+
+    @media only screen and (min-width: 1901px) {
+      .archive-container article {
+        width: 20%;
+      }   
+    }
