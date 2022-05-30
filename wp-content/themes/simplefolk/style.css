@@ -4,7 +4,7 @@ Theme URI: https://folkphotography.com
 Author: Zachary Folk
 Author URI: https://folkphotography.com
 Description: A very stripped down, primitive, hopefully eventually functional theme for my photos
-Version: 0.3.1
+Version: 0.4.2
 Text Domain: simplefolk
 License: GNU General Public License version 3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -569,10 +569,7 @@ body {
 .archive-wrap {
   background-color: var(--warm-1);
 }
-.archive-wrap header {
-  background-color: var(--warm-2);
-  border-bottom: 1px solid #000;
-}
+
 .archive-wrap h1 {
   color: var(--warm-8);
 }
@@ -612,17 +609,7 @@ button:hover, button.active {
 *                *
 *************** */
 
-#primary {
-  float: left;
-  padding-right: 30px;
-  width: 70%;
-}
-#secondary {
-  border-left: 1px solid #eee;
-  float: left;
-  padding-left: 30px;
-  width: 30%;
-}
+
 #primary_full_width {
   width: 100%;
   padding: 10px 20px;
@@ -747,6 +734,7 @@ footer .copyright {
     margin-top: 0px;
     transform: rotate(-405deg);
   }
+  /* Mobile */
   
   @media (max-width: 767px) {
     .menu-button-container {
@@ -1150,7 +1138,40 @@ footer .copyright {
     max-width: 80%;
   }
   
+/* ********************
+*                     *
+*    #Single Post     *
+*                     *
+******************** */
 
+.single-post .wrap {
+  max-width: 1480px;
+  margin: 0 auto;
+  width: 90%;
+  display: flex;
+}
+.single-post .wrap #primary {
+  width: 65%;
+}
+.single-post .wrap #secondary {
+  width: 35%;
+}
+
+/* Sidebar */
+
+#cat_thumbs {
+  display: flex;
+  flex-wrap: wrap;
+}
+#cat_thumbs a {
+  float : left;
+  min-width: 150px;
+  margin: 4px;
+}
+.single-cat-link {
+  text-align: right;
+  margin: 20px;
+}
 
 /* ************************
 *                         *
@@ -1158,6 +1179,15 @@ footer .copyright {
 *                         *
 ************************ */
 
+@media only screen and (max-width: 1100px) {
+  .single-post .wrap #primary, .single-post .wrap #secondary {
+    width: 100%;
+  }
+  .single-post .wrap {
+    flex-direction: column;
+  }
+
+}
   @media only screen and (max-width: 767px) {
 	.main-header, .main-header .header-nav ul {
 	  flex-direction: column

@@ -66,6 +66,13 @@ register_nav_menus(array(
 //                       //
 ///////////////////////////
 
+/**
+ * 
+ * Home / Archive Gallery
+ * Single Hero
+ * Retina / Zoom? 
+ * Sidebar thumbs */
+
 add_image_size('cat-squares', 300, 300, TRUE);
 
 //////////////////////////
@@ -168,7 +175,6 @@ function get_random_img_src_by_tag($tag = '')
 
 function this_cats_thumbs($postID) // pass $id from function to get current category, TODO : use of these ids probably redundant and confusing
 {
-  echo '<div id="recent_posts"><div class="grid-sizer"></div>';
   $args = array(
     'category__in' => wp_get_post_categories($postID),
     'numberposts' => '9',
@@ -178,16 +184,14 @@ function this_cats_thumbs($postID) // pass $id from function to get current cate
   foreach ($recent_posts as $recent) :
     $id = $recent["ID"];
     if (has_post_thumbnail($id)) : ?>
-<div class="recent-item">
-    <a href="<?php echo get_permalink($id); ?>">
-        <?php echo get_the_post_thumbnail($id, 'thumbnail'); ?>
-    </a>
-</div>
+
+<a href="<?php echo get_permalink($id); ?>">
+    <?php echo get_the_post_thumbnail($id, array(150, 150)); ?>
+</a>
 <?php endif;
   //		echo '<li><a href="' . get_permalink($recent["ID"]) . '">' .   $recent["post_title"].'</a> </li> ';
   endforeach;
   wp_reset_query();
-  echo '</div>'; // end recent_posts
 }
 
 //////////////////////////////////////////////////////
