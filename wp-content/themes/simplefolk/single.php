@@ -20,7 +20,9 @@ while (have_posts()) {
                     ?>
                 <div class="entry-thumb">
                     <figure class="entry-thumb-content">
-                        <a href="<?php the_post_thumbnail_url(); ?>"> <?php the_post_thumbnail(); ?></a>
+                        <a data-fancybox="gallery" data-caption="Cool ass caption"
+                            href="<?php the_post_thumbnail_url(); ?>">
+                            <?php the_post_thumbnail('medium_large'); ?></a>
                     </figure>
                 </div>
                 <?php }

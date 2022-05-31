@@ -12,9 +12,11 @@ function photo_child_enqueue_styles()
 {
   wp_enqueue_style('main',  get_theme_file_uri() . '/style.css', array(), SIMPLE_THEME_VERSION, 'all');
   wp_enqueue_style('icons',  get_theme_file_uri() . '/assets/icomoon/style.css', array(), SIMPLE_THEME_VERSION, 'all');
+  wp_enqueue_style('fancy',  get_theme_file_uri() . '/assets/fancybox/fancybox.css', array(), SIMPLE_THEME_VERSION, 'all');
   wp_enqueue_script('imagesloaded-pkgd', get_template_directory_uri() . '/js/imagesloaded.pkgd.min.js', array('jquery'), false, true);
   wp_enqueue_script('isotope', get_template_directory_uri() . '/js/isotope.pkgd.min.js', array('jquery'), false, true);
   wp_enqueue_script('photograph-isotope-setting', get_template_directory_uri() . '/js/isotope-setting.js', array('isotope'), false, true);
+  wp_enqueue_script('fancy',  get_theme_file_uri() . '/assets/fancybox/fancybox.js', array('jquery'), false, true);
 }
 
 add_action('wp_enqueue_scripts', 'photo_child_enqueue_styles');
@@ -58,7 +60,6 @@ register_nav_menus(array(
   'side-nav-menu' => __('Side Menu', 'simplefolk'),
   'social-link'  => __('Add Social Icons Only', 'simplefolk'),
 ));
-
 
 ///////////////////////////
 //                       //
@@ -186,7 +187,7 @@ function this_cats_thumbs($postID) // pass $id from function to get current cate
     if (has_post_thumbnail($id)) : ?>
 
 <a href="<?php echo get_permalink($id); ?>">
-    <?php echo get_the_post_thumbnail($id, array(150, 150)); ?>
+    <?php echo get_the_post_thumbnail($id, 'thumbnail'); ?>
 </a>
 <?php endif;
   //		echo '<li><a href="' . get_permalink($recent["ID"]) . '">' .   $recent["post_title"].'</a> </li> ';
