@@ -12,8 +12,7 @@ $content = apply_filters('the_content', get_post_field('post_content', $id));
     </h1>
     <p>
         <?php
-      // Image Caption
-      //    echo wp_get_attachment_caption(get_post_thumbnail_id());
+
       echo get_the_excerpt();
       ?>
     </p>
