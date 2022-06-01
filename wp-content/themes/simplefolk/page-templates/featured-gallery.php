@@ -17,9 +17,11 @@ $tag_list = explode(',', esc_attr(get_post_meta(get_the_ID(), 'fpt_list', true))
             <?php echo esc_html($gallery_heading); ?>
         </h2>
         <div class="filter-by-tag">
-            <div class="hashtag-container">
-                #
-            </div>
+            <input id="tag_toggle" type="checkbox" />
+            <label class="hashtag-container" for="tag_toggle">
+                <div class="hashtag-button">#</div>
+            </label>
+
             <div class="tag-buttons">
                 <?php
                 $i = 1;

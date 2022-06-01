@@ -4,7 +4,7 @@ Theme URI: https://folkphotography.com
 Author: Zachary Folk
 Author URI: https://folkphotography.com
 Description: A very stripped down theme for folkphotography
-Version: 0.5.8
+Version: 0.5.9
 Text Domain: simplefolk
 License: GNU General Public License version 3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -499,6 +499,12 @@ button {
   -ms-transition: background-color 500ms linear;
   transition: background-color 500ms linear;
 }
+#tag_toggle ~ .tag-buttons  {
+  transition: left 300ms linear;
+}
+#tag_toggle:checked ~ .tag-buttons  {
+  transition: left 300ms linear;
+}
 
 /* .featured-gallery .featured-image-content  {
 	opacity: 1;
@@ -682,8 +688,8 @@ footer .copyright {
     justify-content: space-between;
     background: linear-gradient(to left, var(--dark-background), #000);
     color: var(--off-white);
-    height: 70px;
-    padding: 0 60px;
+    height: 100px;
+    padding: 10px 60px;
   }
   
   .menu {
@@ -757,14 +763,28 @@ footer .copyright {
     }
     .menu {
       position: absolute;
-      top: 0;
-      margin-top: 70px;
+      top: 50px;
       left: 0;
       flex-direction: column;
       width: 100%;
       justify-content: center;
       align-items: center;
     }
+
+    /* lame fixes for when admin bar is visible */ 
+    body.admin-bar .menu { margin-top: 90px;}
+    
+#tag_toggle ~ .tag-buttons  {
+  top: 64px;
+  left:-1200px;
+}
+
+#tag_toggle:checked ~ .tag-buttons  {
+  top: 64px;
+  left: 0;
+}
+.hashtag-button {cursor: pointer;}
+
     #menu-toggle ~ .menu li {
       height: 0;
       margin: 0;
@@ -845,8 +865,7 @@ footer .copyright {
     padding-bottom: 10px;
     border-image-source: linear-gradient(to left, var(--dark-background-2), var(--off-white-2));
     }
-  
-    .hashtag-container {
+    .hashtag-container, #tag_toggle {
       display: none; /* just for mobile */
     }
   .filter-by-tag {
@@ -980,8 +999,7 @@ footer .copyright {
   }
   .tag-buttons {
     position: absolute;
-    width: 110%;
-    right: -20px;
+    width: 100%;
     background-color: rgb(255, 255,255,.8);
     z-index: 970;
     top: 0px;
