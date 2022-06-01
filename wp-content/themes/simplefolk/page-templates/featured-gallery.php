@@ -30,7 +30,7 @@ $num_posts = 40;
                 $i = 1;
                 foreach ($featured_tabs as $featured_tab) :
                     $post_tags = get_term_by('slug', $featured_tab, 'post_tag');
-                    if ($i == 1) : ?>
+                    if (($post_tags) & ($i == 1)) : ?>
                 <button type="button" class="active" data-category="*">All</button>
                 <button type="button"
                     data-category=".tag-<?php echo esc_attr($featured_tab); ?>"><?php echo esc_html($post_tags->name); ?></button>
