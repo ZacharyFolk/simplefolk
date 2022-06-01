@@ -1,13 +1,8 @@
 <?php
-//////////////////////////////////////////////
-//                                          //
-//    TODO : Create admin CMS for these     //
-//                                          //
-//////////////////////////////////////////////
 
-$gallery_heading = "Latest Posts";
-$featured_tabs = array('dogs', 'night', 'birds', 'bears');
-$num_posts = 40;
+$gallery_heading = esc_attr(get_post_meta(get_the_ID(), 'fpt_title', true));
+$num_posts = (int)(get_post_meta(get_the_ID(), 'fpt_count', true));
+$tag_list = explode(',', esc_attr(get_post_meta(get_the_ID(), 'fpt_list', true)));
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                        //
@@ -28,18 +23,21 @@ $num_posts = 40;
             <div class="tag-buttons">
                 <?php
                 $i = 1;
-                foreach ($featured_tabs as $featured_tab) :
+
+                foreach ($tag_list as $featured_tab) :
                     $post_tags = get_term_by('slug', $featured_tab, 'post_tag');
-                    if (($post_tags) & ($i == 1)) : ?>
+                    if ($i == 1) :
+                ?>
                 <button type="button" class="active" data-category="*">All</button>
-                <button type="button"
-                    data-category=".tag-<?php echo esc_attr($featured_tab); ?>"><?php echo esc_html($post_tags->name); ?></button>
-                <?php else :
-                        if ($post_tags) : ?>
+                <?php if ($post_tags) : ?>
                 <button type="button"
                     data-category=".tag-<?php echo esc_attr($featured_tab); ?>"><?php echo esc_html($post_tags->name); ?></button>
                 <?php endif;
-                    endif;
+                    elseif ($post_tags) :
+                        ?>
+                <button type="button"
+                    data-category=".tag-<?php echo esc_attr($featured_tab); ?>"><?php echo esc_html($post_tags->name); ?></button>
+                <?php endif;
                     $i++;
                 endforeach; ?>
             </div>
