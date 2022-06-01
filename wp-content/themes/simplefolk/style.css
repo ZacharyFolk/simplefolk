@@ -772,7 +772,7 @@ footer .copyright {
     }
 
     /* lame fixes for when admin bar is visible */ 
-    body.admin-bar .menu { margin-top: 90px;}
+    body.admin-bar .menu { top: 90px;}
     
 #tag_toggle ~ .tag-buttons  {
   top: 64px;
