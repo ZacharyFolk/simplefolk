@@ -201,7 +201,7 @@ function this_cats_thumbs($postID) // pass $id from function to get current cate
   wp_reset_query();
 }
 
-//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////x
 //                                                  //
 //    Create link for current category root page    //
 //                                                  //
@@ -223,7 +223,7 @@ function cat_thumb_heading()
   $the_cat = get_the_category();
   if ($the_cat) :
     $category_name = $the_cat[0]->cat_name;
-    echo $category_name;
+    echo   '<h3 class="cat-heading">' . $category_name . '</h3>';
   endif;
 }
 
@@ -381,11 +381,14 @@ function hashed_tags()
   $separator = ' ';
   $output = '';
 
-  if (!empty($post_tags)) {
-    foreach ($post_tags as $tag) {
+  if (!empty($post_tags)) :
+    echo '<div id="photo_tag_container">';
+    echo 'Tags: ';
+    foreach ($post_tags as $tag) :
       $output .= '<a title="View all photos with the tag #' . strtolower($tag->name) . '"  href="' . esc_attr(get_tag_link($tag->term_id)) . '">' . $prefix . __($tag->name) . '</a>' . $separator;
-    }
-  }
+    endforeach;
+    echo '</div>';
+  endif;
   return trim($output, $separator);
 }
 
@@ -408,7 +411,7 @@ function the_breadcrumb()
   $showCurrent = 1; // 1 - show current post/page title in breadcrumbs, 0 - don't show
   $before = '<span class="current">'; // tag before the current crumb
   $after = '</span>'; // tag after the current crumb
-  $de = 'yeee';
+
 
 
 
@@ -540,6 +543,8 @@ add_action('add_meta_boxes', 'fpt_register_meta_boxes');
  */
 function fpt_display_callback()
 {
+  // prevent CSRF
+  wp_nonce_field(basename(__FILE__), "meta-box-nonce");
   ?>
 <p>
     <label for="fpt_count">Number of posts to show : </label>
@@ -559,7 +564,7 @@ function fpt_display_callback()
 <?php }
 
 /**
- * Save meta box content.
+ * Save home page meta box content.
  *
  * @param int $post_id Post ID
  */
@@ -581,4 +586,110 @@ function fpt_save_meta_box($post_id)
   }
 }
 add_action('save_post', 'fpt_save_meta_box');
+
+/**
+ * Register meta box for single posts
+ **/
+
+function photo_meta_boxes()
+{
+  add_meta_box('fp-2', esc_html__('Photo Meta', 'pmeta'), 'photo_meta_callback', 'post', 'side', 'high', null);
+}
+add_action('add_meta_boxes', 'photo_meta_boxes');
+
+
+/**
+ * Display Photo meta boxes
+ *
+ * @param WP_Post $post Current post object.
+ */
+function photo_meta_callback($post)
+{
+  wp_nonce_field(basename(__FILE__), "meta-box-nonce");
 ?>
+<p>
+    <label for="photo_short">Short description of photo : </label>
+    <textarea name="photo_short" id="photo_short" rows="5" cols="60" style="width:100%">
+    <?php echo esc_attr(get_post_meta(get_the_ID(), 'photo_short', true)); ?>
+  </textarea>
+</p>
+<p>
+    <label for="photo_location">Location : </label>
+    <input id="photo_location" type="text" name="photo_location" style="margin-right: 10px; width: 100%"
+        value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'photo_location', true)); ?>">
+</p>
+<p>
+    <label for="photo_camera">Camera : </label>
+    <input id="photo_camera" type="text" name="photo_camera" style="margin-right: 10px; width:100%"
+        value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'photo_camera', true)); ?>">
+</p>
+<p>
+    <label for="photo_film">Film type : </label>
+    <input id="photo_film" type="text" name="photo_film" style="margin-right: 10px; width: 100%"
+        value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'photo_film', true)); ?>">
+</p>
+<p>
+    <label for="print_available">Prints Available?</label>
+    <?php
+    $checkbox_value = get_post_meta($post->ID, "print_available", true);
+    if ($checkbox_value == "") {
+    ?>
+    <input name="print_available" type="checkbox" value="true">
+    <?php
+    } else if ($checkbox_value == "true") {
+    ?>
+    <input name="print_available" type="checkbox" value="true" checked>
+    <?php
+    }
+    ?>
+    </div>
+    <?php }
+
+/**
+ * Save post meta box content.
+ *
+ * @param int $post_id Post ID
+ */
+
+add_action('save_post', 'photo_save_meta', 10, 2);
+
+
+function photo_save_meta($post_id, $post)
+{
+
+
+  // Check if user has permissions to save data.
+  if (!current_user_can('edit_post', $post_id)) {
+    return;
+  }
+
+  // Check if not an autosave.
+  if (wp_is_post_autosave($post_id)) {
+    return;
+  }
+
+  // Check if not a revision.
+  if (wp_is_post_revision($post_id)) {
+    return;
+  }
+
+  if (isset($_POST['photo_short'])) {
+    update_post_meta($post_id, 'photo_short', sanitize_textarea_field($_POST['photo_short']));
+  }
+
+  $textfields = [
+    'photo_location',
+    'photo_camera',
+    'photo_film',
+    'print_available'
+  ];
+  foreach ($textfields as $field) {
+    if (array_key_exists($field, $_POST)) {
+      update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
+    }
+  }
+}
+
+
+
+  ?>

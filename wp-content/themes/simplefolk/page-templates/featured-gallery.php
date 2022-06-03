@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Template for home page gallery
+ *
+ */
 $gallery_heading = esc_attr(get_post_meta(get_the_ID(), 'fpt_title', true));
 $num_posts = (int)(get_post_meta(get_the_ID(), 'fpt_count', true));
 $tag_list = explode(',', esc_attr(get_post_meta(get_the_ID(), 'fpt_list', true)));
