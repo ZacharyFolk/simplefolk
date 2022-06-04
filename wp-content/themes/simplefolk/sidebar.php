@@ -39,11 +39,7 @@ $prints = esc_attr(get_post_meta(get_the_ID(), 'print_available', true));
 
     echo hashed_tags();
 
-    echo cat_thumb_heading();
-    echo '<div id="cat_thumbs">';
     echo this_cats_thumbs($id);
-    echo '</div>';
-    echo get_cat_link();
 
   endif;
   ?>

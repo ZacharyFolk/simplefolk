@@ -179,53 +179,41 @@ function get_random_img_src_by_tag($tag = '')
 //                                            //
 ////////////////////////////////////////////////
 
-
-function this_cats_thumbs($postID) // pass $id from function to get current category, TODO : use of these ids probably redundant and confusing
-{
-  $args = array(
-    'category__in' => wp_get_post_categories($postID),
-    'numberposts' => '9',
-    'post__not_in' => array(get_the_ID())
-  );
-  $recent_posts = wp_get_recent_posts($args);
-  foreach ($recent_posts as $recent) :
-    $id = $recent["ID"];
-    if (has_post_thumbnail($id)) : ?>
-
-<a href="<?php echo get_permalink($id); ?>">
-    <?php echo get_the_post_thumbnail($id, 'thumbnail'); ?>
-</a>
-<?php endif;
-  //		echo '<li><a href="' . get_permalink($recent["ID"]) . '">' .   $recent["post_title"].'</a> </li> ';
-  endforeach;
-  wp_reset_query();
-}
-
-//////////////////////////////////////////////////////x
-//                                                  //
-//    Create link for current category root page    //
-//                                                  //
-//////////////////////////////////////////////////////
-
-function get_cat_link()
+function this_cats_thumbs()
 {
   $the_cat = get_the_category();
-  if ($the_cat) :
+  $category_name = $the_cat[0]->name;
+  $category_link = get_category_link($the_cat[0]->cat_ID);
+  $num_posts = $the_cat[0]->category_count;
+  $args = array(
+    'post_type' => 'post',
+    'post_status' => 'publish',
+    'category_name' => $category_name,
+    'post__not_in' => array(get_the_ID()),
+    'posts_per_page' => 9,
+  );
+  $arr_posts = new WP_Query($args);
+  echo   '<p>Category: ' . $category_name . '</p>';
+  if ($arr_posts->have_posts()) :
 
-    $category_name = $the_cat[0]->cat_name;
-    $category_link = get_category_link($the_cat[0]->cat_ID);
+    echo '<div id="cat_thumbs">';
+
+    while ($arr_posts->have_posts()) :
+      $arr_posts->the_post();
+      if (has_post_thumbnail()) :
+    ?>
+<a href="<?php the_permalink(); ?>">
+    <?php the_post_thumbnail('thumbnail'); ?>
+</a>
+<?php endif;
+    endwhile;
+    echo '</div>';
+  endif;
+  if ($num_posts > 9) :
     echo '<div class="single-cat-link">View all of the <a href="' . $category_link . '">' . $category_name . ' collection &gt; &gt;</a></div>';
   endif;
 }
 
-function cat_thumb_heading()
-{
-  $the_cat = get_the_category();
-  if ($the_cat) :
-    $category_name = $the_cat[0]->cat_name;
-    echo   '<h3 class="cat-heading">' . $category_name . '</h3>';
-  endif;
-}
 
 /////////////////////////////
 //                         //
