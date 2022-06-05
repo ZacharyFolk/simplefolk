@@ -338,15 +338,17 @@ function hashed_tags()
   $prefix = '#';
   $separator = ' ';
   $output = '';
+  $string = '';
 
   if (!empty($post_tags)) :
-    echo '<div id="photo_tag_container">Tags: ';
+    $string = '<div id="photo_tag_container">Tags: ';
     foreach ($post_tags as $tag) :
       $output .= '<a title="View all photos with the tag #' . strtolower($tag->name) . '"  href="' . esc_attr(get_tag_link($tag->term_id)) . '">' . $prefix . __($tag->name) . '</a>' . $separator;
     endforeach;
-    echo '</div>';
+    $string .= trim($output, $separator);
+    $string .= '</div>';
   endif;
-  return trim($output, $separator);
+  return $string;
 }
 
 ///////////////////////
@@ -368,9 +370,6 @@ function the_breadcrumb()
   $showCurrent = 1; // 1 - show current post/page title in breadcrumbs, 0 - don't show
   $before = '<span class="current">'; // tag before the current crumb
   $after = '</span>'; // tag after the current crumb
-
-
-
 
   global $post;
   $homeLink = get_bloginfo('url');
