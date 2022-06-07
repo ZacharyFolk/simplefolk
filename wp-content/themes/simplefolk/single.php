@@ -8,7 +8,9 @@ get_header();
 
 while (have_posts()) :
     the_post();
-    $image_caption =  wp_get_attachment_caption(get_post_thumbnail_id()); ?>
+    $image_id = get_post_thumbnail_id();
+    $image_caption =  wp_get_attachment_caption($image_id);
+?>
 
 
 <div class="wrap">
@@ -19,7 +21,8 @@ while (have_posts()) :
                 <figure class="main-image">
                     <a data-fancybox="gallery" data-caption="<?php echo $image_caption; ?>"
                         href="<?php the_post_thumbnail_url(); ?>">
-                        <?php the_post_thumbnail('medium_large'); ?></a>
+                        <?php get_img_with_sizes('medium_large'); ?>
+                    </a>
                 </figure>
                 <?php if ($image_caption) :
                             echo '<figcaption>' . $image_caption . '</figcaption>';

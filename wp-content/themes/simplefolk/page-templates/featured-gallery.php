@@ -66,7 +66,8 @@ $tag_list = explode(',', esc_attr(get_post_meta(get_the_ID(), 'fpt_list', true))
 
             <a title="<?php the_title_attribute(['before' => 'View the full post for ']); ?>"
                 href="<?php echo esc_url(get_permalink()); ?>">
-                <?php the_post_thumbnail('medium_large'); ?>
+                <?php get_img_with_sizes('medium_large'); ?>
+
             </a>
 
             <?php } ?>

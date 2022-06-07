@@ -167,7 +167,7 @@ function get_random_img_src_by_tag($tag = '')
     while ($query->have_posts()) : $query->the_post();
       $id = get_the_ID();
       if (has_post_thumbnail($id)) :
-        echo get_the_post_thumbnail($id, 'post-thumbnail');
+        echo get_img_with_sizes('medium_large');
       endif;
     endwhile;
   }
@@ -204,7 +204,7 @@ function this_cats_thumbs()
         if (has_post_thumbnail()) :
     ?>
 <a href="<?php the_permalink(); ?>">
-    <?php the_post_thumbnail('thumbnail'); ?>
+    <?php get_img_with_sizes('thumbnail'); ?>
 </a>
 <?php endif;
       endwhile;
@@ -307,10 +307,31 @@ function j0e_add_admin_styles()
   echo '<style>.column-j0e_thumb {width: 60px;}</style>';
 }
 
+
+
+/**
+ * Returns an image with alt, width, and height attributes
+ * @since 0.8.2
+ * @param string $size thumbnail | medium | medium-full | full
+ * @return string HTML for image with attributes
+ * */
+function get_img_with_sizes($size)
+{
+  $image_id = get_post_thumbnail_id();
+  $image_attributes = wp_get_attachment_image_src(get_post_thumbnail_id(), $size, true);
+  $image_alt = get_post_meta($image_id, '_wp_attachment_image_alt', TRUE);
+
+  if ($image_attributes) :
+    ?>
+<img src="<?php echo $image_attributes[0]; ?>" width="<?php echo $image_attributes[1]; ?>"
+    height="<?php echo $image_attributes[2]; ?>" alt="<?php echo $image_alt ?>" />
+<?php endif;
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////
-//                                                                                   //
-//    Return only the first category when outputting the previous/next post links    //
-//                                                                                   //
+// //
+// Return only the first category when outputting the previous/next post links //
+// //
 ///////////////////////////////////////////////////////////////////////////////////////
 
 function my_custom_post_navigation($terms, $object_ids, $taxonomies, $args)
@@ -321,14 +342,14 @@ function my_custom_post_navigation($terms, $object_ids, $taxonomies, $args)
 
 
 ////////////////////////////////////////////////
-//                                            //
-//    Filter to prepend tags with a hash #    //
-//                                            //
+// //
+// Filter to prepend tags with a hash # //
+// //
 ////////////////////////////////////////////////
 
 /**
  * Retrieves a list of all tags with the '#' symbol prefix
- * 
+ *
  * @since 0.0.1
  * @return string HTML of links of hashed tags
  * */
@@ -345,7 +366,8 @@ function hashed_tags()
   if (!empty($post_tags)) :
     $string = '<div id="photo_tag_container">Tags: ';
     foreach ($post_tags as $tag) :
-      $output .= '<a title="View all photos with the tag #' . strtolower($tag->name) . '"  href="' . esc_attr(get_tag_link($tag->term_id)) . '">' . $prefix . __($tag->name) . '</a>' . $separator;
+      $output .= '<a title="View all photos with the tag #' . strtolower($tag->name) . '"
+        href="' . esc_attr(get_tag_link($tag->term_id)) . '">' . $prefix . __($tag->name) . '</a>' . $separator;
     endforeach;
     $string .= trim($output, $separator);
     $string .= '</div>';
@@ -354,9 +376,9 @@ function hashed_tags()
 }
 
 ///////////////////////
-//                   //
-//    Breadcrumbs    //
-//                   //
+// //
+// Breadcrumbs //
+// //
 ///////////////////////
 /**
  * Retrieves the breadcrumb for the header
@@ -391,7 +413,8 @@ function the_breadcrumb()
       echo $before . 'Search results for "' . get_search_query() . '"' . $after;
     } elseif (is_day()) {
       echo '<a href="' . get_year_link(get_the_time('Y')) . '">' . get_the_time('Y') . '</a> ' . $delimiter . ' ';
-      echo '<a href="' . get_month_link(get_the_time('Y'), get_the_time('m')) . '">' . get_the_time('F') . '</a> ' . $delimiter . ' ';
+      echo '<a href="' . get_month_link(get_the_time('Y'), get_the_time('m')) . '">' . get_the_time('F') . '</a> ' .
+        $delimiter . ' ';
       echo $before . get_the_time('d') . $after;
     } elseif (is_month()) {
       echo '<a href="' . get_year_link(get_the_time('Y')) . '">' . get_the_time('Y') . '</a> ' . $delimiter . ' ';
@@ -428,32 +451,34 @@ function the_breadcrumb()
       // echo get_category_parents($cat, true, ' ' . $delimiter . ' ');
       // echo '<a href="' . get_permalink($parent) . '">' . $parent->post_title . '</a>';
       // if ($showCurrent == 1) {
-      //   echo ' ' . $delimiter . ' ' . $before . get_the_title() . $after;
+      // echo ' ' . $delimiter . ' ' . $before . get_the_title() . $after;
       // }
     } elseif (is_page() && !$post->post_parent) {
       if ($showCurrent == 1) {
         echo $before . get_the_title() . $after;
       }
     } elseif (is_page() && $post->post_parent) {
-      $parent_id  = $post->post_parent;
+      $parent_id = $post->post_parent;
       $breadcrumbs = array();
       while ($parent_id) {
         $page = get_page($parent_id);
         $breadcrumbs[] = '<a href="' . get_permalink($page->ID) . '">' . get_the_title($page->ID) . '</a>';
-        $parent_id  = $page->post_parent;
+        $parent_id = $page->post_parent;
       }
       $breadcrumbs = array_reverse($breadcrumbs);
       for ($i = 0; $i < count($breadcrumbs); $i++) {
         echo $breadcrumbs[$i];
         if ($i != count($breadcrumbs) - 1) {
-          echo ' ' . $delimiter . ' ';
+          echo ' ' .
+            $delimiter . ' ';
         }
       }
       if ($showCurrent == 1) {
         echo ' ' . $delimiter . ' ' . $before . get_the_title() . $after;
       }
     } elseif (is_tag()) {
-      echo $before . '<a href="/tags/" title="View all of the tags"> Tags </a>'  . $delimiter . ' ' .  single_tag_title('', false)  . $after;
+      echo $before . '<a href="/tags/" title="View all of the tags"> Tags </a>' . $delimiter
+        . ' ' . single_tag_title('', false) . $after;
     } elseif (is_author()) {
       global $author;
       $userdata = get_userdata($author);
@@ -476,9 +501,9 @@ function the_breadcrumb()
 
 
 /////////////////////////
-//                     //
-//  Metaboxes          //
-//                     //
+// //
+// Metaboxes //
+// //
 /////////////////////////
 
 /**
@@ -566,7 +591,12 @@ function photo_meta_callback($post)
 {
   wp_nonce_field(basename(__FILE__), "meta-box-nonce");
 ?>
-
+<p>
+    <label for="photo_short">Short description of photo : </label>
+    <textarea name="photo_short" id="photo_short" rows="5" cols="60" style="width:100%">
+    <?php echo esc_attr(get_post_meta(get_the_ID(), 'photo_short', true)); ?>
+  </textarea>
+</p>
 <p>
     <label for="photo_location">Location : </label>
     <input id="photo_location" type="text" name="photo_location" style="margin-right: 10px; width: 100%"
@@ -582,8 +612,22 @@ function photo_meta_callback($post)
     <input id="photo_film" type="text" name="photo_film" style="margin-right: 10px; width: 100%"
         value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'photo_film', true)); ?>">
 </p>
-<?php //endif;
-}
+<p>
+    <label for="print_available">Prints Available?</label>
+    <?php
+    $checkbox_value = get_post_meta($post->ID, "print_available", true);
+    if ($checkbox_value == "") {
+    ?>
+    <input name="print_available" type="checkbox" value="true">
+    <?php
+    } else if ($checkbox_value == "true") {
+    ?>
+    <input name="print_available" type="checkbox" value="true" checked>
+    <?php
+    }
+    ?>
+    </div>
+    <?php }
 
 /**
  * Save post meta box content.
@@ -609,6 +653,7 @@ function photo_save_meta($post_id)
     'photo_location',
     'photo_camera',
     'photo_film',
+    'print_available'
   ];
   foreach ($textfields as $field) {
     if (array_key_exists($field, $_POST)) {
@@ -628,8 +673,8 @@ function photo_save_meta($post_id)
  */
 function display_photo_meta($id)
 {
-  $attachments = get_children('post_type=attachment&post_parent=' . $id);
 
+  $attachments = get_children('post_type=attachment&post_parent=' . $id);
   if (isset($attachments) && !empty($attachments)) {
     $first_attachment = current($attachments);
     $attachment_fields = get_post_custom($first_attachment->ID);
@@ -638,6 +683,7 @@ function display_photo_meta($id)
     $loc = $attachment_fields['photo_location'][0];
     $cam = $attachment_fields['photo_camera'][0];
     $film = $attachment_fields['photo_film'][0];
+    // $prints = $attachment_fields['print_available'][0];
 
     if ($desc) :
       echo '<p>' . $desc . '</p>';
@@ -657,4 +703,4 @@ function display_photo_meta($id)
   }
 }
 
-?>
+  ?>
