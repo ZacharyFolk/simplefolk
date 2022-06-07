@@ -4,7 +4,7 @@ Theme URI: https://folkphotography.com
 Author: Zachary Folk
 Author URI: https://folkphotography.com
 Description: A very stripped down theme for folkphotography
-Version: 0.8.1
+Version: 0.8.2
 Text Domain: simplefolk
 License: GNU General Public License version 3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -447,28 +447,15 @@ img {
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-regular.eot'); /* IE9 Compat Modes */
+  src: url('./assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-regular.eot'); /* IE9 Compat Modes */
   src: local(''),
-       url('assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-regular.woff') format('woff'), /* Modern Browsers */
-       url('assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-regular.svg#ZenMaruGothic') format('svg'); /* Legacy iOS */
+       url('./assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('./assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('./assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('./assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('./assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-regular.svg#ZenMaruGothic') format('svg'); /* Legacy iOS */
 }
-/* zen-maru-gothic-700 - latin */
-@font-face {
-  font-family: 'Zen Maru Gothic';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-700.eot'); /* IE9 Compat Modes */
-  src: local(''),
-       url('assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
-       url('assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-700.woff') format('woff'), /* Modern Browsers */
-       url('assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-700.svg#ZenMaruGothic') format('svg'); /* Legacy iOS */
-}
+
 
 /* *****************
 *                  *

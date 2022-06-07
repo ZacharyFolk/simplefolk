@@ -182,35 +182,37 @@ function get_random_img_src_by_tag($tag = '')
 function this_cats_thumbs()
 {
   $the_cat = get_the_category();
-  $category_name = $the_cat[0]->name;
-  $category_link = get_category_link($the_cat[0]->cat_ID);
-  $num_posts = $the_cat[0]->category_count;
-  $args = array(
-    'post_type' => 'post',
-    'post_status' => 'publish',
-    'category_name' => $category_name,
-    'post__not_in' => array(get_the_ID()),
-    'posts_per_page' => 9,
-  );
-  $arr_posts = new WP_Query($args);
-  echo   '<p>Category: ' . $category_name . '</p>';
-  if ($arr_posts->have_posts()) :
+  if ($the_cat) :
+    $category_name = $the_cat[0]->name;
+    $category_link = get_category_link($the_cat[0]->cat_ID);
+    $num_posts = $the_cat[0]->category_count;
+    $args = array(
+      'post_type' => 'post',
+      'post_status' => 'publish',
+      'category_name' => $category_name,
+      'post__not_in' => array(get_the_ID()),
+      'posts_per_page' => 9,
+    );
+    $arr_posts = new WP_Query($args);
+    echo   '<p>Category: ' . $category_name . '</p>';
+    if ($arr_posts->have_posts()) :
 
-    echo '<div id="cat_thumbs">';
+      echo '<div id="cat_thumbs">';
 
-    while ($arr_posts->have_posts()) :
-      $arr_posts->the_post();
-      if (has_post_thumbnail()) :
+      while ($arr_posts->have_posts()) :
+        $arr_posts->the_post();
+        if (has_post_thumbnail()) :
     ?>
 <a href="<?php the_permalink(); ?>">
     <?php the_post_thumbnail('thumbnail'); ?>
 </a>
 <?php endif;
-    endwhile;
-    echo '</div>';
-  endif;
-  if ($num_posts > 9) :
-    echo '<div class="single-cat-link">View all of the <a href="' . $category_link . '">' . $category_name . ' collection &gt; &gt;</a></div>';
+      endwhile;
+      echo '</div>';
+    endif;
+    if ($num_posts > 9) :
+      echo '<div class="single-cat-link">View all of the <a href="' . $category_link . '">' . $category_name . ' collection &gt; &gt;</a></div>';
+    endif;
   endif;
 }
 
@@ -543,19 +545,20 @@ function fpt_save_meta_box($post_id)
 }
 add_action('save_post', 'fpt_save_meta_box');
 
+
 /**
- * Register meta box for single posts
+ * Register meta box for media attachment
  **/
 
 function photo_meta_boxes()
 {
-  add_meta_box('fp-2', esc_html__('Photo Meta', 'pmeta'), 'photo_meta_callback', 'post', 'side', 'high', null);
+  add_meta_box('fp-2', esc_html__('Photo Meta', 'pmeta'), 'photo_meta_callback', 'attachment');
 }
-add_action('add_meta_boxes', 'photo_meta_boxes');
+add_action('add_meta_boxes_attachment', 'photo_meta_boxes');
 
 
 /**
- * Display Photo meta boxes
+ * Display meta boxes for image
  *
  * @param WP_Post $post Current post object.
  */
@@ -563,12 +566,7 @@ function photo_meta_callback($post)
 {
   wp_nonce_field(basename(__FILE__), "meta-box-nonce");
 ?>
-<p>
-    <label for="photo_short">Short description of photo : </label>
-    <textarea name="photo_short" id="photo_short" rows="5" cols="60" style="width:100%">
-    <?php echo esc_attr(get_post_meta(get_the_ID(), 'photo_short', true)); ?>
-  </textarea>
-</p>
+
 <p>
     <label for="photo_location">Location : </label>
     <input id="photo_location" type="text" name="photo_location" style="margin-right: 10px; width: 100%"
@@ -584,22 +582,8 @@ function photo_meta_callback($post)
     <input id="photo_film" type="text" name="photo_film" style="margin-right: 10px; width: 100%"
         value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'photo_film', true)); ?>">
 </p>
-<p>
-    <label for="print_available">Prints Available?</label>
-    <?php
-    $checkbox_value = get_post_meta($post->ID, "print_available", true);
-    if ($checkbox_value == "") {
-    ?>
-    <input name="print_available" type="checkbox" value="true">
-    <?php
-    } else if ($checkbox_value == "true") {
-    ?>
-    <input name="print_available" type="checkbox" value="true" checked>
-    <?php
-    }
-    ?>
-    </div>
-    <?php }
+<?php //endif;
+}
 
 /**
  * Save post meta box content.
@@ -607,25 +591,13 @@ function photo_meta_callback($post)
  * @param int $post_id Post ID
  */
 
-add_action('save_post', 'photo_save_meta', 10, 2);
+add_action('edit_attachment', 'photo_save_meta');
 
-
-function photo_save_meta($post_id, $post)
+function photo_save_meta($post_id)
 {
-
 
   // Check if user has permissions to save data.
   if (!current_user_can('edit_post', $post_id)) {
-    return;
-  }
-
-  // Check if not an autosave.
-  if (wp_is_post_autosave($post_id)) {
-    return;
-  }
-
-  // Check if not a revision.
-  if (wp_is_post_revision($post_id)) {
     return;
   }
 
@@ -637,7 +609,6 @@ function photo_save_meta($post_id, $post)
     'photo_location',
     'photo_camera',
     'photo_film',
-    'print_available'
   ];
   foreach ($textfields as $field) {
     if (array_key_exists($field, $_POST)) {
@@ -647,5 +618,43 @@ function photo_save_meta($post_id, $post)
 }
 
 
+/**
+ * Display data from the media meta boxes
+ *
+ * Displays optional location, camera type, film, and prints available
+ *
+ * @param $id The current post id
+ * @return string HTML and data to sidebar.php
+ */
+function display_photo_meta($id)
+{
+  $attachments = get_children('post_type=attachment&post_parent=' . $id);
 
-  ?>
+  if (isset($attachments) && !empty($attachments)) {
+    $first_attachment = current($attachments);
+    $attachment_fields = get_post_custom($first_attachment->ID);
+
+    $desc = $first_attachment->post_content;
+    $loc = $attachment_fields['photo_location'][0];
+    $cam = $attachment_fields['photo_camera'][0];
+    $film = $attachment_fields['photo_film'][0];
+
+    if ($desc) :
+      echo '<p>' . $desc . '</p>';
+    endif;
+
+    if ($loc) :
+      echo '<p>Location: ' . $loc . '</p>';
+    endif;
+
+    if ($cam) :
+      echo '<p>Camera: ' . $cam . '</p>';
+    endif;
+
+    if ($film) :
+      echo '<p>Film: ' . $film . '</p>';
+    endif;
+  }
+}
+
+?>

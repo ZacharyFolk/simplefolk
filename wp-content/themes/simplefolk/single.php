@@ -10,6 +10,7 @@ while (have_posts()) :
     the_post();
     $image_caption =  wp_get_attachment_caption(get_post_thumbnail_id()); ?>
 
+
 <div class="wrap">
     <div id="primary" class="content-area">
         <main id="main" class="site-main" role="main">
