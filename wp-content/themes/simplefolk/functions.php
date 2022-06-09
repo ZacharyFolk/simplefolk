@@ -592,12 +592,6 @@ function photo_meta_callback($post)
   wp_nonce_field(basename(__FILE__), "meta-box-nonce");
 ?>
 <p>
-    <label for="photo_short">Short description of photo : </label>
-    <textarea name="photo_short" id="photo_short" rows="5" cols="60" style="width:100%">
-    <?php echo esc_attr(get_post_meta(get_the_ID(), 'photo_short', true)); ?>
-  </textarea>
-</p>
-<p>
     <label for="photo_location">Location : </label>
     <input id="photo_location" type="text" name="photo_location" style="margin-right: 10px; width: 100%"
         value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'photo_location', true)); ?>">
@@ -645,10 +639,6 @@ function photo_save_meta($post_id)
     return;
   }
 
-  if (isset($_POST['photo_short'])) {
-    update_post_meta($post_id, 'photo_short', sanitize_textarea_field($_POST['photo_short']));
-  }
-
   $textfields = [
     'photo_location',
     'photo_camera',
@@ -678,7 +668,6 @@ function display_photo_meta($id)
   if (isset($attachments) && !empty($attachments)) {
     $first_attachment = current($attachments);
     $attachment_fields = get_post_custom($first_attachment->ID);
-
     $desc = $first_attachment->post_content;
     $loc = $attachment_fields['photo_location'][0];
     $cam = $attachment_fields['photo_camera'][0];
