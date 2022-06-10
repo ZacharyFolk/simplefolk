@@ -17,6 +17,7 @@ function photo_child_enqueue_styles()
   wp_enqueue_script('isotope', get_template_directory_uri() . '/js/isotope.pkgd.min.js', array('jquery'), false, true);
   wp_enqueue_script('photograph-isotope-setting', get_template_directory_uri() . '/js/isotope-setting.js', array('isotope'), false, true);
   wp_enqueue_script('fancyboxjs',  get_theme_file_uri() . '/assets/fancybox/fancybox.js', array('jquery'), false, true);
+  wp_enqueue_script('theme-scripts', get_template_directory_uri() . '/js/theme-scripts.js');
 }
 
 add_action('wp_enqueue_scripts', 'photo_child_enqueue_styles');
@@ -498,6 +499,24 @@ function the_breadcrumb()
     echo '</div>';
   }
 }
+
+
+////////////////////////////////////////
+//                                    //
+//    Check cookie for light theme    //
+//                                    //
+////////////////////////////////////////
+
+function light_mode($classes)
+{
+  if (isset($_COOKIE["mode"])) :
+    if ($_COOKIE["mode"] == 'light') :
+      return array_merge($classes, array('lightmode'));
+    endif;
+  endif;
+  return $classes;
+}
+add_filter('body_class', 'light_mode');
 
 
 /////////////////////////

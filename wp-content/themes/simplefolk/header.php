@@ -13,9 +13,12 @@
 <body <?php body_class(); ?>>
     <?php wp_body_open(); ?>
     <section class="top-nav">
-        <div id="site-branding">
+        <div id="site_branding">
             <?php echo get_site_info(); ?>
         </div>
+
+
+
         <input id="menu-toggle" type="checkbox" />
         <label class="menu-button-container" for="menu-toggle">
             <div class="menu-button"></div>
@@ -34,6 +37,11 @@
                 endif; ?>
         </ul>
         <?php endif; ?>
+        <input id="mode-toggle" type="checkbox" />
+        <label class="mode-button-container" for="mode-toggle">
+            <div class="mode-button">
+            </div>
+        </label>
     </section>
     <div id="crumb_wrap">
         <?php echo the_breadcrumb(); ?>
