@@ -398,7 +398,7 @@ version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
     height: 100%;
   }
   body { display: flex; flex-direction: column;}
-  #content { flex: 1 0 auto;}
+  #content { flex: 1 0 auto; }
 
 
 /* ************************************************************************
@@ -489,6 +489,7 @@ img {
 --dark-surface : #121212;
 
 /* Warm Grey */
+--warm-0: #161410;
 --warm-1: #27241D;
 --warm-2: #423D33;
 --warm-3: #504A40;
@@ -582,6 +583,7 @@ button {
 .mode-button {
   font-size: 1.3rem;
   cursor: pointer;
+  margin-top: 3px;
 }
 .mode-button:before {
   font-family: 'icomoon';
@@ -595,9 +597,8 @@ button {
 
 /* Dark Mode */
 
-
 body { 
-  background-color: var(--warm-1);
+  background-color: var(--warm-0);
   color: var(--warm-8);
 }
 
@@ -611,6 +612,9 @@ a:hover {
 
 .archive-wrap {
   background-color: var(--warm-3);
+}
+.archive-wrap header {
+  background-color: var(--warm-2);
 }
 .top-nav {
 background-color: rgb(7, 7, 7);
@@ -634,7 +638,7 @@ button.active {
   cursor: auto;
 }
 #crumb_wrap {
-  background: var(--warm-2);
+  background: var(--warm-1);
 }
 
 .menu-button,
@@ -644,6 +648,24 @@ button.active {
 }
 footer {
   border-top: 1px solid var(--warm-2);
+}
+@media (max-width: 767px) {
+.menu > li {
+  color: var(--warm-0);
+  background-color: var(--warm-1);
+}
+.menu > li:hover {
+  background-color: var(--warm-2);
+}
+.menu > li:not(:last-child) {
+  border-bottom: 1px solid var(--warm-3);
+}
+#menu-toggle:checked ~ .menu li {
+  border: 1px solid var(--warm-3);
+}
+#menu-toggle:checked ~ .menu li:first-child {
+  border-top: 1px solid var(--warm-1);
+}
 }
 
 /* Light Mode */
@@ -689,6 +711,29 @@ body.lightmode .archive-wrap {
 body.lightmode footer {
     border-top: 1px solid var(--warm-8);
 }
+@media (max-width: 767px) {
+
+body.lightmode .menu-button,
+body.lightmode .menu-button::before,
+body.lightmode .menu-button::after {
+  background-color: var(--warm-2);
+}
+
+
+body.lightmode .menu > li {
+  color: var(--warm-2);
+  background-color: var(--warm-9);
+}
+body.lightmode .menu > li:hover {
+  background-color: var(--warm-10);
+}
+body.lightmode .menu > li:not(:last-child) {
+  border-bottom: 1px solid var(--warm-4);
+}
+body.lightmode #menu-toggle:checked ~ .menu li {
+  border: 1px solid var(--warm-8);
+}
+}
 /* **************
 *               *
 *    Buttons    *
@@ -727,7 +772,7 @@ footer .copyright {
 }
 .wrap {
   max-width: 1480px;
-  margin: 0 auto;
+  margin: 20px auto;
   width: 90%;
   display: flex;
 }
@@ -768,6 +813,7 @@ footer .copyright {
     justify-content: space-between;
     height: 100px;
     padding: 16px 60px;
+    position: relative;
   }
   
   .menu {
@@ -849,9 +895,6 @@ footer .copyright {
       align-items: center;
     }
 
-    /* lame fixes for when admin bar is visible */ 
-    body.admin-bar .menu { top: 90px;}
-    
 #tag_toggle ~ .tag-buttons  {
   top: 64px;
   left:-1200px;
@@ -871,7 +914,6 @@ footer .copyright {
       transition: height 400ms cubic-bezier(0.23, 1, 0.32, 1);
     }
     #menu-toggle:checked ~ .menu li {
-      border: 1px solid #333;
       height: 2.5em;
       padding: 0.5em;
       transition: height 400ms cubic-bezier(0.23, 1, 0.32, 1);
@@ -882,15 +924,8 @@ footer .copyright {
       margin: 0;
       padding: 0.5em 0;
       width: 100%;
-      color: white;
-      background-color: var(--dark-background-2);
     }
-    .menu > li:hover {
-      background-color: var(--dark-background-3);
-    }
-    .menu > li:not(:last-child) {
-      border-bottom: 1px solid #444;
-    }
+
     .menu >li:last-child {
       box-shadow: -5px 20px 40px rgb(13, 13, 13)
     }
@@ -914,8 +949,8 @@ footer .copyright {
   }
 
   #crumbs {
-	margin: 16px 0 16px 60px;
-	font-size: 1.2em;
+	margin: 10px 0 10px 60px;
+	font-size: 1em;
 	font-family: var(--font-crumbs);
 	text-transform: uppercase;
   }
@@ -955,7 +990,7 @@ footer .copyright {
   .featured-gallery-header {
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
+  align-items: baseline;
   position: relative;
   }
   .featured-gallery-header h2 { 
@@ -1026,10 +1061,7 @@ footer .copyright {
     font-weight: normal;
   }
   .archive-container p {
-    padding: 0 1.5em 2em;
-  }
-  .archive-container .img-wrap {
-    padding: .5em 1em 1em
+    padding: 0 1.5em 1em;
   }
   .tag-link {
     display: flex;
@@ -1055,6 +1087,9 @@ footer .copyright {
 
    #primary,  #secondary {
     width: 100%;
+  }
+  #primary_full_width {
+    padding: 0;
   }
   .single-post .wrap {
     flex-direction: column;
@@ -1087,17 +1122,14 @@ footer .copyright {
 
   #crumbs { margin: 10px 0 10px 20px; }
   .page-header { padding-left: 20px;}
-  .top-nav { padding: 4px 10px;}
+  .top-nav { padding: 10px;}
 
   .featured-gallery-header h2 { width: 90%}
 
   /* home-tags container */
   .hashtag-container {
     display: block;
-    font-family: 'Space Mono';
-    font-size: 3em;
-    font-weight: 100;
-    margin-top: -26px;
+    font-size: 1.7em;
     position: relative;
     z-index: 980;
   }
@@ -1109,9 +1141,7 @@ footer .copyright {
     top: 0px;
     padding: 0 30px;
   }
-  .home-tags-header h3{
-    color: var(--dark-background-3);
-  }
+
   .tag-buttons button {
     margin: 10px 4px 10px 0;
   }

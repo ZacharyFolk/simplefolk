@@ -23,7 +23,7 @@ $tag_list = explode(',', esc_attr(get_post_meta(get_the_ID(), 'fpt_list', true))
         <div class="filter-by-tag">
             <input id="tag_toggle" type="checkbox" />
             <label class="hashtag-container" for="tag_toggle">
-                <div class="hashtag-button">#</div>
+                <span class="icon-tag"></span>
             </label>
 
             <div class="tag-buttons">

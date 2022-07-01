@@ -10,7 +10,7 @@ $fancy_link = wp_get_attachment_image_src(get_post_thumbnail_id(), 'full');
     <div class="archive-wrap">
         <header>
             <h1>
-                #<?php echo strtolower(the_title()); ?>
+                <?php echo strtolower(the_title()); ?>
             </h1>
         </header>
         <div class="img-wrap">
