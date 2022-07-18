@@ -6,7 +6,7 @@
 //                                    //
 ////////////////////////////////////////
 
-define('SIMPLE_THEME_VERSION', '0.0.1');
+define('SIMPLE_THEME_VERSION', '0.9.3');
 
 function photo_child_enqueue_styles()
 {
@@ -118,6 +118,7 @@ function get_site_info()
 // if ( $description && true === get_theme_mod( 'display_title_and_tagline', true ) ) :
 // echo $description; // phpcs:ignore WordPress.Security.EscapeOutput 
 
+
 //////////////////////////////////
 //                              //
 //    Display a random image    //
@@ -174,6 +175,38 @@ function get_random_img_src_by_tag($tag = '')
   }
 }
 
+//////////////////////////////
+//                          //
+//    Gallery by tag    //
+//                          //
+//////////////////////////////
+
+function get_gallery_by_tag($post_tag)
+{
+
+  $args = array(
+    'tag' => $post_tag
+  );
+
+  $tag_query = new WP_Query($args);
+
+  if ($tag_query->have_posts()) :
+    echo '<div id="tag_thumbs">';
+    while ($tag_query->have_posts()) :
+      $tag_query->the_post();
+      if (has_post_thumbnail()) :
+        $image_id = get_post_thumbnail_id();
+        $image_caption =  wp_get_attachment_caption($image_id);
+    ?>
+<a data-fancybox="gallery" data-caption="<?php echo $image_caption; ?>" href="<?php the_post_thumbnail_url(); ?>">
+    <?php get_img_with_sizes('thumbnail'); ?>
+</a>
+<?php endif;
+    endwhile;
+    echo '</div>';
+  endif;
+}
+
 ////////////////////////////////////////////////
 //                                            //
 //    Sidebar Thumbs from current category    //
@@ -203,7 +236,7 @@ function this_cats_thumbs()
       while ($arr_posts->have_posts()) :
         $arr_posts->the_post();
         if (has_post_thumbnail()) :
-    ?>
+        ?>
 <a href="<?php the_permalink(); ?>">
     <?php get_img_with_sizes('thumbnail'); ?>
 </a>
@@ -376,11 +409,12 @@ function hashed_tags()
   return $string;
 }
 
-///////////////////////
-// //
-// Breadcrumbs //
-// //
-///////////////////////
+
+////////////////////////
+//                    //
+//    Breadcrumbs     //
+//                    //
+////////////////////////
 /**
  * Retrieves the breadcrumb for the header
  * @since 0.0.1
@@ -687,27 +721,35 @@ function display_photo_meta($id)
   if (isset($attachments) && !empty($attachments)) {
     $first_attachment = current($attachments);
     $attachment_fields = get_post_custom($first_attachment->ID);
-    $desc = $first_attachment->post_content;
-    $loc = $attachment_fields['photo_location'][0];
-    $cam = $attachment_fields['photo_camera'][0];
-    $film = $attachment_fields['photo_film'][0];
-    // $prints = $attachment_fields['print_available'][0];
 
+    $desc = $first_attachment->post_content;
     if ($desc) :
       echo '<p>' . $desc . '</p>';
     endif;
+    if (array_key_exists('photo_location', $attachment_fields)) {
+      $loc = $attachment_fields['photo_location'][0];
+      if ($loc) :
+        echo '<p>Location: ' . $loc . '</p>';
+      endif;
+    }
+    if (array_key_exists('photo_camera', $attachment_fields)) {
+      $cam = $attachment_fields['photo_camera'][0];
+      if ($cam) :
+        echo '<p>Camera: ' . $cam . '</p>';
+      endif;
+    }
+    if (array_key_exists('photo_film', $attachment_fields)) {
+      $film = $attachment_fields['photo_film'][0];
+      if ($film) :
+        echo '<p>Film: ' . $film . '</p>';
+      endif;
+    }
 
-    if ($loc) :
-      echo '<p>Location: ' . $loc . '</p>';
-    endif;
+    // if (array_key_exists('print_available', $attachment_fields)) {
 
-    if ($cam) :
-      echo '<p>Camera: ' . $cam . '</p>';
-    endif;
+    // $prints = $attachment_fields['print_available'][0];
+    // }
 
-    if ($film) :
-      echo '<p>Film: ' . $film . '</p>';
-    endif;
   }
 }
 

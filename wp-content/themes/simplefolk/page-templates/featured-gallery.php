@@ -4,6 +4,14 @@
  * Template for home page gallery
  *
  */
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                 //
+//    TODO : Home page options currently custom meta for page... all these values probably better as global theme customization    //
+//                                                                                                                                 //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 $gallery_heading = esc_attr(get_post_meta(get_the_ID(), 'fpt_title', true));
 $num_posts = (int)(get_post_meta(get_the_ID(), 'fpt_count', true));
 $tag_list = explode(',', esc_attr(get_post_meta(get_the_ID(), 'fpt_list', true)));
@@ -61,17 +69,12 @@ $tag_list = explode(',', esc_attr(get_post_meta(get_the_ID(), 'fpt_list', true))
             $fancy_link = wp_get_attachment_image_src(get_post_thumbnail_id(), 'full');
         ?>
         <article <?php post_class('archive-card'); ?>>
-
             <?php if (has_post_thumbnail()) { ?>
-
             <a title="<?php the_title_attribute(['before' => 'View the full post for ']); ?>"
                 href="<?php echo esc_url(get_permalink()); ?>">
                 <?php get_img_with_sizes('medium_large'); ?>
-
             </a>
-
             <?php } ?>
-
         </article>
         <?php
         endwhile;

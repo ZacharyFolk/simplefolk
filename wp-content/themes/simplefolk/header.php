@@ -16,9 +16,6 @@
         <div id="site_branding">
             <?php echo get_site_info(); ?>
         </div>
-
-
-
         <input id="menu-toggle" type="checkbox" />
         <label class="menu-button-container" for="menu-toggle">
             <div class="menu-button"></div>
