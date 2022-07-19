@@ -6,7 +6,7 @@
 //                                    //
 ////////////////////////////////////////
 
-define('SIMPLE_THEME_VERSION', '0.9.3');
+define('SIMPLE_THEME_VERSION', '1.0.0');
 
 function photo_child_enqueue_styles()
 {
@@ -22,6 +22,7 @@ function photo_child_enqueue_styles()
 
 add_action('wp_enqueue_scripts', 'photo_child_enqueue_styles');
 
+include('customizer.php');
 
 //////////////////////////////
 //                          //
@@ -173,6 +174,56 @@ function get_random_img_src_by_tag($tag = '')
       endif;
     endwhile;
   }
+}
+
+
+///////////////////////////////////
+//                               //
+//    Updates for page title     //
+//                               //
+///////////////////////////////////
+/**
+ * Fix for empty title on home page
+ * 
+ * @param string $title The original title.
+ * @return string The title to use.
+ */
+
+add_filter('wp_title', 'wp_title_home');
+function wp_title_home($title)
+{
+  if (empty($title) && (is_home() || is_front_page())) {
+    $title = get_bloginfo('name') . ' | ' . get_bloginfo('description');
+  }
+
+  return $title;
+}
+
+//////////////////////////////////////
+//                                  //
+//    Optimize page descriptions    //
+//                                  //
+//////////////////////////////////////
+/**
+ * Dynamic meta descriptions
+ * 
+ * @return string The description of the page based on this fallback:
+ * 1) Check if custom meta description ('meta_desc') is defined from the page or post 
+ * 2) If no meta description and it is a single post check for image caption 
+ * 3) No meta, no caption, then just shows default site description
+ */
+function get_meta_description()
+{
+  $field = get_post_meta(get_queried_object_id(), 'meta_desc', true);
+  if (is_single()) {
+    $image_id = get_post_thumbnail_id();
+    $image_caption =  wp_get_attachment_caption($image_id);
+    $desc = (empty($field) ? (empty($image_caption) ? get_bloginfo('description') : $image_caption) : $field);
+  } else {
+    $desc = (empty($field) ?  get_bloginfo('description')  : $field);
+  }
+
+  return esc_attr(trim($desc));
 }
 
 //////////////////////////////
@@ -554,75 +605,8 @@ add_filter('body_class', 'light_mode');
 
 
 /////////////////////////
-// //
 // Metaboxes //
-// //
 /////////////////////////
-
-/**
- * Register meta boxes for featured post gallery on home page
- */
-
-function fpt_register_meta_boxes()
-{
-  global $post;
-  if ($post->ID == get_option('page_on_front')) :
-    add_meta_box('fp-1', esc_html__('Featued Post Tags', 'fpt'), 'fpt_display_callback', 'page', 'normal', 'default');
-  endif;
-}
-add_action('add_meta_boxes', 'fpt_register_meta_boxes');
-
-/**
- * Meta box display callback.
- *
- * @param WP_Post $post Current post object.
- */
-function fpt_display_callback()
-{
-  // prevent CSRF
-  wp_nonce_field(basename(__FILE__), "meta-box-nonce");
-  ?>
-<p>
-    <label for="fpt_count">Number of posts to show : </label>
-    <input id="fpt_count" type="text" name="fpt_count" style="margin-right: 10px; width: 200px"
-        value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'fpt_count', true)); ?>">
-</p>
-<p>
-    <label for="fpt_title">Main heading for gallery : </label>
-    <input id="fpt_title" type="text" name="fpt_title" style="margin-right: 10px; width: 600px"
-        value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'fpt_title', true)); ?>">
-</p>
-<p>
-    <label for="fpt_list">Comma seperated list of featured tags : </label>
-    <input id="fpt_list" type="text" name="fpt_list" style="margin-right: 10px; width: 70%"
-        value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'fpt_list', true)); ?>">
-</p>
-<?php }
-
-/**
- * Save home page meta box content.
- *
- * @param int $post_id Post ID
- */
-function fpt_save_meta_box($post_id)
-{
-  if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
-  if ($parent_id = wp_is_post_revision($post_id)) {
-    $post_id = $parent_id;
-  }
-  $fields = [
-    'fpt_title',
-    'fpt_count',
-    'fpt_list',
-  ];
-  foreach ($fields as $field) {
-    if (array_key_exists($field, $_POST)) {
-      update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
-    }
-  }
-}
-add_action('save_post', 'fpt_save_meta_box');
-
 
 /**
  * Register meta box for media attachment
@@ -643,7 +627,7 @@ add_action('add_meta_boxes_attachment', 'photo_meta_boxes');
 function photo_meta_callback($post)
 {
   wp_nonce_field(basename(__FILE__), "meta-box-nonce");
-?>
+  ?>
 <p>
     <label for="photo_location">Location : </label>
     <input id="photo_location" type="text" name="photo_location" style="margin-right: 10px; width: 100%"

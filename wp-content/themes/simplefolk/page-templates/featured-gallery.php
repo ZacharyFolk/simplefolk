@@ -6,15 +6,9 @@
  */
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                 //
-//    TODO : Home page options currently custom meta for page... all these values probably better as global theme customization    //
-//                                                                                                                                 //
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-$gallery_heading = esc_attr(get_post_meta(get_the_ID(), 'fpt_title', true));
-$num_posts = (int)(get_post_meta(get_the_ID(), 'fpt_count', true));
-$tag_list = explode(',', esc_attr(get_post_meta(get_the_ID(), 'fpt_list', true)));
+$gallery_heading = esc_attr(get_theme_mod('featured_heading', 'Featured Posts'));
+$num_posts = (int)(get_theme_mod('num_posts', 10));
+$tag_list = explode(',', esc_attr(get_theme_mod('tag_list')));
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                        //
