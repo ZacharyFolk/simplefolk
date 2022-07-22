@@ -2,6 +2,7 @@
 <html class="no-js [🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️📸🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️🎞️]"
     <?php language_attributes(); ?>>
 <?php get_template_part('commentapalooza'); ?>
+<?php $analytics_key =  esc_attr(get_theme_mod('analytics_key')); ?>
 
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
@@ -10,6 +11,19 @@
     <title><?php wp_title(''); ?></title>
     <meta name="description" content="<?php echo get_meta_description(); ?>">
     <?php wp_head(); ?>
+    <?php if ($analytics_key) : ?>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $analytics_key; ?>"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', '<?php echo $analytics_key; ?>');
+    </script>
+    <?php endif; ?>
 </head>
 
 <body <?php body_class(); ?>>

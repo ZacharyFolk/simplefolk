@@ -4,6 +4,12 @@ add_action('customize_register', 'simplefolk_customizer_settings');
 function simplefolk_customizer_settings($wp_customize)
 {
 
+    /////////////////////////////////////
+    //                                 //
+    //    Featured Gallery settings    //
+    //                                 //
+    /////////////////////////////////////
+
     $wp_customize->add_section('simple_featured', array(
         'title'      => 'Featured Gallery (Home)',
         'priority'   => 30,
@@ -41,6 +47,29 @@ function simplefolk_customizer_settings($wp_customize)
         'description' => 'Comma seperated list of tags to use as filters (will only appear if posts with that tag exist)',
         'section'    => 'simple_featured',
         'settings'   => 'tag_list',
+        'type' => 'text'
+    ));
+
+    ///////////////////////////
+    //                       //
+    //    Google settings    //
+    //                       //
+    ///////////////////////////
+
+
+    $wp_customize->add_section('google_settings', array(
+        'title'      => 'Google settings',
+        'priority'   => 40,
+    ));
+    $wp_customize->add_setting('analytics_key', array(
+        'transport'   => 'refresh',
+    ));
+
+    $wp_customize->add_control('analytics_key', array(
+        'label'        => 'Analytics Key',
+        'description' => 'Insert key for GA API. Example (G-XK1E*****)',
+        'section'    => 'google_settings',
+        'settings'   => 'analytics_key',
         'type' => 'text'
     ));
 }
