@@ -813,10 +813,9 @@ footer .copyright {
 }
 #primary {
   width: 65%;
-  margin-right: 1%;
 }
 #secondary {
-  width: 34%;
+  width: 35%;
 }
 
 /* ***************
@@ -1019,6 +1018,9 @@ article.type-post figcaption {
   max-width: 100%;
   height: auto;
 }
+figure.main-image {
+  margin: 0;
+}
 
 /* ***********************
   *                        *
@@ -1153,10 +1155,6 @@ a.buttonish {
 @media only screen and (max-width: 767px) {
   #main {
     padding: 0;
-  }
-
-  figure.main-image {
-    margin: 0;
   }
 
   .main-header,

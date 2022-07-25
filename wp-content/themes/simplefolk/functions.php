@@ -700,41 +700,55 @@ function photo_save_meta($post_id)
  */
 function display_photo_meta($id)
 {
-
-  $attachments = get_children('post_type=attachment&post_parent=' . $id);
-  if (isset($attachments) && !empty($attachments)) {
-    $first_attachment = current($attachments);
-    $attachment_fields = get_post_custom($first_attachment->ID);
-
-    $desc = $first_attachment->post_content;
-    if ($desc) :
-      echo '<p>' . $desc . '</p>';
-    endif;
-    if (array_key_exists('photo_location', $attachment_fields)) {
-      $loc = $attachment_fields['photo_location'][0];
-      if ($loc) :
-        echo '<p>Location: ' . $loc . '</p>';
-      endif;
+  $attachment_id = (get_post_thumbnail_id($id));
+  $core_meta = wp_get_attachment($attachment_id);
+  if (isset($core_meta) && !empty($core_meta)) {
+    if (!empty($core_meta['description'])) {
+      echo '<p>' . $core_meta['description'] . '</p>';
     }
-    if (array_key_exists('photo_camera', $attachment_fields)) {
-      $cam = $attachment_fields['photo_camera'][0];
-      if ($cam) :
-        echo '<p>Camera: ' . $cam . '</p>';
-      endif;
-    }
-    if (array_key_exists('photo_film', $attachment_fields)) {
-      $film = $attachment_fields['photo_film'][0];
-      if ($film) :
-        echo '<p>Film: ' . $film . '</p>';
-      endif;
-    }
-
-    // if (array_key_exists('print_available', $attachment_fields)) {
-
-    // $prints = $attachment_fields['print_available'][0];
-    // }
-
   }
+
+  $attachment_fields = get_post_custom($attachment_id);
+  if (array_key_exists('photo_location', $attachment_fields)) {
+    $loc = $attachment_fields['photo_location'][0];
+    if ($loc) :
+      echo '<p>Location: ' . $loc . '</p>';
+    endif;
+  }
+  if (array_key_exists('photo_camera', $attachment_fields)) {
+    $cam = $attachment_fields['photo_camera'][0];
+    if ($cam) :
+      echo '<p>Camera: ' . $cam . '</p>';
+    endif;
+  }
+  if (array_key_exists('photo_film', $attachment_fields)) {
+    $film = $attachment_fields['photo_film'][0];
+    if ($film) :
+      echo '<p>Film: ' . $film . '</p>';
+    endif;
+  }
+}
+
+
+/**
+ * Return all of the data from attachment
+
+ *
+ * @param $attachment_id The id of the media attachment, a featured post can use get_post_thumbnail_id($post);
+ * @return array HTML and data to sidebar.php
+ */
+function wp_get_attachment($attachment_id)
+{
+
+  $attachment = get_post($attachment_id);
+  return array(
+    'alt' => get_post_meta($attachment->ID, '_wp_attachment_image_alt', true),
+    'caption' => $attachment->post_excerpt,
+    'description' => $attachment->post_content,
+    'href' => get_permalink($attachment->ID),
+    'src' => $attachment->guid,
+    'title' => $attachment->post_title
+  );
 }
 
   ?>

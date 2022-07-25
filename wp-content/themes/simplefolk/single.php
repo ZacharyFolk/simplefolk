@@ -17,6 +17,8 @@ while (have_posts()) :
     <div id="primary" class="content-area">
         <main id="main" class="site-main" role="main">
             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+                <?php echo the_title('<h1>', '</h1>'); ?>
+
                 <?php if (has_post_thumbnail()) : ?>
                 <figure class="main-image">
                     <a data-fancybox="gallery" data-caption="<?php echo $image_caption; ?>"
