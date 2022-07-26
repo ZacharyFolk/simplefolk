@@ -24,6 +24,23 @@ add_action('wp_enqueue_scripts', 'photo_child_enqueue_styles');
 
 include('customizer.php');
 
+// Load styles for admin area
+
+function simple_admin_css()
+{
+  if (is_admin()) {
+    wp_enqueue_style(
+      "simple_admin",
+      get_bloginfo('template_directory') . "/simple_admin.css",
+      false,
+      false,
+      "all"
+    );
+  }
+}
+add_action('admin_print_styles', 'simple_admin_css');
+add_action('wp_enqueue_scripts', 'simple_admin_css');
+
 //////////////////////////////
 //                          //
 //    Debug highlighter     //

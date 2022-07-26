@@ -1,0 +1,7 @@
+/* for weird bug in Media page */
+body.post-type-attachment #wpfooter {
+  position: relative;
+}
+.wp_attachment_image {
+  max-width: 600px;
+}
