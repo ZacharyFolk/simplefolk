@@ -517,6 +517,7 @@ img {
   --dark-surface: #121212;
 
   /* Warm Grey */
+  --warm-00: #0e0c0a;
   --warm-0: #161410;
   --warm-1: #27241d;
   --warm-2: #423d33;
@@ -639,6 +640,7 @@ a:hover {
 .wrap {
   background-color: var(--dark-surface);
 }
+
 .archive-wrap {
   background-color: var(--grey-1);
   padding: 20px;
@@ -669,6 +671,7 @@ button.active {
 }
 #crumb_wrap {
   background: var(--warm-1);
+  border-bottom: 1px solid var(--warm-1);
 }
 
 .menu-button,
@@ -715,10 +718,12 @@ body.lightmode a:hover {
 
 body.lightmode .top-nav {
   background-color: var(--warm-8);
+  border-bottom: 2px solid var(--warm-6);
   color: var(--warm-1);
 }
 body.lightmode #crumb_wrap {
   background: var(--warm-9);
+  border-bottom: 1px solid var(--warm-1);
 }
 
 body.lightmode button {
@@ -743,7 +748,9 @@ body.lightmode .archive-wrap {
 body.lightmode .archive-wrap header {
   background-color: var(--warm-7);
 }
-
+body.lightmode #post_title {
+  background-color: var(--warm-8);
+}
 body.lightmode footer {
   border-top: 1px solid var(--warm-8);
 }
@@ -799,22 +806,23 @@ footer {
   width: 100%;
   display: flex;
   flex-direction: row-reverse;
-  margin-top: 60px;
 }
 footer .copyright {
   padding: 20px 60px;
 }
 .wrap {
   max-width: 1480px;
-  margin: 30px auto;
-  width: 90%;
+  margin: 0 auto;
+  width: 100%;
+}
+.content-wrap {
   display: flex;
-  padding: 20px 0 60px;
 }
 #primary {
   width: 65%;
 }
 #secondary {
+  padding: 20px;
   width: 35%;
 }
 
@@ -1017,9 +1025,21 @@ article.type-post figcaption {
   /* TODO : Should replace this with srcset variations */
   max-width: 100%;
   height: auto;
+  margin: 0 auto;
+  padding: 20px;
 }
 figure.main-image {
   margin: 0;
+}
+#post_title {
+  background-color: var(--dark-background);
+  border-bottom: 1px solid var(--dark-background-2);
+  width: 100%;
+}
+#post_title h1 {
+  font-size: 1.4em;
+  margin: 0;
+  padding: 20px 0 20px 40px;
 }
 
 /* ***********************
@@ -1139,10 +1159,13 @@ a.buttonish {
   #secondary {
     width: 100%;
   }
+  #secondary {
+    border-top: 1px dashed var(--warm-1);
+  }
   #primary_full_width {
     padding: 0;
   }
-  .wrap {
+  .content-wrap {
     flex-direction: column;
   }
   #cat_thumbs a {
