@@ -431,9 +431,9 @@ function get_img_with_sizes($size)
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////
-// //
-// Return only the first category when outputting the previous/next post links //
-// //
+//                                                                                   //
+//    Return only the first category when outputting the previous/next post links    //
+//                                                                                   //
 ///////////////////////////////////////////////////////////////////////////////////////
 
 function my_custom_post_navigation($terms, $object_ids, $taxonomies, $args)
@@ -444,9 +444,9 @@ function my_custom_post_navigation($terms, $object_ids, $taxonomies, $args)
 
 
 ////////////////////////////////////////////////
-// //
-// Filter to prepend tags with a hash # //
-// //
+//                                            //
+//    Filter to prepend tags with a hash #    //
+//                                            //
 ////////////////////////////////////////////////
 
 /**
