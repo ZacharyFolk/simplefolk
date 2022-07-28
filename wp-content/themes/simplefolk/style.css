@@ -4,7 +4,7 @@ Theme URI: https://folkphotography.com
 Author: Zachary Folk
 Author URI: https://folkphotography.com
 Description: A very stripped down theme for folkphotography
-Version: 1.1.0
+Version: 1.2.0
 Text Domain: simplefolk
 License: GNU General Public License version 3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -36,16 +36,6 @@ h1 {
   margin: 0.67em 0;
 }
 
-/* *************************
-*                          *
-*    ##additional reset    *
-*                          *
-************************* */
-
-/**
-   * Box sizing reset
-   */
-
 html {
   box-sizing: border-box;
 }
@@ -60,7 +50,6 @@ a:link,
 a:visited {
   text-decoration: none;
 }
-
 a:hover {
   text-decoration: underline;
 }
@@ -82,59 +71,6 @@ img {
   height: auto;
 }
 
-/* *************
-*              *
-*    Fonts     *
-*              *
-************* */
-
-/* koulen-regular - latin */
-@font-face {
-  font-family: 'Koulen';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('./assets/fonts/koulen-v25-latin/koulen-v25-latin-regular.eot'); /* IE9 Compat Modes */
-  src: local(''),
-    url('./assets/fonts/koulen-v25-latin/koulen-v25-latin-regular.eot?#iefix')
-      format('embedded-opentype'),
-    /* IE6-IE8 */
-      url('./assets/fonts/koulen-v25-latin/koulen-v25-latin-regular.woff2')
-      format('woff2'),
-    /* Super Modern Browsers */
-      url('./assets/fonts/koulen-v25-latin/koulen-v25-latin-regular.woff')
-      format('woff'),
-    /* Modern Browsers */
-      url('./assets/fonts/koulen-v25-latin/koulen-v25-latin-regular.ttf')
-      format('truetype'),
-    /* Safari, Android, iOS */
-      url('./assets/fonts/koulen-v25-latin/koulen-v25-latin-regular.svg#Koulen')
-      format('svg'); /* Legacy iOS */
-}
-/* zen-maru-gothic-regular - latin */
-@font-face {
-  font-family: 'Zen Maru Gothic';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('./assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-regular.eot'); /* IE9 Compat Modes */
-  src: local(''),
-    url('./assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-regular.eot?#iefix')
-      format('embedded-opentype'),
-    /* IE6-IE8 */
-      url('./assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-regular.woff2')
-      format('woff2'),
-    /* Super Modern Browsers */
-      url('./assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-regular.woff')
-      format('woff'),
-    /* Modern Browsers */
-      url('./assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-regular.ttf')
-      format('truetype'),
-    /* Safari, Android, iOS */
-      url('./assets/fonts/zen-maru-gothic/zen-maru-gothic-v9-latin-regular.svg#ZenMaruGothic')
-      format('svg'); /* Legacy iOS */
-}
-
 /* *****************
 *                  *
 *    #Variables    *
@@ -144,6 +80,18 @@ img {
 /* Fallbacks?  https://caniuse.com/css-variables  */
 
 :root {
+  /* fonts */
+
+  --font-primary: Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;
+  --font-crumbs: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+  --font-nav: 'Rajdhani', sans-serif;
+
+  /* colors */
+  /* todo: 
+  *  Clean these up to only colors being used. 
+  *  Add palletes to the admin section #24
+  */
+
   --dark-background: rgb(13, 13, 13);
   --dark-background-2: rgb(36, 37, 37);
   --dark-background-3: rgb(53, 54, 54);
@@ -153,19 +101,6 @@ img {
   --off-white-2: rgb(187, 179, 167);
   --off-white-3: rgb(249, 232, 207);
   --light-button-border: rgb(143, 132, 117);
-
-  /* fonts */
-  /* --font-primary: 'Zen Maru Gothic', Verdana, Geneva, sans-serif; */
-  --font-primary: Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;
-
-  /* --font-crumbs: 'Koulen', Impact, Haettenschweiler, 'Franklin Gothic Bold',
-    Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', 'Arial Black',
-    'sans serif'; */
-
-  --font-crumbs: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
-
-  --font-nav: 'Rajdhani', sans-serif;
-
   --dark-surface: #121212;
 
   /* Warm Grey */
@@ -240,26 +175,25 @@ button {
 #mode-toggle {
   display: none;
 }
-
-.mode-button {
-  font-size: 1.3rem;
+.mode-button,
+.menu-button {
   cursor: pointer;
-  margin-top: 3px;
+  fill: var(--warm-5);
 }
-.mode-button:before {
-  font-family: 'icomoon';
-  content: '\e9d4';
+.mode-button .lightson {
+  display: none;
 }
-
-#mode-toggle:checked + .mode-button-container .mode-button::before {
-  content: '\e900';
+#mode-toggle:checked + .mode-button-container .mode-button .lightson {
+  display: block;
 }
-
+#mode-toggle:checked + .mode-button-container .mode-button .lightsoff {
+  display: none;
+}
 /* Dark Mode */
 
 body {
   background-color: var(--warm-0);
-  color: var(--warm-8);
+  color: var(--warm-7);
 }
 
 a:link,
@@ -309,11 +243,6 @@ button.active {
   border-bottom: 1px solid var(--warm-1);
 }
 
-.menu-button,
-.menu-button::before,
-.menu-button::after {
-  background-color: var(--warm-7);
-}
 footer {
   border-top: 1px solid var(--warm-2);
 }
@@ -342,7 +271,10 @@ body.lightmode {
   background-color: var(--warm-10);
   color: var(--warm-2);
 }
-
+body.lightmode .mode-button,
+body.lightmode .menu-button {
+  fill: var(--warm-2);
+}
 body.lightmode a:link,
 body.lightmode a:visited {
   color: var(--warm-2);
@@ -379,6 +311,9 @@ body.lightmode .wrap {
 body.lightmode .archive-wrap {
   background-color: var(--warm-9);
 }
+body.lightmode .archive-container h1 {
+  color: var(--warm-1);
+}
 body.lightmode .archive-wrap header {
   background-color: var(--warm-7);
 }
@@ -389,12 +324,6 @@ body.lightmode footer {
   border-top: 1px solid var(--warm-8);
 }
 @media (max-width: 767px) {
-  body.lightmode .menu-button,
-  body.lightmode .menu-button::before,
-  body.lightmode .menu-button::after {
-    background-color: var(--warm-2);
-  }
-
   body.lightmode .menu > li {
     color: var(--warm-2);
     background-color: var(--warm-9);
@@ -408,16 +337,6 @@ body.lightmode footer {
   body.lightmode #menu-toggle:checked ~ .menu li {
     border: 1px solid var(--warm-8);
   }
-}
-/* **************
-*               *
-*    Buttons    *
-*               *
-************** */
-
-button,
-input {
-  font-family: 'Space Mono', monospace;
 }
 
 /* ***************
@@ -506,6 +425,7 @@ footer .copyright {
   z-index: 999;
 }
 
+/* Responsive menu */
 .menu-button-container {
   display: none;
   height: 100%;
@@ -515,55 +435,28 @@ footer .copyright {
   justify-content: center;
   align-items: center;
 }
-
 #menu-toggle {
   display: none;
 }
-
-.menu-button,
-.menu-button::before,
-.menu-button::after {
+.menu-button .menu-expanded {
+  display: none;
+}
+#menu-toggle:checked + .menu-button-container .menu-button .menu-expanded {
   display: block;
-  position: absolute;
-  height: 3px;
-  width: 24px;
-  transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
-  border-radius: 2px;
 }
-
-.menu-button::before {
-  content: '';
-  margin-top: -8px;
-}
-
-.menu-button::after {
-  content: '';
-  margin-top: 8px;
-}
-
-#menu-toggle:checked + .menu-button-container .menu-button::before {
-  margin-top: 0px;
-  transform: rotate(405deg);
-}
-
-#menu-toggle:checked + .menu-button-container .menu-button {
-  background: rgba(255, 255, 255, 0);
-}
-
-#menu-toggle:checked + .menu-button-container .menu-button::after {
-  margin-top: 0px;
-  transform: rotate(-405deg);
+#menu-toggle:checked + .menu-button-container .menu-button .menu-closed {
+  display: none;
 }
 /* Mobile */
 
 @media (max-width: 767px) {
   .menu-button-container {
     display: flex;
-    margin-right: 6px;
+    margin-right: 20px;
   }
   .menu {
     position: absolute;
-    top: 50px;
+    top: 86px;
     left: 0;
     flex-direction: column;
     width: 100%;
@@ -767,8 +660,10 @@ figure.main-image {
 }
 .archive-container h1 {
   margin-right: 1em;
-  font-size: 1.6em;
+  font-size: 1.1em;
   font-weight: normal;
+  text-transform: lowercase;
+  color: var(--warm-5);
 }
 .archive-container p {
   padding: 0 1.5em 1em;

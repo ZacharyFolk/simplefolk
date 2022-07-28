@@ -6,7 +6,7 @@
 //                                    //
 ////////////////////////////////////////
 
-define('SIMPLE_THEME_VERSION', '1.1.0');
+define('SIMPLE_THEME_VERSION', '1.2.0');
 
 function photo_child_enqueue_styles()
 {
