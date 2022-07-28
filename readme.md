@@ -1,13 +1,8 @@
-========= SIMPLE FOLK =========
-
-Contributors: Zachary Folk
-Tags: basic,bare, photos, featured-images, responsive, fast, seo, photography, blog, portfolio, darkmode
-Stable tag: Not yet
-License: GNU General Public License version 3.0
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+================== SIMPLE FOLK ==================
 
 **Description**: SimpleFolk is a WordPress theme I am developing for [my photography site](folkphotography.com).
-My goal is to get this site as fast as possible and get a perfect score from Lighthouse ticking all the boxes for performance, security, and accessibility.
+
+My goal is to get this site as fast as possible and a perfect score from Lighthouse; ticking all the boxes for performance, security, and accessibility.
 
 Latest lightouse snapshot from 2022-07-27 :
 
