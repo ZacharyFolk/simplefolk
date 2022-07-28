@@ -11,7 +11,7 @@ My goal is to get this site as fast as possible and get a perfect score from Lig
 
 Latest lightouse snapshot from 2022-07-27 :
 
-![Lighthouse score as of 2022-07-27](./assets/readme/lightouse.jpg)
+![Lighthouse score as of 2022-07-27](./readme/lightouse.jpg)
 
 When 100 is achieved and I have moved everything into configurable options. I plan to make all the updates to adhere to the WordPress guidelines and submit this as a free, open theme available from their library.
 
