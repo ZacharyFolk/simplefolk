@@ -10,6 +10,10 @@ Latest lightouse snapshot from 2022-07-27 :
 
 When 100 is achieved and I have moved everything into configurable options. I plan to make all the updates to adhere to the WordPress guidelines and submit this as a free, open theme available from their library.
 
+Report from websitecarbon.com 2022-07-27 :
+
+![Carbon score as of 2022-07-27](./readme/websitecarbon.jpg)
+
 Another goal of building this was to remove the dependence on numerous plugins. Plugins are great but I wanted an all in one solution to keep it simple, have control over it, and reduce as much page weight as possible.
 
     Features
