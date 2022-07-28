@@ -1,6 +1,6 @@
 ================== SIMPLE FOLK ==================
 
-**Description**: SimpleFolk is a WordPress theme I am developing for [my photography site](folkphotography.com).
+**Description**: SimpleFolk is a WordPress theme I am developing for [my photography site](https://www.folkphotography.com).
 
 My goal is to get this site as fast as possible and a perfect score from Lighthouse; ticking all the boxes for performance, security, and accessibility.
 
