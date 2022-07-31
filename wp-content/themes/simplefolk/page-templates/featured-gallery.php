@@ -34,17 +34,19 @@ $tag_list = explode(',', esc_attr(get_theme_mod('tag_list')));
 
                 foreach ($tag_list as $featured_tab) :
                     $post_tags = get_term_by('slug', $featured_tab, 'post_tag');
+                    $featured_tab = trim($featured_tab);
                     if ($i == 1) :
                 ?>
                 <button type="button" class="active" data-category="*">All</button>
-                <?php if ($post_tags) : ?>
+                <?php if ($post_tags) :
+                        ?>
                 <button type="button"
                     data-category=".tag-<?php echo esc_attr($featured_tab); ?>"><?php echo esc_html($post_tags->name); ?></button>
                 <?php endif;
                     elseif ($post_tags) :
                         ?>
                 <button type="button"
-                    data-category=".tag-<?php echo esc_attr($featured_tab); ?>"><?php echo esc_html($post_tags->name); ?></button>
+                    data-category=".tag-<?php echo trim(esc_attr($featured_tab)); ?>"><?php echo esc_html($post_tags->name); ?></button>
                 <?php endif;
                     $i++;
                 endforeach; ?>
