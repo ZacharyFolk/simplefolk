@@ -40,6 +40,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- bug with featured gallery tags
+- fancybox loaded only on single posts
+
 ## [1.2.0] - 2022-07-28
 
 ### Added

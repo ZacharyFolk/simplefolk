@@ -8,19 +8,30 @@
 
 define('SIMPLE_THEME_VERSION', '1.2.0');
 
-function photo_child_enqueue_styles()
+function main_scripts()
 {
   wp_enqueue_style('main',  get_theme_file_uri() . '/style.css', array(), SIMPLE_THEME_VERSION, 'all');
   wp_enqueue_style('icons',  get_theme_file_uri() . '/assets/icomoon/style.css', array(), SIMPLE_THEME_VERSION, 'all');
-  wp_enqueue_style('fancy',  get_theme_file_uri() . '/assets/fancybox/fancybox.css', array(), SIMPLE_THEME_VERSION, 'all');
   wp_enqueue_script('imagesloaded-pkgd', get_template_directory_uri() . '/js/imagesloaded.pkgd.min.js', array('jquery'), false, true);
   wp_enqueue_script('isotope', get_template_directory_uri() . '/js/isotope.pkgd.min.js', array('jquery'), false, true);
   wp_enqueue_script('photograph-isotope-setting', get_template_directory_uri() . '/js/isotope-setting.js', array('isotope'), false, true);
-  wp_enqueue_script('fancyboxjs',  get_theme_file_uri() . '/assets/fancybox/fancybox.js', array('jquery'), false, true);
   wp_enqueue_script('theme-scripts', get_template_directory_uri() . '/js/theme-scripts.js');
 }
 
-add_action('wp_enqueue_scripts', 'photo_child_enqueue_styles');
+add_action('wp_enqueue_scripts', 'main_scripts');
+
+
+
+function single_scripts()
+{
+  if (is_singular('post')) {
+    wp_enqueue_style('fancy',  get_theme_file_uri() . '/assets/fancybox/fancybox.css', array(), SIMPLE_THEME_VERSION, 'all');
+    wp_enqueue_script('fancyboxjs',  get_theme_file_uri() . '/assets/fancybox/fancybox.js', array('jquery'), false, true);
+  }
+}
+
+add_action('wp_enqueue_scripts', 'single_scripts');
+
 
 include('customizer.php');
 
