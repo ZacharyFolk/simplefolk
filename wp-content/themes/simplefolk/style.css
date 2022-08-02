@@ -364,6 +364,8 @@ footer .copyright {
   padding: 20px 60px;
 }
 .wrap {
+  display: flex;
+  flex-flow: row wrap;
   max-width: 1480px;
   margin: 40px auto;
   width: 100%;
@@ -374,10 +376,15 @@ footer .copyright {
 }
 #primary {
   width: 65%;
+  display: flex;
+  justify-content: center;
 }
 #secondary {
   padding: 20px;
   width: 35%;
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
 }
 
 /* ***************
@@ -563,6 +570,7 @@ figure.main-image {
 #post_title {
   background-color: var(--dark-background);
   border-bottom: 1px solid var(--dark-background-2);
+  flex: 0 0 100%;
   width: 100%;
 }
 #post_title h1 {
