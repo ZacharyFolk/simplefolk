@@ -52,6 +52,25 @@ function simple_admin_css()
 add_action('admin_print_styles', 'simple_admin_css');
 add_action('wp_enqueue_scripts', 'simple_admin_css');
 
+//////////////////////////////////
+//                              //
+//    Disable Gutenberg  CSS    //
+//                              //
+//////////////////////////////////
+
+function remove_gutenberg_block_library_css()
+{
+  $disable = esc_attr(get_theme_mod('gutenberg_blocks'));
+  if ($disable) {
+    wp_dequeue_style('wp-block-library');
+  }
+}
+
+
+add_action('wp_enqueue_scripts', 'remove_gutenberg_block_library_css', 100);
+
+
+
 //////////////////////////////
 //                          //
 //    Debug highlighter     //

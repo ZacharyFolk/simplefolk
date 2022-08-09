@@ -72,4 +72,29 @@ function simplefolk_customizer_settings($wp_customize)
         'settings'   => 'analytics_key',
         'type' => 'text'
     ));
+
+    /////////////////////////
+    //                     //
+    //    Theme options    //
+    //                     //
+    /////////////////////////
+
+
+
+    $wp_customize->add_section('theme_options', array(
+        'title'      => 'Theme options',
+        'priority'   => 50,
+    ));
+    $wp_customize->add_setting('gutenberg_blocks', array(
+        'default' => 0,
+        'transport'   => 'refresh',
+    ));
+
+    $wp_customize->add_control('gutenberg_blocks', array(
+        'label'        => 'Disable Guttenberg block editor',
+        'description' => 'If not using the block editor disable for increased performance',
+        'section'    => 'theme_options',
+        'settings'   => 'gutenberg_blocks',
+        'type' => 'checkbox'
+    ));
 }
