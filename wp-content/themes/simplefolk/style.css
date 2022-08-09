@@ -779,11 +779,23 @@ a.buttonish {
   .archive-container article {
     width: 50%;
   }
+  #main {
+    padding: 0;
+  }
+  .featured-gallery-content {
+    padding: 0 20px;
+  }
 }
 
 @media only screen and (min-width: 1241px) and (max-width: 1700px) {
   .archive-container article {
     width: 33.3%;
+  }
+  #main {
+    padding: 0;
+  }
+  .featured-gallery-content {
+    padding: 0 20px;
   }
 }
 

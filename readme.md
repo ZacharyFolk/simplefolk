@@ -49,6 +49,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - bug with featured gallery tags
 - fancybox loaded only on single posts
 - layout bug on About page
+- padding for medium screens
+
+### Removed
+
+- old icomoon css
 
 ## [1.2.0] - 2022-07-28
 
