@@ -51,3 +51,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
   cookieCheck();
 });
+
+/////////////////////////////////////////
+//                                     //
+//    Initialize isotope containers    //
+//                                     //
+/////////////////////////////////////////
+
+var elem = document.querySelector('.archive-container');
+
+if (elem) {
+  imagesLoaded(elem, function (instance) {
+    var iso = new Isotope(elem, {
+      itemSelector: '.archive-card',
+      layoutMode: 'masonry',
+      masonry: {
+        columnWidth: '.archive-card',
+        gutter: 0,
+      },
+    });
+
+    var tagFilters = document.querySelectorAll('.tag-buttons button');
+
+    tagFilters.forEach(function (button) {
+      button.addEventListener('click', function () {
+        var filterValue = this.getAttribute('data-category');
+        iso.arrange({ filter: filterValue });
+        document
+          .querySelector('.tag-buttons button.active')
+          .classList.remove('active');
+        this.classList.add('active');
+      });
+    });
+  });
+}
