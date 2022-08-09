@@ -1,18 +1,12 @@
-================== SIMPLE FOLK ==================
+                ================== SIMPLE FOLK ==================
 
 **Description**: SimpleFolk is a WordPress theme I am developing for [my photography site](https://www.folkphotography.com).
 
-My goal is to get this site as fast as possible and a perfect score from Lighthouse; ticking all the boxes for performance, security, and accessibility.
+My goal is to get this site as fast as possible and ticking all the boxes for performance, security, seo, and accessibility. Working now on making the theme more versatile and plan to share it with an open license when it is ready.
 
-Latest lightouse snapshot from 2022-07-27 :
+Latest lightouse snapshot from 2022-08-09 :
 
-![Lighthouse score as of 2022-07-27](./readme/lightouse-2.jpg)
-
-When 100 is achieved and I have moved everything into configurable options. I plan to make all the updates to adhere to the WordPress guidelines and submit this as a free, open theme available from their library.
-
-Report from websitecarbon.com 2022-07-27 :
-
-![Carbon score as of 2022-07-27](./readme/websitecarbon.jpg)
+![Lighthouse score as of 2022-07-27](./readme/lightouse-3.jpg)
 
 Another goal of building this was to remove the dependence on numerous plugins. Plugins are great but I wanted an all in one solution to keep it simple, have control over it, and reduce as much page weight as possible.
 
@@ -28,10 +22,6 @@ Another goal of building this was to remove the dependence on numerous plugins. 
 - **Photocentric** - This theme is all about the images uploaded to the media library. Additional meta boxes are available to add information about the image such as location, captions, film type, etc.. Future updates will refine this, adding more meta boxes and maybe use the archive pages instead of posts.
 
 ---
-
-I am tracking this mainly as an exercise and to keep myself organized with this project.
-
-Eventually, I plan to release this as a free community theme and will be happy to have collaborators at that time.
 
     Changelog
 
