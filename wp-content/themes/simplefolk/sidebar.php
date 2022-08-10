@@ -5,13 +5,13 @@
  * TODO : Cleaner way to exclude specific pages (About) ?
  */
 $id = get_the_ID();
+
 ?>
 <aside id="secondary" class="widget-area">
-    <?php if (($id) && !is_page('About')) :
-
+    <?php if (($id)) :
     display_photo_meta($id);
     echo hashed_tags();
-    echo this_cats_thumbs($id);
+    echo this_archive_cats_thumbs($id);
   endif;
   ?>
     <?php

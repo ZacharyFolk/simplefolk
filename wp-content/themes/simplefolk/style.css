@@ -4,7 +4,7 @@ Theme URI: https://folkphotography.com
 Author: Zachary Folk
 Author URI: https://folkphotography.com
 Description: A very stripped down theme for folkphotography
-Version: 1.2.0
+Version: 2.0.0
 Text Domain: simplefolk
 License: GNU General Public License version 3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -366,8 +366,8 @@ footer .copyright {
 .wrap {
   display: flex;
   flex-flow: row wrap;
+  align-items: flex-start;
   max-width: 1480px;
-  margin: 40px auto;
   width: 100%;
 }
 .content-wrap {
@@ -375,16 +375,15 @@ footer .copyright {
   padding-bottom: 40px;
 }
 #primary {
-  width: 65%;
   display: flex;
   justify-content: center;
 }
 #secondary {
-  padding: 20px;
-  width: 35%;
-  display: flex;
   justify-content: center;
   flex-flow: column;
+}
+#secondary h1 {
+  margin: 0 0 0.5em;
 }
 
 /* ***************
@@ -429,7 +428,6 @@ footer .copyright {
 .menu > li {
   margin: 0 1rem;
   overflow: hidden;
-  z-index: 999;
 }
 
 /* Responsive menu */
@@ -571,6 +569,7 @@ figure.main-image {
   background-color: var(--dark-background);
   border-bottom: 1px solid var(--dark-background-2);
   flex: 0 0 100%;
+  margin: 0 0 20px;
   width: 100%;
 }
 #post_title h1 {
@@ -582,6 +581,71 @@ figure.main-image {
 #photo_tag_container a {
   font-weight: 300;
   text-transform: lowercase;
+}
+
+/* ********************
+*                     *
+*    Simple Modal     *
+*                     *
+******************** */
+
+/*Image modal*/
+.modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.733);
+  margin-top: -1px;
+  animation: zoom 0.3s ease-in-out;
+}
+
+.modal img {
+  max-width: 90%;
+  max-height: 90%;
+  margin: auto;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  -o-object-fit: contain;
+  object-fit: contain;
+}
+
+.close-button::before {
+  content: '×';
+}
+
+.close-button {
+  color: rgba(255, 255, 255, 0.87);
+  font-size: 3em;
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  color: var(--off-white);
+  font-weight: 300;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.close-button:hover {
+  color: rgb(255, 255, 255);
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
 }
 
 /* ***********************

@@ -6,7 +6,7 @@
 //                                    //
 ////////////////////////////////////////
 
-define('SIMPLE_THEME_VERSION', '1.2.0');
+define('SIMPLE_THEME_VERSION', '2.0.0');
 
 function main_scripts()
 {
@@ -17,15 +17,6 @@ function main_scripts()
 }
 
 add_action('wp_enqueue_scripts', 'main_scripts');
-
-function single_scripts()
-{
-  if (is_singular('post')) {
-    wp_enqueue_style('fancy',  get_theme_file_uri() . '/assets/fancybox/fancybox.css', array(), SIMPLE_THEME_VERSION, 'all');
-    wp_enqueue_script('fancyboxjs',  get_theme_file_uri() . '/assets/fancybox/fancybox.js', array('jquery'), false, true);
-  }
-}
-add_action('wp_enqueue_scripts', 'single_scripts');
 
 include('customizer.php');
 
@@ -63,6 +54,105 @@ function remove_gutenberg_block_library_css()
 
 add_action('wp_enqueue_scripts', 'remove_gutenberg_block_library_css', 100);
 
+
+//////////////////////////////////
+//                              //
+//    Create new taxonomies     //
+//                              //
+//////////////////////////////////
+
+function simple_register_attachments_tax()
+{
+  register_taxonomy(
+    'gallery-category',
+    'attachment',
+    array(
+      'labels' =>  array(
+        'name'              => 'Gallery Categories',
+        'singular_name'     => 'Gallery Category',
+        'search_items'      => 'Search Gallery Categories',
+        'all_items'         => 'All Gallery Categories',
+        'edit_item'         => 'Edit Gallery Categories',
+        'update_item'       => 'Update Gallery Category',
+        'add_new_item'      => 'Add New Gallery Category',
+        'new_item_name'     => 'New Gallery Category Name',
+        'menu_name'         => 'Gallery Category',
+      ),
+      'hierarchical' => true,
+      'sort' => true,
+      'show_admin_column' => true,
+      'rewrite' => array('slug' => 'projects', 'with_front' => false)
+
+    )
+  );
+
+  wp_insert_term(
+    'Exclude Category',
+    'gallery-category',
+    array(
+      'description'  => 'This category is used to exlude any media from featured posts and archives.',
+      'slug'     => 'exclude'
+    )
+  );
+  register_taxonomy(
+    'gallery-tags',
+    'attachment',
+    array(
+      'labels' =>  array(
+        'name'              => 'Gallery Tags',
+        'singular_name'     => 'Gallery Tag',
+        'search_items'      => 'Search Gallery Tags',
+        'all_items'         => 'All Gallery Tags',
+        'edit_item'         => 'Edit Gallery Tags',
+        'update_item'       => 'Update Gallery Tag',
+        'add_new_item'      => 'Add New Gallery Tag',
+        'new_item_name'     => 'New Gallery Tag Name',
+        'menu_name'         => 'Gallery Tag',
+      ),
+      'hierarchical' => false,
+      'sort' => true,
+      'show_admin_column' => true,
+      'rewrite' => array('slug' => 'tags', 'with_front' => false)
+    )
+  );
+}
+add_action('init', 'simple_register_attachments_tax', 0);
+
+
+
+
+
+////////////////////////////////////////////////////
+//                                                //
+//    Create new permalink for archive pages      //
+//                                                //
+////////////////////////////////////////////////////
+
+
+// add_filter('attachment_link', 'updated_attachment_link', 20, 2);
+function updated_attachment_link($link, $attachment_id)
+{
+
+  $attachment = get_post($attachment_id);
+
+  // Only for attachments actually attached to a parent post
+  if (!empty($attachment->post_parent)) {
+
+    $parent_link = get_permalink($attachment->post_parent);
+    // make the link compatible with permalink settings with or without "/" at the end
+    $parent_link = rtrim($parent_link, "/");
+    $link =  $parent_link . '/gallery/' . $attachment_id;
+  }
+
+  return $link;
+}
+
+
+add_action('init', function () {
+
+  // Tell WordPress how to handle the new structure
+  // add_rewrite_rule('(.+)/gallery/([0-9]{1,})/?$', 'index.php?attachment_id=$matches[2]', 'top');
+});
 
 
 //////////////////////////////
@@ -218,6 +308,36 @@ function get_random_img_src_by_tag($tag = '')
 }
 
 
+function get_random_atta_img_src_by_tag($tag = '')
+{
+  if ($tag) {
+    $args = array(
+      'post_type' => 'attachment',
+      'post_status' => 'inherit',
+      'posts_per_page' => 1,
+      'orderby' => 'rand',
+      'tax_query' => array(
+        array(
+          'taxonomy' => 'gallery-tags',
+          'field'    => 'slug',
+          'terms'    => $tag,
+        ),
+      ),
+    );
+
+    $query = new WP_Query($args);
+    if ($query->have_posts()) :
+      while ($query->have_posts()) : $query->the_post();
+        $id = get_the_ID();
+        $atta_img = wp_get_attachment_image($id, 'medium_large');
+        if ($atta_img) {
+          echo $atta_img;
+        }
+      endwhile;
+    endif;
+  }
+}
+
 ///////////////////////////////////
 //                               //
 //    Updates for page title     //
@@ -311,6 +431,7 @@ function this_cats_thumbs()
   if ($the_cat) :
     $category_name = $the_cat[0]->name;
     $category_link = get_category_link($the_cat[0]->cat_ID);
+
     $num_posts = $the_cat[0]->category_count;
     $args = array(
       'post_type' => 'post',
@@ -342,12 +463,49 @@ function this_cats_thumbs()
   endif;
 }
 
+function this_archive_cats_thumbs()
+{
+  $the_cat = wp_get_post_terms(get_the_ID(), 'gallery-category');
 
+  if ($the_cat) :
+    $category_name = $the_cat[0]->name;
+    $category_term_id = (int)$the_cat[0]->term_id;
+    $category_link = get_term_link($category_term_id);
+
+    $args = array(
+      'post_type' => 'attachment',
+      'post_status' => 'inherit',
+      'posts_per_page' => 9,
+      'post__not_in' => array(get_the_ID()),
+      'tax_query' => array(
+        array(
+          'taxonomy' => 'gallery-category',
+          'field' => 'slug',
+          'terms' => $category_name,
+        )
+      ),
+    );
+    $atta_query = new WP_Query($args);
+    if ($atta_query->have_posts()) :
+      echo '<div id="cat_thumbs">';
+      while ($atta_query->have_posts()) :
+        $atta_query->the_post();
+        $atta_img = wp_get_attachment_image(get_the_ID(), 'thumbnail');
+        $atta_link = get_attachment_link();
+        if ($atta_img) {
+          echo '<a href="' . $atta_link . '">' . $atta_img . '</a>';
+        }
+      endwhile;
+      echo '</div>';
+
+    endif;
+  endif;
+}
 
 
 /**
- * ? Still need this function 
- * Remove inline width/height attributes 
+ * ? Still need this function
+ * Remove inline width/height attributes
  */
 
 add_filter('post_thumbnail_html', 'remove_width_attribute', 10);
@@ -360,7 +518,7 @@ function remove_width_attribute($html)
 }
 
 /**
- * ? Still need this function 
+ * ? Still need this function
  * Prevent WP from adding <p> tags on all post types
  */
 
@@ -374,9 +532,9 @@ add_filter('the_content', 'disable_wp_auto_p', 0);
 
 
 //////////////////////////////////////////////////////
-//                                                  //
-//    Add featured post image in admin post list    //
-//                                                  //
+// //
+// Add featured post image in admin post list //
+// //
 //////////////////////////////////////////////////////
 
 /**
@@ -430,7 +588,11 @@ function j0e_column_order($columns)
 add_action('admin_head', 'j0e_add_admin_styles');
 function j0e_add_admin_styles()
 {
-  echo '<style>.column-j0e_thumb {width: 60px;}</style>';
+  echo '<style>
+    .column-j0e_thumb {
+        width: 60px;
+    }
+    </style>';
 }
 
 
@@ -453,6 +615,7 @@ function get_img_with_sizes($size)
     height="<?php echo $image_attributes[2]; ?>" alt="<?php echo $image_alt ?>" />
 <?php endif;
 };
+
 
 ///////////////////////////////////////////////////////////////////////////////////////
 //                                                                                   //
@@ -529,7 +692,7 @@ function the_breadcrumb()
     if ($showOnHome == 1) {
       echo '<div id="crumbs" class="breadcrumb"><a href="' . $homeLink . '">' . $home . '</a></div>';
     }
-  } else { // Category Pages
+  } else {
     echo '<div id="crumbs"><a href="' . $homeLink . '">' . $home . '</a> ' . $delimiter . ' ';
     if (is_category()) {
       $thisCat = get_category(get_query_var('cat'), false);
@@ -557,6 +720,30 @@ function the_breadcrumb()
           echo $before . get_the_title() . $after;
         }
       }
+    }
+    if (is_attachment()) {
+      // NOTE: This may be unorthodox, reason is to distinguish between if the previous page
+      // was a tag or category.  If neither then it just defaults to the root.  
+      // TODO : This along with actual permalink path need to be consistent
+
+      $ref = ($_SERVER['HTTP_REFERER']);
+      // search string for 'tags' 
+      if (strpos($ref, 'tags') !== false) {
+        echo '<a href="' . $ref . '">Tags</a> ' . $delimiter . ' ' . $before . get_the_title() . $after;
+      }
+      if (strpos($ref, 'projects') !== false) {
+        echo '<a href="/projects/">Projects</a>';
+      }
+    }
+    if (is_archive()) {
+      $tax = get_queried_object()->taxonomy;
+      // NOTE : This is not great - reconsider this whole naming convention for the taxonomy
+      // Maybe should just scrape url for whatever these pages are called
+      $part = explode('-', $tax);
+      $slug = get_queried_object()->slug;
+
+      // wut(get_queried_object());
+      echo '<a href="/' . $part[1] . '">' . $part[1] . '</a> ' . $delimiter . ' ' . $before . $slug . $after;
     } elseif (!is_single() && !is_page() && get_post_type() != 'post' && !is_404()) {
       $post_type = get_post_type_object(get_post_type());
       echo $before . $post_type->labels->singular_name . $after;
