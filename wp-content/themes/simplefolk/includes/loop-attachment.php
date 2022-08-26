@@ -15,9 +15,9 @@ while (have_posts()) :
                 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                     <?php if ($image) : ?>
                     <figure class="main-image">
-                        <?php
-                                // todo : add a simple modal to link to $full_image_link
-                                echo $image; ?>
+                        <a href="<?php echo $full_image_link; ?>" class="glightbox">
+                            <?php echo $image; ?>
+                        </a>
                     </figure>
                     <?php if ($image_caption) :
                                 echo '<figcaption>' . $image_caption . '</figcaption>';
@@ -31,42 +31,42 @@ while (have_posts()) :
     <?php endwhile; ?>
 
     <script>
-    const image = document.querySelectorAll(".main-image img");
-    let fullSizedImage = "<?php echo $full_image_link; ?>"; // todo : add this as data-attribute to the image
-    // will have to override core wp_get_attachment_image_url or think of something better
-    if (fullSizedImage) {
-        image.forEach((img) => {
-            img.addEventListener("click", (e) => {
-                imgModal(fullSizedImage);
-            });
-        });
-        let imgModal = (src) => {
-            const modal = document.createElement("div");
-            modal.setAttribute("class", "modal");
+    // const image = document.querySelectorAll(".main-image img");
+    // let fullSizedImage = "<?php echo $full_image_link; ?>"; // todo : add this as data-attribute to the image
+    // // will have to override core wp_get_attachment_image_url or think of something better
+    // if (fullSizedImage) {
+    //     image.forEach((img) => {
+    //         img.addEventListener("click", (e) => {
+    //             imgModal(fullSizedImage);
+    //         });
+    //     });
+    //     let imgModal = (src) => {
+    //         const modal = document.createElement("div");
+    //         modal.setAttribute("class", "modal");
 
-            const closeBtn = document.createElement("span");
-            closeBtn.setAttribute("class", "close-button");
+    //         const closeBtn = document.createElement("span");
+    //         closeBtn.setAttribute("class", "close-button");
 
-            document.querySelector("body").append(modal);
-            const newImage = document.createElement("img");
-            newImage.setAttribute("src", src);
-            modal.append(newImage, closeBtn);
+    //         document.querySelector("body").append(modal);
+    //         const newImage = document.createElement("img");
+    //         newImage.setAttribute("src", src);
+    //         modal.append(newImage, closeBtn);
 
-            closeBtn.onclick = () => {
-                modal.remove();
-            };
-            document.onkeydown = function(evt) {
-                evt = evt || window.event;
-                var isEscape = false;
-                if ("key" in evt) {
-                    isEscape = (evt.key === "Escape" || evt.key === "Esc");
-                } else {
-                    isEscape = (evt.keyCode === 27);
-                }
-                if (isEscape) {
-                    modal.remove();
-                }
-            };
-        };
-    }
+    //         closeBtn.onclick = () => {
+    //             modal.remove();
+    //         };
+    //         document.onkeydown = function(evt) {
+    //             evt = evt || window.event;
+    //             var isEscape = false;
+    //             if ("key" in evt) {
+    //                 isEscape = (evt.key === "Escape" || evt.key === "Esc");
+    //             } else {
+    //                 isEscape = (evt.keyCode === 27);
+    //             }
+    //             if (isEscape) {
+    //                 modal.remove();
+    //             }
+    //         };
+    //     };
+    // }
     </script>

@@ -85,3 +85,11 @@ if (elem) {
     });
   });
 }
+// https://github.com/biati-digital/glightbox/blob/master/README.md
+const lightbox = GLightbox({
+  touchNavigation: true,
+});
+
+// lightbox.on('open', () => {
+//   alert('i am opening');
+// });

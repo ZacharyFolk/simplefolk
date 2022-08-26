@@ -11,8 +11,10 @@ define('SIMPLE_THEME_VERSION', '2.0.0');
 function main_scripts()
 {
   wp_enqueue_style('main',  get_theme_file_uri() . '/style.css', array(), SIMPLE_THEME_VERSION, 'all');
+  wp_enqueue_style('glightbox',  get_theme_file_uri() . '/assets/glightbox/css/glightbox.min.css', array(), SIMPLE_THEME_VERSION, 'all');
   wp_enqueue_script('imagesloaded-pkgd', get_template_directory_uri() . '/js/imagesloaded.pkgd.min.js', array(), false, true);
   wp_enqueue_script('isotope', get_template_directory_uri() . '/js/isotope.pkgd.min.js', array(), false, true);
+  wp_enqueue_script('glightbox-script', get_template_directory_uri() . '/assets/glightbox/js/glightbox.min.js', array(), false, true);
   wp_enqueue_script('theme-scripts', get_template_directory_uri() . '/js/theme-scripts.js', array(), false, true);
 }
 
@@ -739,10 +741,12 @@ function the_breadcrumb()
       $tax = get_queried_object()->taxonomy;
       // NOTE : This is not great - reconsider this whole naming convention for the taxonomy
       // Maybe should just scrape url for whatever these pages are called
+      wut($tax);
       $part = explode('-', $tax);
       $slug = get_queried_object()->slug;
 
-      // wut(get_queried_object());
+      wut($part[1]);
+      wut(get_queried_object());
       echo '<a href="/' . $part[1] . '">' . $part[1] . '</a> ' . $delimiter . ' ' . $before . $slug . $after;
     } elseif (!is_single() && !is_page() && get_post_type() != 'post' && !is_404()) {
       $post_type = get_post_type_object(get_post_type());
