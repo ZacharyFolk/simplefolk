@@ -346,6 +346,86 @@ body.lightmode footer {
   }
 }
 
+/* **********************
+*                       *
+*    #Lightbox theme    *
+*                       *
+********************** */
+
+div.simple .gslide-description {
+  background-color: var(--warm-00);
+}
+
+/* Keeping this for now if we want to override the clean theme with div.simple */
+/* .glightbox-simple .gdesc-inner {
+  padding: 22px 20px;
+}
+.glightbox-simple .gslide-title {
+  font-size: 1em;
+  font-weight: normal;
+  font-family: arial;
+  color: #000;
+  margin-bottom: 19px;
+  line-height: 1.4em;
+}
+
+.glightbox-simple .gslide-desc {
+  font-size: 0.86em;
+  margin-bottom: 0;
+  font-family: arial;
+  line-height: 1.4em;
+}
+
+.glightbox-simple .gslide-video {
+  background: #000;
+}
+
+.glightbox-simple .gprev,
+.glightbox-simple .gnext,
+.glightbox-simple .gclose {
+  background-color: rgba(0, 0, 0, 0.75);
+  border-radius: 4px;
+}
+
+.glightbox-simple .gprev path,
+.glightbox-simple .gnext path,
+.glightbox-simple .gclose path {
+  fill: #fff;
+}
+
+.glightbox-simple .gprev {
+  position: absolute;
+  top: -100%;
+  left: 30px;
+  width: 40px;
+  height: 50px;
+}
+
+.glightbox-simple .gnext {
+  position: absolute;
+  top: -100%;
+  right: 30px;
+  width: 40px;
+  height: 50px;
+}
+
+.glightbox-simple .gclose {
+  width: 35px;
+  height: 35px;
+  top: 15px;
+  right: 10px;
+  position: absolute;
+}
+
+.glightbox-simple .gclose svg {
+  width: 18px;
+  height: auto;
+}
+
+.glightbox-simple .gclose:hover {
+  opacity: 1;
+} */
+
 /* ***************
 *                *
 *    #Layouts    *

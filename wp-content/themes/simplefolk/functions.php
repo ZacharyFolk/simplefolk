@@ -894,13 +894,15 @@ function photo_save_meta($post_id)
  * Displays optional location, camera type, film, and prints available
  *
  * @param $id The current post id
- * @return string HTML and data to sidebar.php
+ * @return string HTML of additional data as paragraphs
  */
 function display_photo_meta($id)
 {
   $attachment_id = (get_post_thumbnail_id($id));
   $core_meta = wp_get_attachment($attachment_id);
   if (isset($core_meta) && !empty($core_meta)) {
+
+
     if (!empty($core_meta['description'])) {
       echo '<p>' . $core_meta['description'] . '</p>';
     }
@@ -908,26 +910,55 @@ function display_photo_meta($id)
 
   $attachment_fields = get_post_custom($attachment_id);
   if (array_key_exists('photo_location', $attachment_fields)) {
+    echo '<ul>';
     $loc = $attachment_fields['photo_location'][0];
     if ($loc) :
-      echo '<p>Location: ' . $loc . '</p>';
+      echo '<li>Location: ' . $loc . '</li>';
     endif;
   }
   if (array_key_exists('photo_camera', $attachment_fields)) {
     $cam = $attachment_fields['photo_camera'][0];
     if ($cam) :
-      echo '<p>Camera: ' . $cam . '</p>';
+      echo '<li>Camera: ' . $cam . '</li>';
     endif;
   }
   if (array_key_exists('photo_film', $attachment_fields)) {
     $film = $attachment_fields['photo_film'][0];
     if ($film) :
-      echo '<p>Film: ' . $film . '</p>';
+      echo '<li>Film: ' . $film . '</li>';
     endif;
   }
+  echo '</ul>';
 }
 
 
+
+/**
+ * Display partial data from the media meta boxes
+ *
+ * Displays title, caption, and link to full attachment
+ *
+ * @param $id The current post id
+ * @return string HTML of additional data
+ */
+function modal_display_photo_meta($id)
+{
+  $attachment_id = (get_post_thumbnail_id($id));
+
+  $image_title = get_the_title($attachment_id);
+  $image_caption =  wp_get_attachment_caption($attachment_id);
+  $image_link = get_attachment_link();
+
+  if ($image_title) :
+    echo '<h1>' . $image_title . '</h1>';
+  endif;
+  if ($image_caption) :
+    echo '<p>' . $image_caption . '</p>';
+  endif;
+  if ($image_link) :
+    echo '<a href ="' . $image_link . '"> View more details > > > </a>';
+  endif;
+}
 /**
  * Return all of the data from attachment
 

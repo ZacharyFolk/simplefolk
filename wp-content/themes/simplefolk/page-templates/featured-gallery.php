@@ -66,17 +66,27 @@ $tag_list = explode(',', esc_attr(get_theme_mod('tag_list')));
             while ($atta_query->have_posts()) :
                 $atta_query->the_post();
                 $atta_img = wp_get_attachment_image($post->ID, 'medium_large');
+                // todo : Add customizer configs to enable/disable modal view and instead link directly to attachment page
+                // worth providing different links / sitemap for bots that link to attachment
+                $full_image_link = wp_get_attachment_image_url($post->ID, 'full');
                 $atta_link = get_attachment_link();
                 $atta_tags = get_the_terms($post->ID, 'gallery-tags');
-
+                $id = get_the_ID();
+                $slide_class = "full-meta-" . $id;
                 if ($atta_img) :
-                    // todo : how, why can not cleanly do echo '<article ' . post_class('archive-card') . '>'; 
         ?>
         <article <?php post_class('archive-card'); ?>>
             <?php
-                    echo '<a href="' . $atta_link . '">';
+                    echo '<a href="' . $full_image_link . '" 
+                    class="glightbox"
+                    data-desc-position="bottom"  // todo: configs for this
+                    data-glightbox="description: .' . $slide_class . '">';
                     echo $atta_img;
                     echo '</a>';
+
+                    echo '<div class="glightbox-desc ' . $slide_class .  '">'; // hidden element that shows in modal
+                    modal_display_photo_meta($id);
+                    echo '</div>';
                     echo '</article>';
                 endif;
             endwhile;
