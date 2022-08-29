@@ -21,7 +21,7 @@ $tag_list = explode(',', esc_attr(get_theme_mod('tag_list')));
             'orderby' => 'random',
             'tax_query' => array(
                 array(
-                    'taxonomy' => 'gallery-category',
+                    'taxonomy' => 'category',
                     'terms' => array('exclude'),
                     'field' => 'slug',
                     'operator' => 'NOT IN',
@@ -42,14 +42,15 @@ $tag_list = explode(',', esc_attr(get_theme_mod('tag_list')));
             <div class="tag-buttons">
                 <?php $i = 0;
                     foreach ($tag_list as $tag) :
-                        $post_tags = get_term_by('slug', $tag, 'gallery-tags');
-                        if ($i == 0) : ?>
+                        $post_tags = get_term_by('slug', $tag, 'post_tag');
+                        if ($i == 0) :
+                    ?>
                 <button type="button" class="active" data-category="*">All</button>
                 <?php else :
                             if ($post_tags) :
                                 $tag_name = $post_tags->name;
                             ?>
-                <button type="button" data-category=".gallery-tags-<?php echo trim(esc_attr($tag_name)); ?>">
+                <button type="button" data-category=".tag-<?php echo trim(esc_attr($tag_name)); ?>">
                     <?php echo esc_html($tag_name); ?>
                 </button>
                 <?php endif;
@@ -70,7 +71,6 @@ $tag_list = explode(',', esc_attr(get_theme_mod('tag_list')));
                 // worth providing different links / sitemap for bots that link to attachment
                 $full_image_link = wp_get_attachment_image_url($post->ID, 'full');
                 $atta_link = get_attachment_link();
-                $atta_tags = get_the_terms($post->ID, 'gallery-tags');
                 $id = get_the_ID();
                 $slide_class = "full-meta-" . $id;
                 if ($atta_img) :

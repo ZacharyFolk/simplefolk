@@ -7,7 +7,7 @@ get_header();
 
 $all_cats = get_terms(
     array(
-        'taxonomy' => 'gallery-category',
+        'taxonomy' => 'category',
         'hide_empty' => false,
     )
 );
@@ -18,7 +18,6 @@ $all_cats = get_terms(
     <main id="main" class="site-main">
         <div class="archive-container">
             <?php
-
             foreach ($all_cats as $cat) :
                 $title = $cat->name;
                 $slug = $cat->slug;
@@ -35,7 +34,7 @@ $all_cats = get_terms(
                     <div class="img-wrap">
                         <a href="<?php echo $slug; ?>"
                             title="View all photos from the collection <?php echo strtolower($title); ?>">
-                            <?php get_random_atta_img_src_by_tag($slug); ?>
+                            <?php get_random_atta_img_src_by_term('category', $slug); ?>
                         </a>
                     </div>
                     <?php if ($desc) :
