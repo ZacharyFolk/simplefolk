@@ -1,29 +1,14 @@
 <?php
 
 /**
- * Sidebar template for displaying all single posts.
- * TODO : Cleaner way to exclude specific pages (About) ?
+ * Sidebar template container for widget area on single posts
  */
-$id = get_the_ID();
 
+if (!is_active_sidebar('sidebar-1')) {
+    return;
+}
 ?>
-<aside id="secondary" class="widget-area">
-    <?php if (($id)) :
-    display_photo_meta($id);
-    echo hashed_tags();
-    echo this_archive_cats_thumbs($id);
-  endif;
-  ?>
-    <?php
-  if (is_page('About')) :
-    if (is_active_sidebar('about-sidebar')) : // Widgets if available 
-  ?>
-    <div class="sidebar about-sidebar">
-        <?php dynamic_sidebar('about-sidebar'); ?>
-    </div>
-    <?php endif;
-    echo '<h1>Self Portraits</h1>';
-    echo get_gallery_by_tag('self-portrait');
 
-  endif; ?>
+<aside id="secondary" class="widget-area" aria-label="<?php esc_attr_e('Blog Sidebar', 'simplefolk'); ?>">
+    <?php dynamic_sidebar('sidebar-1'); ?>
 </aside>

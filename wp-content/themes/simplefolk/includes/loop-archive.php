@@ -3,7 +3,7 @@
 
 $term = get_queried_object();
 $tax = $term->taxonomy;
-$current_slug = get_query_var($tax);
+$current_slug = $term->slug;
 $args = array(
     'post_type' => 'attachment',
     'post_status' => 'inherit',
@@ -12,14 +12,19 @@ $args = array(
     'tax_query' => array(
         array(
             'taxonomy' => $tax,
-            'field' => 'slug',
+            // 'field' => 'slug',
             'terms' => $current_slug,
+            //'terms' => array('exclude'),
+            'field' => 'slug',
+            //'operator' => 'NOT IN',
         )
     ),
 );
 $atta_query = new WP_Query($args);
+
 if ($atta_query->have_posts()) :
     while ($atta_query->have_posts()) :
+
         $atta_query->the_post();
         $atta_img = wp_get_attachment_image($post->ID, 'medium_large');
         $atta_link = get_attachment_link();

@@ -324,9 +324,7 @@ body.lightmode .archive-container h1 {
 body.lightmode .archive-wrap header {
   background-color: var(--warm-7);
 }
-body.lightmode #post_title {
-  background-color: var(--warm-8);
-}
+
 body.lightmode footer {
   border-top: 1px solid var(--warm-8);
 }
@@ -344,6 +342,24 @@ body.lightmode footer {
   body.lightmode #menu-toggle:checked ~ .menu li {
     border: 1px solid var(--warm-8);
   }
+}
+
+/* ***************
+*                *
+*    Headings    *
+*                *
+*************** */
+
+h2 {
+  font-weight: 100;
+  border-image-slice: 1;
+  border-bottom: 1px solid;
+  padding-bottom: 10px;
+  border-image-source: linear-gradient(
+    to left,
+    var(--dark-background-2),
+    var(--off-white-2)
+  );
 }
 
 /* **********************
@@ -450,27 +466,49 @@ footer {
 footer .copyright {
   padding: 20px 60px;
 }
-.wrap {
-  display: flex;
-  flex-flow: row wrap;
-  align-items: flex-start;
-  justify-content: center;
-  width: 100%;
-}
+
 .content-wrap {
-  display: flex;
-  padding-bottom: 40px;
+  max-width: 1680px;
+  margin: 0 auto;
 }
-#primary {
+
+.single-main {
   display: flex;
-  justify-content: center;
+}
+
+/* todo : this isn't great */
+
+#primary {
+  width: 75%;
+  padding: 40px;
 }
 #secondary {
-  justify-content: center;
-  flex-flow: column;
+  width: 25%;
+  padding: 40px 0 0;
 }
 #secondary h1 {
   margin: 0 0 0.5em;
+}
+
+.home-top-container {
+  display: flex;
+}
+.home-top-container img {
+  max-width: 100%;
+}
+.home-main-content {
+  width: 55%;
+  padding: 40px 5% 0 20px;
+}
+
+.home-aside-container {
+  width: 40%;
+  display: flex;
+}
+.home-aside-1,
+.home-aside-2 {
+  width: 50%;
+  padding: 0 20px;
 }
 
 /* ***************
@@ -665,18 +703,11 @@ article.type-post figcaption {
 figure.main-image {
   margin: 0;
 }
-#post_title {
-  background-color: var(--dark-background);
-  border-bottom: 1px solid var(--dark-background-2);
-  flex: 0 0 100%;
-  margin: 0 0 20px;
-  width: 100%;
-}
+
 #post_title h1 {
   font-size: 1.2em;
   font-weight: 300;
   margin: 0;
-  padding: 20px 0 20px 40px;
 }
 #photo_tag_container a {
   font-weight: 300;
@@ -754,27 +785,13 @@ figure.main-image {
   *                        *
   *********************** */
 
-.featured-gallery-content {
-  padding: 0 60px;
-}
 .featured-gallery-header {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   position: relative;
 }
-.featured-gallery-header h2 {
-  font-weight: 100;
-  border-image-slice: 1;
-  border-bottom: 1px solid;
-  width: 50%;
-  padding-bottom: 10px;
-  border-image-source: linear-gradient(
-    to left,
-    var(--dark-background-2),
-    var(--off-white-2)
-  );
-}
+
 .hashtag-container,
 #tag_toggle {
   display: none; /* just for mobile */
@@ -861,7 +878,15 @@ a.buttonish {
 *    Responsive Rules     *
 *                         *
 ************************ */
-
+@media only screen and (max-width: 1501px) {
+  .home-aside-container {
+    flex-direction: column;
+  }
+  .home-aside-1,
+  .home-aside-2 {
+    width: 100%;
+  }
+}
 @media only screen and (max-width: 1100px) {
   #primary,
   #secondary {
@@ -882,6 +907,22 @@ a.buttonish {
   #cat_thumbs img {
     width: 100px;
   }
+  .home-top-container {
+    flex-direction: column;
+  }
+  .home-main-content {
+    width: 100%;
+  }
+  .home-aside-container {
+    width: 100%;
+  }
+  .home-aside-container {
+    flex-direction: row;
+  }
+  .home-aside-1,
+  .home-aside-2 {
+    width: 50%;
+  }
 }
 @media only screen and (max-width: 767px) {
   #main {
@@ -891,6 +932,13 @@ a.buttonish {
   .main-header,
   .main-header .header-nav ul {
     flex-direction: column;
+  }
+  .home-aside-container {
+    flex-direction: column;
+  }
+  .home-aside-1,
+  .home-aside-2 {
+    width: 100%;
   }
 
   .site-title {

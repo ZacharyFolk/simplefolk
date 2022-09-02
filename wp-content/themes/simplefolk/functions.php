@@ -85,6 +85,187 @@ function add_media_tags()
 
 add_action('init', 'add_media_tags');
 
+////////////////////////////
+//                        //
+//    Register widgets    //
+//                        //
+////////////////////////////
+/**
+ *
+ * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
+ */
+function simple_widgets_init()
+{
+  register_sidebar(
+    array(
+      'name'          => __('Blog Sidebar', 'simplefolk'),
+      'id'            => 'sidebar-1',
+      'description'   => __('Add widgets here to appear in your sidebar on single posts.', 'simplefolk'),
+      'before_widget' => '<section id="%1$s" class="widget %2$s">',
+      'after_widget'  => '</section>',
+      'before_title'  => '<h2 class="widget-title">',
+      'after_title'   => '</h2>',
+    )
+  );
+
+  register_sidebar(
+    array(
+      'name'          => __('Home Column 1', 'simplefolk'),
+      'id'            => 'sidebar-2',
+      'description'   => __('Widget for column on home page.', 'simplefolk'),
+      'before_widget' => '<section id="%1$s" class="widget %2$s">',
+      'after_widget'  => '</section>',
+      'before_title'  => '<h2 class="widget-title">',
+      'after_title'   => '</h2>',
+    )
+  );
+
+  register_sidebar(
+    array(
+      'name'          => __('Home Column 2', 'simplefolk'),
+      'id'            => 'sidebar-3',
+      'description'   => __('Widget for additional column on home page.', 'simplefolk'),
+      'before_widget' => '<section id="%1$s" class="widget %2$s">',
+      'after_widget'  => '</section>',
+      'before_title'  => '<h2 class="widget-title">',
+      'after_title'   => '</h2>',
+    )
+  );
+
+  register_sidebar(
+    array(
+      'name'          => __('Footer 1', 'simplefolk'),
+      'id'            => 'sidebar-4',
+      'description'   => __('Add widgets here to appear in your footer.', 'simplefolk'),
+      'before_widget' => '<section id="%1$s" class="widget %2$s">',
+      'after_widget'  => '</section>',
+      'before_title'  => '<h2 class="widget-title">',
+      'after_title'   => '</h2>',
+    )
+  );
+
+  register_sidebar(
+    array(
+      'name'          => __('Footer 2', 'simplefolk'),
+      'id'            => 'sidebar-5',
+      'description'   => __('Add widgets here to appear in your footer.', 'simplefolk'),
+      'before_widget' => '<section id="%1$s" class="widget %2$s">',
+      'after_widget'  => '</section>',
+      'before_title'  => '<h2 class="widget-title">',
+      'after_title'   => '</h2>',
+    )
+  );
+}
+add_action('widgets_init', 'simple_widgets_init');
+
+
+////////////////////////////////////////
+//                                    //
+//    Featured projects widget        //
+//                                    //
+////////////////////////////////////////
+
+/**
+ * 
+ * Creates a widget that allows to select from category dropdown
+ * Selected category will generate an archive card that includes
+ * Category thumbnail, title, description and link to archive collection
+ */
+class project_thumbs_widget extends WP_Widget
+{
+
+  function __construct()
+  {
+    parent::__construct(
+
+      'project_thumbs_widget',
+      __('Project thumbs', 'simplefolk'),
+      array('description' => __('Get random collection of images from specific project(category)', 'simplefolk'),)
+    );
+  }
+
+  public function widget($args, $instance)
+  {
+    $title = apply_filters('widget_title', $instance['title']);
+    $cat = apply_filters('widget_text', $instance['cat']);
+
+    echo $args['before_widget'];
+    if (!empty($title)) {
+      echo $args['before_title'] . $title . $args['after_title'];
+    }
+    featured_cat_card($cat);
+    echo $args['after_widget'];
+  }
+
+  public function form($instance)
+  {
+    if (isset($instance['title'])) {
+      $title = $instance['title'];
+    } else {
+      $title = __('New title', 'simplefolk');
+    }
+    if (isset($instance['cat'])) {
+      $cat = $instance['cat'];
+    } else {
+      $cat = 1; // 1 should be Uncategorized as default
+    }
+
+?>
+<?php if ($cat) {
+      featured_cat_card($cat);
+    }
+    ?>
+<p>
+    <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
+    <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>"
+        name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
+</p>
+<p>
+    <label for="<?php echo $this->get_field_id('cat'); ?>">
+        Select featured project:
+        <select class="widefat" id="<?php echo $this->get_field_id('cat'); ?>"
+            name="<?php echo $this->get_field_name('cat'); ?>" />
+        <?php
+        echo '<option>' . __('No Category', 'simplefolk') . '</option>';
+        $args = array('show_option_none' => 'No Category', 'hide_empty' => 0);
+        $categories = get_categories($args);
+        foreach ($categories as $category) :
+          $selected = ($cat ==  $category->term_id) ? 'selected' : '';
+          echo '<option value="' . $category->term_id . '" ' . $selected . '>' . $category->name . '</option>';
+        endforeach; ?>
+        </select>
+    </label>
+</p>
+<?php
+  }
+  public function update($new_instance, $old_instance)
+  {
+    $instance = array();
+    $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
+    $instance['cat'] = (!empty($new_instance['cat'])) ? strip_tags($new_instance['cat']) : '';
+    return $instance;
+  }
+}
+
+function load_cat_thumb_widget()
+{
+  register_widget('project_thumbs_widget');
+}
+add_action('widgets_init', 'load_cat_thumb_widget');
+
+/**
+ * Returns card elements from a category id
+ * HTML of category name, description, and attachment
+ * @param string $catID Category id to build elements
+ * @return string HTML of image with category title and description
+ * 
+ * */
+function featured_cat_card($catID)
+{
+  echo get_cat_name($catID);
+  echo category_description($catID);
+  echo get_attachment_by_cat_id($catID, 'landscape_thumb');
+}
 
 ////////////////////////////////////////////////////
 //                                                //
@@ -171,6 +352,8 @@ register_nav_menus(array(
  * Retina / Zoom? 
  * Sidebar thumbs */
 
+add_image_size('landscape_thumb', 450, 150, true);
+
 // disable srcset on frontend
 function disable_wp_responsive_images()
 {
@@ -195,7 +378,7 @@ function get_site_info()
 {
   $blog_info    = get_bloginfo('name');
   $show_title   = (true === get_theme_mod('display_title_and_tagline', true));
-?>
+  ?>
 <?php if ($blog_info) : ?>
 
 <?php if (is_front_page() && !is_paged()) : ?>
@@ -337,6 +520,42 @@ function get_random_atta_img_src_by_term($tax, $term = '')
   }
 }
 
+
+/**
+ * Returns a random image from attachments with that category id
+ * @param int $id (required) - Category id (term_id)  
+ * @param string $size (optional) - Default value of 'thumbnail'
+ * @return string HTML of random image src 
+ * 
+ * */
+function get_attachment_by_cat_id($id, $size = 'thumbnail')
+{
+  $args = array(
+    'post_type' => 'attachment',
+    'post_status' => 'inherit',
+    'posts_per_page' => 10,
+    'orderby' => 'rand',
+    'tax_query' => array(
+      array(
+        'taxonomy' => 'category',
+        'field'    => 'term_id',
+        'terms'    => $id,
+      ),
+    ),
+  );
+
+  $query = new WP_Query($args);
+  if ($query->have_posts()) :
+    while ($query->have_posts()) : $query->the_post();
+      $id = get_the_ID();
+      $atta_img = wp_get_attachment_image($id, $size);
+      if ($atta_img) {
+        return $atta_img;
+      }
+    endwhile;
+  endif;
+}
+
 ///////////////////////////////////
 //                               //
 //    Updates for page title     //
@@ -464,7 +683,7 @@ function this_cats_thumbs()
 
 function this_archive_cats_thumbs()
 {
-  $the_cat = wp_get_post_terms(get_the_ID(), 'gallery-category');
+  $the_cat = get_the_category();
 
   if ($the_cat) :
     $category_name = $the_cat[0]->name;
@@ -478,7 +697,7 @@ function this_archive_cats_thumbs()
       'post__not_in' => array(get_the_ID()),
       'tax_query' => array(
         array(
-          'taxonomy' => 'gallery-category',
+          'taxonomy' => 'category',
           'field' => 'slug',
           'terms' => $category_name,
         )
@@ -671,14 +890,14 @@ function hashed_tags()
 ////////////////////////
 /**
  * Retrieves the breadcrumb for the header
- * @since 0.0.1
  * @return string HTML of links and current location
  */
 
 function the_breadcrumb()
 {
+  /* TODO : Add configs for this */
   $showOnHome = 0; // 1 - show breadcrumbs on the homepage, 0 - don't show
-  $delimiter = '&raquo;'; // delimiter between crumbs
+  $delimiter = ' &raquo; '; // delimiter between crumbs
   $home = 'Home'; // text for the 'Home' link
   $showCurrent = 1; // 1 - show current post/page title in breadcrumbs, 0 - don't show
   $before = '<span class="current">'; // tag before the current crumb
@@ -693,12 +912,14 @@ function the_breadcrumb()
     }
   } else {
     echo '<div id="crumbs"><a href="' . $homeLink . '">' . $home . '</a> ' . $delimiter . ' ';
-    if (is_category()) {
-      $thisCat = get_category(get_query_var('cat'), false);
-      if ($thisCat->parent != 0) {
-        echo get_category_parents($thisCat->parent, true, ' ' . $delimiter . ' ');
+    if (is_archive()) {
+      if (is_category()) {
+        $thisCat = get_category(get_query_var('cat'), false);
+        if ($thisCat->parent != 0) {
+          echo get_category_parents($thisCat->parent, true, ' ' . $delimiter . ' ');
+        }
+        echo $catLink  . $delimiter . $before . ' ' . single_cat_title('', false) . $after;
       }
-      echo $catLink  . $delimiter . $before . ' ' . single_cat_title('', false) . $after;
     } elseif (is_single() && !is_attachment()) {
       if (get_post_type() != 'post') {
         $post_type = get_post_type_object(get_post_type());
@@ -707,47 +928,46 @@ function the_breadcrumb()
         if ($showCurrent == 1) {
           echo ' ' . $delimiter . ' ' . $before . get_the_title() . $after;
         }
-      } else {
-        $cat = get_the_category();
-        $cat = $cat[0];
-        $cats = get_category_parents($cat, true, ' ' . $delimiter . ' ');
-        if ($showCurrent == 0) {
-          $cats = preg_replace("#^(.+)\s$delimiter\s$#", "$1", $cats);
-        }
-        echo $catLink . ' ' . $delimiter . ' ' . $cats;
-        if ($showCurrent == 1) {
-          echo $before . get_the_title() . $after;
-        }
+      }
+      if (is_tag()) {
+        echo 'im a tag';
       }
     }
     if (is_attachment()) {
+
       // NOTE: This may be unorthodox, reason is to distinguish between if the previous page
       // was a tag or category.  If neither then it just defaults to the root.  
       // TODO : This along with actual permalink path need to be consistent
+      // Does this cause duplicate content SEO problems?
 
       $ref = ($_SERVER['HTTP_REFERER']);
       // search string for 'tags' 
       if (strpos($ref, 'tags') !== false) {
-        echo '<a href="' . $ref . '">Tags</a> ' . $delimiter . ' ' . $before . get_the_title() . $after;
+        echo '<a href="' . $ref . '">Tags</a>' . $delimiter;
       }
       if (strpos($ref, 'projects') !== false) {
-        echo '<a href="/projects/">Projects</a>';
+        echo '<a href="/projects/">Projects</a>' . $delimiter;
       }
+      echo ' ' . $before . get_the_title() . $after;
     }
-    if (is_archive()) {
-      // $tax = get_queried_object()->taxonomy;
-      // // NOTE : This is not great - reconsider this whole naming convention for the taxonomy
-      // // Maybe should just scrape url for whatever these pages are called
-      // wut($tax);
-      // $part = explode('-', $tax);
-      // $slug = get_queried_object()->slug;
+    // if (is_archive()) {
 
-      // wut($part[1]);
-      // wut(get_queried_object());
-      // echo '<a href="/' . $part[1] . '">' . $part[1] . '</a> ' . $delimiter . ' ' . $before . $slug . $after;
-    } elseif (!is_single() && !is_page() && get_post_type() != 'post' && !is_404()) {
-      $post_type = get_post_type_object(get_post_type());
-      echo $before . $post_type->labels->singular_name . $after;
+
+    //   // $tax = get_queried_object()->taxonomy;
+    //   // // NOTE : This is not great - reconsider this whole naming convention for the taxonomy
+    //   // // Maybe should just scrape url for whatever these pages are called
+    //   // wut($tax);
+    //   // echo '<a href="">Tags</a> ' . $delimiter . ' ' . $before . get_the_title() . $after;
+    //   // // $part = explode('-', $tax);
+    //   // $slug = get_queried_object()->slug;
+    //   // wut($slug);
+    //   // wut($part[1]);
+    //   // wut(get_queried_object());
+    //   // echo '<a href="/' . $part[1] . '">' . $part[1] . '</a> ' . $delimiter . ' ' . $before . $slug . $after;
+    // } 
+    if (!is_single() && !is_page() && get_post_type() != 'post' && !is_404()) {
+      // $post_type = get_post_type_object(get_post_type());
+      // echo $before . $post_type->labels->singular_name . $after;
     } elseif (is_page() && !$post->post_parent) {
       if ($showCurrent == 1) {
         echo $before . get_the_title() . $after;
@@ -755,6 +975,8 @@ function the_breadcrumb()
     } elseif (is_page() && $post->post_parent) {
       $parent_id = $post->post_parent;
       $breadcrumbs = array();
+
+
       while ($parent_id) {
         $page = get_post($parent_id);
         $breadcrumbs[] = '<a href="' . get_permalink($page->ID) . '">' . get_the_title($page->ID) . '</a>';
@@ -771,9 +993,6 @@ function the_breadcrumb()
       if ($showCurrent == 1) {
         echo ' ' . $delimiter . ' ' . $before . get_the_title() . $after;
       }
-    } elseif (is_tag()) {
-      echo $before . '<a href="/tags/" title="View all of the tags"> Tags </a>' . $delimiter
-        . ' ' . single_tag_title('', false) . $after;
     }
 
     echo '</div>';
