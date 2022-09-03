@@ -468,7 +468,7 @@ footer .copyright {
 }
 
 .content-wrap {
-  max-width: 1680px;
+  max-width: 1971px;
   margin: 0 auto;
 }
 
@@ -495,6 +495,7 @@ footer .copyright {
 }
 .home-top-container img {
   max-width: 100%;
+  margin: 0 auto;
 }
 .home-main-content {
   width: 55%;
@@ -511,6 +512,38 @@ footer .copyright {
   padding: 0 20px;
 }
 
+.wp-block-latest-posts__featured-image {
+  border: 3px solid var(--warm-4);
+}
+.more {
+  width: 100%;
+  float: left;
+  text-align: right;
+  margin-top: 10px;
+}
+.more:hover {
+  text-decoration: underline;
+}
+.featured-cat-banner {
+  position: relative;
+}
+.featured-cat-banner h3 {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-top: 1px solid var(--warm-9);
+  border-bottom: 1px solid var(--warm-9);
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #404040;
+  text-emphasis: inherit;
+  font-size: 1.4em;
+  -webkit-text-fill-color: var(--warm-8);
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: var(--warm-00);
+  margin: 0px 0 0;
+  position: relative;
+}
 /* ***************
 *                *
 *    Main Nav    *
@@ -648,9 +681,14 @@ footer .copyright {
 
 #crumbs {
   margin: 10px 0 10px 60px;
-  font-size: 1em;
+  font-size: 0.75em;
   font-family: var(--font-crumbs);
   text-transform: uppercase;
+}
+.delimiter {
+  margin: 0;
+  padding: 0;
+  line-height: 1em;
 }
 .archive-wrap img {
   max-width: 100%;
@@ -693,15 +731,17 @@ article.type-post figcaption {
 .single-cat-link {
   margin: 4px;
 }
-.single-post .main-image img {
-  /* TODO : Should replace this with srcset variations */
-  max-width: 100%;
-  height: auto;
-  margin: 0 auto;
-  padding: 20px;
-}
 figure.main-image {
   margin: 0;
+  float: left;
+}
+.single-post .main-image img {
+  /* TODO : Should replace this with srcset variations? */
+  max-width: 100%;
+  height: auto;
+  padding: 20px;
+  background-color: var(--warm-00);
+  margin: 0 20px;
 }
 
 #post_title h1 {
@@ -784,7 +824,9 @@ figure.main-image {
   *    Featured Gallery    *
   *                        *
   *********************** */
-
+.featured-gallery-content {
+  margin-top: 60px;
+}
 .featured-gallery-header {
   display: flex;
   justify-content: space-between;

@@ -262,9 +262,12 @@ add_action('widgets_init', 'load_cat_thumb_widget');
  * */
 function featured_cat_card($catID)
 {
-  echo get_cat_name($catID);
-  echo category_description($catID);
+  echo '<div class="featured-cat-banner">';
   echo get_attachment_by_cat_id($catID, 'landscape_thumb');
+  echo '<h3>' . get_cat_name($catID) . '</h3>';
+  echo '</div>';
+  echo category_description($catID);
+  echo '<div class="category-link" style="text-align: right"><a title="View all photos from the ' . get_cat_name($catID) . ' collection" href="' . get_category_link($catID) . '">View collection &raquo; </a>';
 }
 
 ////////////////////////////////////////////////////
@@ -345,14 +348,21 @@ register_nav_menus(array(
 //                       //
 ///////////////////////////
 
-/**
- * 
- * Home / Archive Gallery
- * Single Hero
- * Retina / Zoom? 
- * Sidebar thumbs */
 
-add_image_size('landscape_thumb', 450, 150, true);
+add_image_size('landscape_thumb', 450, 180, true);
+add_image_size('square_hero', 450, 450, true);
+
+/* Add new sizes to admin menus */
+function new_image_sizes($size_names)
+{
+  $new_sizes = array(
+    'landscape_thumb' => 'Landscape Thumbmail',
+    'square_hero' => 'Square 450',
+
+  );
+  return array_merge($size_names, $new_sizes);
+}
+add_filter('image_size_names_choose', 'new_image_sizes');
 
 // disable srcset on frontend
 function disable_wp_responsive_images()
@@ -604,6 +614,19 @@ function get_meta_description()
 
   return esc_attr(trim($desc));
 }
+
+///////////////////////////////
+//                           //
+//    Update excerpt link    //
+//                           //
+///////////////////////////////
+
+function new_excerpt_more($more)
+{
+  global $post;
+  return '… <a title="View the full post: ' . get_the_title($post->ID) . '" href="' . get_permalink($post->ID) . '">' . '<span class="more">Read more &raquo;</span>' . '</a>';
+}
+add_filter('excerpt_more', 'new_excerpt_more');
 
 //////////////////////////////
 //                          //
@@ -897,7 +920,7 @@ function the_breadcrumb()
 {
   /* TODO : Add configs for this */
   $showOnHome = 0; // 1 - show breadcrumbs on the homepage, 0 - don't show
-  $delimiter = ' &raquo; '; // delimiter between crumbs
+  $delimiter = '<span class="delimiter"> &raquo; </span>'; // delimiter between crumbs
   $home = 'Home'; // text for the 'Home' link
   $showCurrent = 1; // 1 - show current post/page title in breadcrumbs, 0 - don't show
   $before = '<span class="current">'; // tag before the current crumb
@@ -911,7 +934,9 @@ function the_breadcrumb()
       echo '<div id="crumbs" class="breadcrumb"><a href="' . $homeLink . '">' . $home . '</a></div>';
     }
   } else {
+
     echo '<div id="crumbs"><a href="' . $homeLink . '">' . $home . '</a> ' . $delimiter . ' ';
+    // archive / category
     if (is_archive()) {
       if (is_category()) {
         $thisCat = get_category(get_query_var('cat'), false);
@@ -921,17 +946,7 @@ function the_breadcrumb()
         echo $catLink  . $delimiter . $before . ' ' . single_cat_title('', false) . $after;
       }
     } elseif (is_single() && !is_attachment()) {
-      if (get_post_type() != 'post') {
-        $post_type = get_post_type_object(get_post_type());
-        $slug = $post_type->rewrite;
-        echo '<a href="' . $homeLink . '/' . $slug['slug'] . '/">' . $post_type->labels->singular_name . '</a>';
-        if ($showCurrent == 1) {
-          echo ' ' . $delimiter . ' ' . $before . get_the_title() . $after;
-        }
-      }
-      if (is_tag()) {
-        echo 'im a tag';
-      }
+      echo ' ' . $before . get_the_title() . $after;
     }
     if (is_attachment()) {
 
@@ -1171,7 +1186,7 @@ function modal_display_photo_meta($id)
     echo '<p>' . $image_caption . '</p>';
   endif;
   if ($image_link) :
-    echo '<a href ="' . $image_link . '"> View more details > > > </a>';
+    echo '<a href ="' . $image_link . '"> View more &raquo; </a>';
   endif;
 }
 /**

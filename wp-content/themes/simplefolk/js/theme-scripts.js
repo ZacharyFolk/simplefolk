@@ -90,6 +90,15 @@ const lightbox = GLightbox({
   skin: 'clean simple',
 });
 
+// this is kind of painful but I see options are either build a custom Guttenberg gallery
+// mainly to add the glightbox class to the href rather than the parent OR
+// do this and change format so all images for the lightbox are .glightbox > figure > a (link to full size)
+
+const lightbox2 = GLightbox({
+  selector: ' .single-post-gallery figure a',
+  skin: 'clean simple',
+});
+
 // lightbox.on('open', () => {
 //   alert('i am opening');
 // });
