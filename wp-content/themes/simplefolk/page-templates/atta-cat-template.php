@@ -5,12 +5,19 @@
  */
 get_header();
 
+
+
 $all_cats = get_terms(
     array(
         'taxonomy' => 'category',
         'hide_empty' => false,
+        'exclude' => array(115) // category named "exclude" 
+        // TODO : Find a way to pass the slug here instead of id
+        // OR could programmatically set the category and id? 
     )
 );
+
+
 ?>
 
 <div id="primary_full_width">
@@ -19,28 +26,13 @@ $all_cats = get_terms(
         <div class="archive-container">
             <?php
             foreach ($all_cats as $cat) :
-                $title = $cat->name;
-                $slug = $cat->slug;
-                $desc = $cat->description;
+                $id = $cat->term_id;
             ?>
 
             <article class="archive-card">
                 <div class="archive-wrap">
-                    <header>
-                        <h1>
-                            <?php echo  $title; ?>
-                        </h1>
-                    </header>
-                    <div class="img-wrap">
-                        <a href="<?php echo $slug; ?>"
-                            title="View all photos from the collection <?php echo strtolower($title); ?>">
-                            <?php get_random_atta_img_src_by_term('category', $slug); ?>
-                        </a>
-                    </div>
-                    <?php if ($desc) :
-                            echo '<p>' . $desc . '</p>';
-                        endif;
-                        ?>
+                    <?php featured_cat_card($id); ?>
+
                 </div>
             </article>
             </a>

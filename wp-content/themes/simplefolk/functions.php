@@ -264,7 +264,7 @@ function featured_cat_card($catID)
 {
   echo '<div class="featured-cat-banner">';
   echo get_attachment_by_cat_id($catID, 'landscape_thumb');
-  echo '<h3>' . get_cat_name($catID) . '</h3>';
+  echo '<header><h3>' . get_cat_name($catID) . '</h3></header>';
   echo '</div>';
   echo category_description($catID);
   echo '<div class="category-link" style="text-align: right"><a title="View all photos from the ' . get_cat_name($catID) . ' collection" href="' . get_category_link($catID) . '">View collection &raquo; </a>';
@@ -349,7 +349,7 @@ register_nav_menus(array(
 ///////////////////////////
 
 
-add_image_size('landscape_thumb', 450, 180, true);
+add_image_size('landscape_thumb', 750, 220, true);
 add_image_size('square_hero', 450, 450, true);
 
 /* Add new sizes to admin menus */
@@ -500,7 +500,8 @@ function get_random_atta_img_src_by_tag($tag = '')
 
 function get_random_atta_img_src_by_term($tax, $term = '')
 {
-
+  // Note :  Found passing slug breaks this because the spaces are hyphenated
+  // Passing title for $term seems to work ok
 
   if ($term) {
     $args = array(
@@ -565,6 +566,42 @@ function get_attachment_by_cat_id($id, $size = 'thumbnail')
     endwhile;
   endif;
 }
+
+//////////////////////////////////
+//                              //
+//    Get image and lightbox    //
+//                              //
+//////////////////////////////////
+
+/**
+ * @param int $id Term id to get attachment and meta
+ * @return string HTML of image with modal link
+ * 
+ * Returns an image with lightbox enabled and image meta available in the modal
+ */
+
+
+function get_lightbox_image($id)
+{
+  $full_image_link = wp_get_attachment_image_url($id, 'full');
+  $slide_class = "full-meta-" . $id;
+  $atta_img = wp_get_attachment_image($id, 'medium_large');
+  if ($atta_img) :
+    echo '<a href="' . $full_image_link . '" 
+  class="glightbox"
+  data-desc-position="bottom"  // todo: configs for this
+  data-glightbox="description: .' . $slide_class . '">';
+    echo $atta_img;
+    echo '</a>';
+    echo '<div class="glightbox-desc ' . $slide_class .  '">'; // hidden element that shows in modal
+    modal_display_photo_meta($id);
+    echo '</div>';
+  endif;
+}
+
+
+
+
 
 ///////////////////////////////////
 //                               //

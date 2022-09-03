@@ -65,7 +65,11 @@ body {
 #content {
   flex: 1 0 auto;
 }
-
+#content-attachment {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 img {
   display: block;
   height: auto;
@@ -243,12 +247,17 @@ button.active {
   background: var(--warm-1);
   border-bottom: 1px solid var(--warm-1);
 }
-.single-attachment .main-image {
-  background-color: black;
+.single-attachment .main-image img {
+  border: 10px solid var(--warm-00);
 }
 footer {
   border-top: 1px solid var(--warm-2);
 }
+
+.featured-gallery-content {
+  background-color: var(--warm-00);
+}
+
 @media (max-width: 767px) {
   .menu > li {
     color: var(--warm-0);
@@ -328,6 +337,11 @@ body.lightmode .archive-wrap header {
 body.lightmode footer {
   border-top: 1px solid var(--warm-8);
 }
+
+body.lightmode .featured-gallery-content {
+  background-color: var(--warm-9);
+}
+
 @media (max-width: 767px) {
   body.lightmode .menu > li {
     color: var(--warm-2);
@@ -451,9 +465,12 @@ body {
   font-family: var(--font-primary);
   font-size: 1.1em;
 }
-#main {
-  padding: 0 60px;
+
+.wrap {
+  display: flex;
+  justify-content: center;
 }
+
 #primary_full_width {
   width: 100%;
   padding: 10px 20px;
@@ -476,15 +493,16 @@ footer .copyright {
   display: flex;
 }
 
-/* todo : this isn't great */
-
-#primary {
-  width: 75%;
-  padding: 40px;
+figcaption {
+  text-align: center;
+  padding-bottom: 20px;
 }
+/* #primary {
+  width: 75%;
+} */
 #secondary {
   width: 25%;
-  padding: 40px 0 0;
+  padding: 40px 60px;
 }
 #secondary h1 {
   margin: 0 0 0.5em;
@@ -498,12 +516,12 @@ footer .copyright {
   margin: 0 auto;
 }
 .home-main-content {
-  width: 55%;
-  padding: 40px 5% 0 20px;
+  width: 45%;
+  padding: 40px 3% 0;
 }
 
 .home-aside-container {
-  width: 40%;
+  width: 50%;
   display: flex;
 }
 .home-aside-1,
@@ -704,7 +722,6 @@ footer .copyright {
   max-width: 100%;
   height: auto;
   margin: 0 auto;
-  padding: 20px;
 }
 
 /* *******************
@@ -731,10 +748,7 @@ article.type-post figcaption {
 .single-cat-link {
   margin: 4px;
 }
-figure.main-image {
-  margin: 0;
-  float: left;
-}
+
 .single-post .main-image img {
   /* TODO : Should replace this with srcset variations? */
   max-width: 100%;
@@ -826,6 +840,7 @@ figure.main-image {
   *********************** */
 .featured-gallery-content {
   margin-top: 60px;
+  padding: 20px 40px;
 }
 .featured-gallery-header {
   display: flex;
@@ -887,7 +902,6 @@ figure.main-image {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1em;
 }
 .archive-container h1 {
   margin-right: 1em;
@@ -934,6 +948,9 @@ a.buttonish {
   #secondary {
     width: 100%;
   }
+  .wrap {
+    flex-direction: column;
+  }
   #secondary {
     border-top: 1px dashed var(--warm-1);
   }
@@ -967,10 +984,6 @@ a.buttonish {
   }
 }
 @media only screen and (max-width: 767px) {
-  #main {
-    padding: 0;
-  }
-
   .main-header,
   .main-header .header-nav ul {
     flex-direction: column;
@@ -1033,9 +1046,7 @@ a.buttonish {
   .archive-container article {
     width: 50%;
   }
-  #main {
-    padding: 0;
-  }
+
   .featured-gallery-content {
     padding: 0 20px;
   }
@@ -1045,9 +1056,7 @@ a.buttonish {
   .archive-container article {
     width: 33.3%;
   }
-  #main {
-    padding: 0;
-  }
+
   .featured-gallery-content {
     padding: 0 20px;
   }
