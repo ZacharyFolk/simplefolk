@@ -1021,6 +1021,7 @@ function the_breadcrumb()
   $before = '<span class="current">'; // tag before the current crumb
   $after = '</span>'; // tag after the current crumb
   $catLink = '<a href="/projects/"> Projects</a> ';
+  $tagLink = '<a href="/tags/">Tags</a>';
 
   global $post;
   $homeLink = get_bloginfo('url');
@@ -1040,6 +1041,9 @@ function the_breadcrumb()
         }
         echo $catLink  . $delimiter . $before . ' ' . single_cat_title('', false) . $after;
       }
+    }
+    if (is_tag()) {
+      echo $tagLink  . $delimiter . $before . ' ' . get_queried_object()->name . $after;
     } elseif (is_single() && !is_attachment()) {
       echo ' ' . $before . get_the_title() . $after;
     }
@@ -1085,8 +1089,6 @@ function the_breadcrumb()
     } elseif (is_page() && $post->post_parent) {
       $parent_id = $post->post_parent;
       $breadcrumbs = array();
-
-
       while ($parent_id) {
         $page = get_post($parent_id);
         $breadcrumbs[] = '<a href="' . get_permalink($page->ID) . '">' . get_the_title($page->ID) . '</a>';
