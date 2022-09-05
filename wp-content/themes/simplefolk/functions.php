@@ -351,6 +351,7 @@ register_nav_menus(array(
 
 add_image_size('landscape_thumb', 750, 220, true);
 add_image_size('square_hero', 450, 450, true);
+add_image_size('tiny_thumb', 80, 80, true);
 
 /* Add new sizes to admin menus */
 function new_image_sizes($size_names)
@@ -358,6 +359,7 @@ function new_image_sizes($size_names)
   $new_sizes = array(
     'landscape_thumb' => 'Landscape Thumbmail',
     'square_hero' => 'Square 450',
+    'tiny_thumb' => 'Square 80'
 
   );
   return array_merge($size_names, $new_sizes);
@@ -530,6 +532,62 @@ function get_random_atta_img_src_by_term($tax, $term = '')
     endif;
   }
 }
+
+
+/**
+ * Returns the display for each tag on the root tags/ page 
+ * @param string $tax Taxonomy to use for the query eg: post_tag
+ * @param object $single_tag WP_Term Object
+ * @return string HTML generated from get_the_post_thumbnail 
+ * */
+function get_tag_display($tax, $single_tag)
+{
+  // Note :  Found passing slug breaks this because the spaces are hyphenated
+  //   $single_tag->name for $term seems to work ok
+
+  $term = $single_tag->name;
+  if ($term) {
+    $args = array(
+      'post_type' => 'attachment',
+      'post_status' => 'inherit',
+      'posts_per_page' => 10,
+      'orderby' => 'rand',
+      'tax_query' => array(
+        array(
+          'taxonomy' => $tax,
+          'field'    => 'name',
+          'terms'    => $term,
+        ),
+      ),
+    );
+
+    $name = '#' . strtolower($term);
+    $tag_banner_array = array('<span>' . $name . '</span>');
+
+
+    $query = new WP_Query($args);
+    if ($query->have_posts()) :
+      while ($query->have_posts()) : $query->the_post();
+        $id = get_the_ID();
+        $atta_img = wp_get_attachment_image($id, 'tiny_thumb');
+        if ($atta_img) {
+          array_push($tag_banner_array, $atta_img);
+          // echo $atta_img;
+        }
+      endwhile;
+    endif;
+
+
+    shuffle($tag_banner_array);
+
+
+
+    foreach ($tag_banner_array as $output) {
+      echo $output;
+    }
+  }
+}
+
 
 
 /**

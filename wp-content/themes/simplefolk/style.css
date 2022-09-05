@@ -217,7 +217,7 @@ a:hover {
 
 .archive-wrap {
   background-color: var(--grey-1);
-  padding: 20px;
+  /* padding: 20px; */
 }
 .archive-wrap header {
   background-color: var(--dark-background);
