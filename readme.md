@@ -1,25 +1,46 @@
-                ================== SIMPLE FOLK ==================
+                            ====== SIMPLE FOLK =======
 
-**Description**: SimpleFolk is a WordPress theme I am developing for [my photography site](https://www.folkphotography.com).
+SimpleFolk is a WordPress theme I built for [my photography site](https://www.folkphotography.com). Unlike most themes I sampled, this one is focused on the attachments and media library portion of the CMS. You can build all of the content of a site using mainly just the meta that is added to the image.
 
-My goal is to get this site as fast as possible and ticking all the boxes for performance, security, seo, and accessibility. Working now on making the theme more versatile and plan to share it with an open license when it is ready.
-
-Latest lightouse snapshot from 2022-08-09 :
-
-![Lighthouse score as of 2022-07-27](./readme/lightouse-3.jpg)
-
-Another goal of building this was to remove the dependence on numerous plugins. Plugins are great but I wanted an all in one solution to keep it simple, have control over it, and reduce as much page weight as possible.
+Another goal of building this is to make it as fast as possible and ticking all the boxes for performance, security, seo, and accessibility. I wanted features from various plugins without all of the extra bloat and complications of maintaining all these modules so there are many features built into the theme.
 
     Features
 
-- **Photocentric** - Unlike most themes that center around posts and pages, this theme is built mainly around the media gallery
-- **SEO** - Theme adds breadcrumb support, dynamic titles, and dynamic meta description.
+- **Fast** - See below for performance test results- last lighthouse score was a perfect 100.
+- **Photos first** - Organize and display your images all from the media library.
+- **EXIF data** - If EXIF data (Camera type, shutter speed, etc.. ) exists it is imported as meta content
+- **Blog** - All the usual WordPress post functionality still exists along with the media content.
+- **SEO** - Theme adds breadcrumb support, dynamic titles, and dynamic meta descriptions.
 - **Fully Responsive** - Website flexes to give the user the best experience on any device.
-- **Analytics** - Setup to work with a unique API key added to the admin
-- **Darkmode/Lightmode toggle** - Built in frontend toggle to give the user their preferred style. It is a todo to add color palletes to the admin customizer.
-- **Organization** - tag filters and gallery, dedicated tag and category archive pages
-- **Image modals** - using glightbox for zoom views
-- **Masonry** - Uses isotope for filters and flexible layouts
+- **Analytics** - Setup to work with a unique API key added to the admin.
+- **Darkmode/Lightmode toggle** - Built in frontend toggle to give the user their preferred style.
+- **Organization** - tag filters and gallery, dedicated tag and category archive pages.
+- **Image modals** - using glightbox for zoom views.
+- **Masonry** - Uses isotope for filters and flexible layouts.
+
+---
+
+    Live Demo
+
+You can check it out on [my photography site](https://www.folkphotography.com).
+
+---
+
+    Examples
+
+[coming soon]
+
+---
+
+    Options
+
+[coming soon]
+
+---
+
+    Performance Results
+
+[coming soon]
 
 ---
 
@@ -40,6 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - numerous widgets for home, footer, and sidebar
 - widget for featured category
 - updating styles for main layouts
+- EXIF data imported into metaboxes of attachement
 
 ### Removed
 

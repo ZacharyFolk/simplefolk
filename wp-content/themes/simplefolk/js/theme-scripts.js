@@ -85,6 +85,22 @@ if (elem) {
     });
   });
 }
+
+var tags = document.querySelector('.tag-container');
+
+if (tags) {
+  imagesLoaded(elem, function (instance) {
+    var iso = new Isotope(elem, {
+      itemSelector: '.archive-card',
+      layoutMode: 'masonry',
+      masonry: {
+        columnWidth: '.archive-card',
+        gutter: 0,
+      },
+    });
+  });
+}
+
 // https://github.com/biati-digital/glightbox/blob/master/README.md
 const lightbox = GLightbox({
   skin: 'clean simple',
