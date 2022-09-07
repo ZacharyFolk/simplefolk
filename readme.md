@@ -1,3 +1,4 @@
+<<<<<<< HEAD
     ======================== [o] SIMPLE FOLK [o] =========================>>>
 
                                       ___
@@ -10,21 +11,37 @@
                              ---------------------
 
 Simple Folk is a WordPress theme built for photographers. It is focused on using the media library as the main tool to organize and build content.
+=======
+                            ====== SIMPLE FOLK =======
+
+SimpleFolk is a WordPress theme I built for [my photography site](https://www.folkphotography.com). Unlike most themes I sampled, this one is focused on the attachments and media library portion of the CMS. You can build all of the content of a site using mainly just the meta that is added to the image.
+
+Another goal of building this is to make it as fast as possible and ticking all the boxes for performance, security, seo, and accessibility. I wanted features from various plugins without all of the extra bloat and complications of maintaining all these modules so there are many features built into the theme.
+>>>>>>> 184d6c2f4a1cb1d3a3f0236969473e74f19d69d3
 
     Features
 
 - **Fast** - See below for performance test results- last lighthouse score was a perfect 100.
+<<<<<<< HEAD
 - **Enhanced Media Library** - Organize and display your images all from the media library.
 - **Meta data** - EXIF (Camera type, shutter speed, etc.. ) imported and additional fields for film cameras.
+=======
+- **Photos first** - Organize and display your images all from the media library.
+- **EXIF data** - If EXIF data (Camera type, shutter speed, etc.. ) exists it is imported as meta content
+>>>>>>> 184d6c2f4a1cb1d3a3f0236969473e74f19d69d3
 - **Blog** - All the usual WordPress post functionality still exists along with the media content.
 - **SEO** - Theme adds breadcrumb support, dynamic titles, and dynamic meta descriptions.
 - **Fully Responsive** - Website flexes to give the user the best experience on any device.
 - **Analytics** - Setup to work with a unique API key added to the admin.
 - **Darkmode/Lightmode toggle** - Built in frontend toggle to give the user their preferred style.
+<<<<<<< HEAD
 - **Organization** - Tags and Category added to media attachments.
 - **Custom Menus** - multiple spots to customize with widgets and navigation
 - **Custom Widgets** - Feature a particular project (category)
 - **Configuration** - Layout and features easily controlled through admin customizer
+=======
+- **Organization** - tag filters and gallery, dedicated tag and category archive pages.
+>>>>>>> 184d6c2f4a1cb1d3a3f0236969473e74f19d69d3
 - **Image modals** - using glightbox for zoom views.
 - **Masonry** - Uses isotope for filters and flexible layouts.
 
@@ -36,7 +53,11 @@ You can check it out on [my photography site](https://www.folkphotography.com).
 
 ---
 
+<<<<<<< HEAD
     Setting Up
+=======
+    Examples
+>>>>>>> 184d6c2f4a1cb1d3a3f0236969473e74f19d69d3
 
 [coming soon]
 
@@ -51,6 +72,7 @@ You can check it out on [my photography site](https://www.folkphotography.com).
     Performance Results
 
 [coming soon]
+<<<<<<< HEAD
 
 ---
 
@@ -75,6 +97,8 @@ You can check it out on [my photography site](https://www.folkphotography.com).
     Support
 
 [coming soon]
+=======
+>>>>>>> 184d6c2f4a1cb1d3a3f0236969473e74f19d69d3
 
 ---
 
