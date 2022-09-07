@@ -1,25 +1,80 @@
-                ================== SIMPLE FOLK ==================
+    ======================== [o] SIMPLE FOLK [o] =========================>>>
 
-**Description**: SimpleFolk is a WordPress theme I am developing for [my photography site](https://www.folkphotography.com).
+                                      ___
+                             .==.____/[=]\ _______
+                             |_---___________[o]_|
+                            /|    _ /  --  \     |\
+                            ||   (_// /''\ \\    ||
+                            ||     \\ \../ //    ||
+                            \|      \\ __ //     |/
+                             ---------------------
 
-My goal is to get this site as fast as possible and ticking all the boxes for performance, security, seo, and accessibility. Working now on making the theme more versatile and plan to share it with an open license when it is ready.
-
-Latest lightouse snapshot from 2022-08-09 :
-
-![Lighthouse score as of 2022-07-27](./readme/lightouse-3.jpg)
-
-Another goal of building this was to remove the dependence on numerous plugins. Plugins are great but I wanted an all in one solution to keep it simple, have control over it, and reduce as much page weight as possible.
+Simple Folk is a WordPress theme built for photographers. It is focused on using the media library as the main tool to organize and build content.
 
     Features
 
-- **Photocentric** - Unlike most themes that center around posts and pages, this theme is built mainly around the media gallery
-- **SEO** - Theme adds breadcrumb support, dynamic titles, and dynamic meta description.
+- **Fast** - See below for performance test results- last lighthouse score was a perfect 100.
+- **Enhanced Media Library** - Organize and display your images all from the media library.
+- **Meta data** - EXIF (Camera type, shutter speed, etc.. ) imported and additional fields for film cameras.
+- **Blog** - All the usual WordPress post functionality still exists along with the media content.
+- **SEO** - Theme adds breadcrumb support, dynamic titles, and dynamic meta descriptions.
 - **Fully Responsive** - Website flexes to give the user the best experience on any device.
-- **Analytics** - Setup to work with a unique API key added to the admin
-- **Darkmode/Lightmode toggle** - Built in frontend toggle to give the user their preferred style. It is a todo to add color palletes to the admin customizer.
-- **Organization** - tag filters and gallery, dedicated tag and category archive pages
-- **Image modals** - using glightbox for zoom views
-- **Masonry** - Uses isotope for filters and flexible layouts
+- **Analytics** - Setup to work with a unique API key added to the admin.
+- **Darkmode/Lightmode toggle** - Built in frontend toggle to give the user their preferred style.
+- **Organization** - Tags and Category added to media attachments.
+- **Custom Menus** - multiple spots to customize with widgets and navigation
+- **Custom Widgets** - Feature a particular project (category)
+- **Configuration** - Layout and features easily controlled through admin customizer
+- **Image modals** - using glightbox for zoom views.
+- **Masonry** - Uses isotope for filters and flexible layouts.
+
+---
+
+    Live Demo
+
+You can check it out on [my photography site](https://www.folkphotography.com).
+
+---
+
+    Setting Up
+
+[coming soon]
+
+---
+
+    Options
+
+[coming soon]
+
+---
+
+    Performance Results
+
+[coming soon]
+
+---
+
+    Browser
+
+[coming soon]
+
+---
+
+    Contributing
+
+[coming soon]
+
+---
+
+    Donate
+
+[coming soon]
+
+---
+
+    Support
+
+[coming soon]
 
 ---
 
@@ -40,6 +95,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - numerous widgets for home, footer, and sidebar
 - widget for featured category
 - updating styles for main layouts
+- EXIF data imported into metaboxes of attachement
 
 ### Removed
 
@@ -150,3 +206,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - function to display category thumbs in sidebar
+
+---
+
+    License
+
+[coming soon]

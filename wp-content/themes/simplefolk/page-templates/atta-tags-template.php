@@ -15,7 +15,7 @@ $all_tags = get_terms(
 ?>
 <div id="primary_full_width">
     <main id="main" class="site-main">
-        <div class="archive-container">
+        <div class="tag-container">
             <?php
             foreach ($all_tags as $single_tag) :
                 $tag_name = $single_tag->name;
@@ -39,40 +39,3 @@ $all_tags = get_terms(
     </main>
 </div>
 <?php get_footer(); ?>
-<style>
-.tag-banner a {
-    display: flex;
-    align-items: center;
-}
-
-.tag-banner span {
-    text-align: center;
-    min-height: 80px;
-    min-width: 80px;
-    background-color: var(--warm-00);
-    display: inline-grid;
-    align-items: center;
-    text-align: center;
-    padding: 0 20px;
-}
-
-.tag-wrap {
-    position: relative;
-    width: fit-content;
-}
-
-.tag-wrap header {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
-    background-image: linear-gradient(to right,
-            rgba(0, 0, 0, .4) 0%,
-            rgba(0, 0, 0, .2) 15%,
-            rgba(0, 0, 0, 0) 100%);
-}
-
-.small-thumbs {
-    display: flex;
-}
-</style>

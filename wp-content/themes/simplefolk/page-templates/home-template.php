@@ -18,16 +18,16 @@ get_header();
                 <div class="home-aside-1">
                     <?php
                     if (is_active_sidebar('home-1')) : ?>
-                    <aside class="widget-area" aria-label="<?php esc_attr_e('Home Left', 'simplefolk'); ?>">
-                        <?php dynamic_sidebar('sidebar-2'); ?>
+                    <aside class="widget-area" aria-label="<?php esc_attr_e('Home One', 'simplefolk'); ?>">
+                        <?php dynamic_sidebar('home-1'); ?>
                     </aside>
                     <?php endif; ?>
                 </div>
                 <div class="home-aside-2">
                     <?php
                     if (is_active_sidebar('home-2')) : ?>
-                    <aside class="widget-area" aria-label="<?php esc_attr_e('Home Left', 'simplefolk'); ?>">
-                        <?php dynamic_sidebar('sidebar-3'); ?>
+                    <aside class="widget-area" aria-label="<?php esc_attr_e('Home Two', 'simplefolk'); ?>">
+                        <?php dynamic_sidebar('home-2'); ?>
                     </aside>
                     <?php endif; ?>
                 </div>
