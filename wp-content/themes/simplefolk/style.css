@@ -501,8 +501,8 @@ figcaption {
   width: 75%;
 } */
 #secondary {
-  width: 25%;
-  padding: 40px 60px;
+  width: 35%;
+  padding: 40px 50px 40px 10px;
 }
 #secondary h1 {
   margin: 0 0 0.5em;
@@ -561,6 +561,20 @@ figcaption {
   -webkit-text-stroke-color: var(--warm-00);
   margin: 0px 0 0;
   position: relative;
+}
+
+.florin {
+  font-family: auto;
+  margin: 0 3px;
+} /* span style for apeture ƒ symbol ( alt-0131 or alt-159) ?  */
+
+.photo-exif {
+  list-style-type: none;
+  padding: 0;
+}
+
+.photo-exif li {
+  margin: 4px 0;
 }
 /* ***************
 *                *

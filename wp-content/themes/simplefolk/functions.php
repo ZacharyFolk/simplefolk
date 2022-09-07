@@ -1177,6 +1177,9 @@ function light_mode($classes)
 add_filter('body_class', 'light_mode');
 
 
+
+
+
 /////////////////////////
 // Metaboxes //
 /////////////////////////
@@ -1187,9 +1190,36 @@ add_filter('body_class', 'light_mode');
 
 function photo_meta_boxes()
 {
-  add_meta_box('fp-2', esc_html__('Photo Meta', 'pmeta'), 'photo_meta_callback', 'attachment');
+  add_meta_box('simple_exif', 'Photo Meta', 'photo_meta_callback', 'attachment', 'side', 'high');
 }
 add_action('add_meta_boxes_attachment', 'photo_meta_boxes');
+
+
+// wp_read_image_metadata() converts the raw EXIF with wp_exif_frac2dec()
+// @see wp-admin/includes/image.php
+// Convert decimal to fraction
+// @https://stackoverflow.com/a/14357170/82330
+
+function float2rat($n, $tolerance = 1.e-6)
+{
+  $h1 = 1;
+  $h2 = 0;
+  $k1 = 0;
+  $k2 = 1;
+  $b = 1 / $n;
+  do {
+    $b = 1 / $b;
+    $a = floor($b);
+    $aux = $h1;
+    $h1 = $a * $h1 + $h2;
+    $h2 = $aux;
+    $aux = $k1;
+    $k1 = $a * $k1 + $k2;
+    $k2 = $aux;
+    $b = $b - $a;
+  } while (abs($n - $h1 / $k1) > $n * $tolerance);
+  return "$h1/$k1";
+}
 
 
 /**
@@ -1200,22 +1230,99 @@ add_action('add_meta_boxes_attachment', 'photo_meta_boxes');
 function photo_meta_callback($post)
 {
   wp_nonce_field(basename(__FILE__), "meta-box-nonce");
+  require_once ABSPATH . '/wp-admin/includes/image.php'; // Without this wp_read_image_metadata() throws Fatal error: Uncaught Error: Call to undefined function
+  $id = get_the_ID();
+  $filepath = get_attached_file($id);
+  $imageEXIF = wp_read_image_metadata($filepath);
+  // wut(wp_read_image_metadata($filepath));
+
+  // [aperture]
+  $exif_aperture = empty($imageEXIF['aperture']) ? '' :  $imageEXIF['aperture'];
+  $meta_aperture = esc_attr(get_post_meta(get_the_ID(), 'aperture', true));
+  $aperture_value = empty($meta_aperture) ? $exif_aperture : $meta_aperture;
+
+  // [camera] 
+  // converted ex: NIKON D10 => Nikon D10
+  $exif_camera = empty($imageEXIF['camera']) ? '' :  $imageEXIF['camera'];
+  $fixCase = explode(' ', $exif_camera);
+  $capitalFirst = strtolower($fixCase[0]);
+  $capitalFirst = ucwords($capitalFirst);
+  $exif_camera = $capitalFirst . ' ' .  $fixCase[1];
+  $meta_camera = esc_attr(get_post_meta(get_the_ID(), 'camera', true));
+  $camera_value = empty($meta_camera) ? $exif_camera : $meta_camera;
+
+  // [iso] 
+  $exif_iso =  empty($imageEXIF['iso']) ? '' :  $imageEXIF['iso'];
+  $meta_iso = esc_attr(get_post_meta(get_the_ID(), 'iso', true));
+  $iso_value = empty($meta_iso) ? $exif_iso : $meta_iso;
+
+  // [shutter_speed] 
+  $exif_shutter =  empty($imageEXIF['shutter_speed']) ? '' :  $imageEXIF['shutter_speed'];
+  $exif_shutter = float2rat($exif_shutter);
+  $meta_shutter = esc_attr(get_post_meta(get_the_ID(), 'shutter', true));
+  $shutter_value = empty($meta_shutter) ? $exif_shutter : $meta_shutter;
+
+  // [focal_length] 
+  // lens focal length (in millimeters (mm))
+
+  $exif_focal = empty($imageEXIF['focal_length']) ? '' :  $imageEXIF['focal_length'];
+  $meta_focal = esc_attr(get_post_meta(get_the_ID(), 'focal', true));
+  $focal_value = empty($meta_focal) ? $exif_focal . 'mm' : $meta_focal;
+
+  // [created_timestamp] 
+  // unix timestamp converted, eg: 1471244893 => August 15, 2016, 7:08 AM
+  // date("F j, Y, g:i a")
+
+  $exif_time = empty($imageEXIF['created_timestamp']) ? '' :  $imageEXIF['created_timestamp'];
+  $meta_time = esc_attr(get_post_meta(get_the_ID(), 'time', true));
+  $converted_time = date("F j, Y, g:i A", $exif_time);
+  $time_value = empty($meta_time) ? $converted_time : $meta_time;
   ?>
 <p>
-    <label for="photo_location">Location : </label>
-    <input id="photo_location" type="text" name="photo_location" style="margin-right: 10px; width: 100%"
-        value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'photo_location', true)); ?>">
+    <label for="camera">Camera : </label>
+    <input id="camera" type="text" name="camera" style="margin-right: 10px; width: 100%"
+        value="<?php echo $camera_value; ?>">
+
 </p>
 <p>
-    <label for="photo_camera">Camera : </label>
-    <input id="photo_camera" type="text" name="photo_camera" style="margin-right: 10px; width:100%"
-        value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'photo_camera', true)); ?>">
+    <label for="iso">ISO : </label>
+    <input id="iso" type="text" name="iso" style="margin-right: 10px; width:100%; text-align: center;"
+        value="<?php echo $iso_value; ?>">
 </p>
 <p>
-    <label for="photo_film">Film type : </label>
-    <input id="photo_film" type="text" name="photo_film" style="margin-right: 10px; width: 100%"
-        value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'photo_film', true)); ?>">
+    <label for="aperture">Aperture : </label>
+    <input id="aperture" type="text" name="aperture" style="margin-right: 10px; width:100%; text-align: center;"
+        value="<?php echo $aperture_value; ?>">
+    <span class="extra-info">
+        This value is displayed with ƒ prefix
+    </span>
 </p>
+<p>
+    <label for="shutter">Shutter : </label>
+    <input id="shutter" type="text" name="shutter" style="margin-right: 10px; width:100%; text-align: center;"
+        value="<?php echo $shutter_value; ?>">
+</p>
+<p>
+    <label for="focal">Focal Length : </label>
+    <input id="focal" type="text" name="focal" style="margin-right: 10px; width:100%"
+        value="<?php echo $focal_value; ?>">
+</p>
+<p>
+    <label for="film">Film type : </label>
+    <input id="film" type="text" name="film" style="margin-right: 10px; width: 100%"
+        value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'film', true)); ?>">
+</p>
+<p>
+    <label for="time">Time of creation : </label>
+    <input id="time" type="text" name="time" style="margin-right: 10px; width:100%" value="<?php echo $time_value; ?>">
+</p>
+<p>
+    <label for="location">Location : </label>
+    <input id="location" type="text" name="location" style="margin-right: 10px; width: 100%"
+        value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'location', true)); ?>">
+</p>
+
+
 <p>
     <label for="print_available">Prints Available?</label>
     <?php
@@ -1231,7 +1338,8 @@ function photo_meta_callback($post)
     }
     ?>
     </div>
-    <?php }
+    <?php
+}
 
 /**
  * Save post meta box content.
@@ -1239,9 +1347,9 @@ function photo_meta_callback($post)
  * @param int $post_id Post ID
  */
 
-add_action('edit_attachment', 'photo_save_meta');
+add_action('edit_attachment', 'simple_save_meta');
 
-function photo_save_meta($post_id)
+function simple_save_meta($post_id)
 {
 
   // Check if user has permissions to save data.
@@ -1250,9 +1358,15 @@ function photo_save_meta($post_id)
   }
 
   $textfields = [
-    'photo_location',
-    'photo_camera',
-    'photo_film',
+    'camera',
+    'iso',
+    'aperture',
+    'shutter',
+    'focal',
+    'film',
+    'time',
+    'location',
+
     'print_available'
   ];
   foreach ($textfields as $field) {
@@ -1267,41 +1381,81 @@ function photo_save_meta($post_id)
  *
  * Displays optional location, camera type, film, and prints available
  *
- * @param $id The current post id
+ * @param $id The current post id 
  * @return string HTML of additional data as paragraphs
  */
+
 function display_photo_meta($id)
 {
   $attachment_id = (get_post_thumbnail_id($id));
   $core_meta = wp_get_attachment($attachment_id);
   if (isset($core_meta) && !empty($core_meta)) {
-
-
     if (!empty($core_meta['description'])) {
       echo '<p>' . $core_meta['description'] . '</p>';
     }
   }
-
   $attachment_fields = get_post_custom($attachment_id);
-  if (array_key_exists('photo_location', $attachment_fields)) {
-    echo '<ul>';
-    $loc = $attachment_fields['photo_location'][0];
-    if ($loc) :
-      echo '<li>Location: ' . $loc . '</li>';
-    endif;
-  }
-  if (array_key_exists('photo_camera', $attachment_fields)) {
-    $cam = $attachment_fields['photo_camera'][0];
+
+  echo '<ul class="photo-exif">';
+
+  if (array_key_exists('camera', $attachment_fields)) {
+    $cam = $attachment_fields['camera'][0];
     if ($cam) :
       echo '<li>Camera: ' . $cam . '</li>';
     endif;
   }
-  if (array_key_exists('photo_film', $attachment_fields)) {
-    $film = $attachment_fields['photo_film'][0];
+
+
+  if (array_key_exists('iso', $attachment_fields)) {
+    $iso = $attachment_fields['iso'][0];
+    if ($iso) :
+      echo '<li>ISO: ' . $iso . '</li>';
+    endif;
+  }
+
+
+  if (array_key_exists('aperture', $attachment_fields)) {
+    $aperture = $attachment_fields['aperture'][0];
+    if ($aperture) :
+      echo '<li>Aperture: ' . $aperture . '</li>';
+    endif;
+  }
+
+  if (array_key_exists('shutter', $attachment_fields)) {
+    $shutter = $attachment_fields['shutter'][0];
+    if ($shutter) :
+      echo '<li>Shutter speed:' . $shutter . '</li>';
+    endif;
+  }
+
+  if (array_key_exists('focal', $attachment_fields)) {
+    $focal = $attachment_fields['focal'][0];
+    if ($focal) :
+      echo '<li>Focal length: ' . $focal . '</li>';
+    endif;
+  }
+
+  if (array_key_exists('film', $attachment_fields)) {
+    $film = $attachment_fields['film'][0];
     if ($film) :
       echo '<li>Film: ' . $film . '</li>';
     endif;
   }
+
+  if (array_key_exists('time', $attachment_fields)) {
+    $time = $attachment_fields['time'][0];
+    if ($time) :
+      echo '<li>Time of capture: ' . $time . '</li>';
+    endif;
+  }
+
+  if (array_key_exists('location', $attachment_fields)) {
+    $loc = $attachment_fields['location'][0];
+    if ($loc) :
+      echo '<li>Location: ' . $loc . '</li>';
+    endif;
+  }
+
   echo '</ul>';
 }
 

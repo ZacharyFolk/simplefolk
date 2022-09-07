@@ -2,6 +2,9 @@
 body.post-type-attachment #wpfooter {
   position: relative;
 }
-.wp_attachment_image {
+/* .wp_attachment_image {
   max-width: 600px;
+} */
+#simple_exif .inside input {
+  text-align: center;
 }
