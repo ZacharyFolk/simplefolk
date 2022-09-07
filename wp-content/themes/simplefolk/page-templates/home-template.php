@@ -17,7 +17,7 @@ get_header();
             <div class="home-aside-container">
                 <div class="home-aside-1">
                     <?php
-                    if (is_active_sidebar('sidebar-2')) : ?>
+                    if (is_active_sidebar('home-1')) : ?>
                     <aside class="widget-area" aria-label="<?php esc_attr_e('Home Left', 'simplefolk'); ?>">
                         <?php dynamic_sidebar('sidebar-2'); ?>
                     </aside>
@@ -25,7 +25,7 @@ get_header();
                 </div>
                 <div class="home-aside-2">
                     <?php
-                    if (is_active_sidebar('sidebar-3')) : ?>
+                    if (is_active_sidebar('home-2')) : ?>
                     <aside class="widget-area" aria-label="<?php esc_attr_e('Home Left', 'simplefolk'); ?>">
                         <?php dynamic_sidebar('sidebar-3'); ?>
                     </aside>

@@ -12,14 +12,14 @@ Another goal of building this was to remove the dependence on numerous plugins. 
 
     Features
 
+- **Photocentric** - Unlike most themes that center around posts and pages, this theme is built mainly around the media gallery
 - **SEO** - Theme adds breadcrumb support, dynamic titles, and dynamic meta description.
 - **Fully Responsive** - Website flexes to give the user the best experience on any device.
-- **Analytics** - Setup to work with a unique API key
+- **Analytics** - Setup to work with a unique API key added to the admin
 - **Darkmode/Lightmode toggle** - Built in frontend toggle to give the user their preferred style. It is a todo to add color palletes to the admin customizer.
-- **Archives** - tag filters and gallery, dedicated tag and category archive pages
-- **Image modals** - built in lightbox (currently fancybox)
+- **Organization** - tag filters and gallery, dedicated tag and category archive pages
+- **Image modals** - using glightbox for zoom views
 - **Masonry** - Uses isotope for filters and flexible layouts
-- **Photocentric** - This theme is all about the images uploaded to the media library. Additional meta boxes are available to add information about the image such as location, captions, film type, etc.. Future updates will refine this, adding more meta boxes and maybe use the archive pages instead of posts.
 
 ---
 
@@ -27,6 +27,24 @@ Another goal of building this was to remove the dependence on numerous plugins. 
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [2.0.0] - 2022-09-10
+
+### Added
+
+- total overhaul on structure, using includes/ to structure the loops
+- featured gallery and archive pages now built strictly off attachments
+- posts are posts again
+- glightbox for zoom view of most images on the site
+- taxonomy structure for attachments
+- numerous widgets for home, footer, and sidebar
+- widget for featured category
+- updating styles for main layouts
+
+### Removed
+
+- icomoon and other deprecated scripts
+- custom taxonomy to use normal cat/tags for attachments
 
 ## [1.3.0] - 2022-08-09
 

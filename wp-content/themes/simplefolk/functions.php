@@ -111,7 +111,7 @@ function simple_widgets_init()
   register_sidebar(
     array(
       'name'          => __('Home Column 1', 'simplefolk'),
-      'id'            => 'sidebar-2',
+      'id'            => 'home-1',
       'description'   => __('Widget for column on home page.', 'simplefolk'),
       'before_widget' => '<section id="%1$s" class="widget %2$s">',
       'after_widget'  => '</section>',
@@ -123,7 +123,7 @@ function simple_widgets_init()
   register_sidebar(
     array(
       'name'          => __('Home Column 2', 'simplefolk'),
-      'id'            => 'sidebar-3',
+      'id'            => 'home-2',
       'description'   => __('Widget for additional column on home page.', 'simplefolk'),
       'before_widget' => '<section id="%1$s" class="widget %2$s">',
       'after_widget'  => '</section>',
@@ -135,8 +135,8 @@ function simple_widgets_init()
   register_sidebar(
     array(
       'name'          => __('Footer 1', 'simplefolk'),
-      'id'            => 'sidebar-4',
-      'description'   => __('Add widgets here to appear in your footer.', 'simplefolk'),
+      'id'            => 'footer-1',
+      'description'   => __('Add widgets here to appear in your footer column one.', 'simplefolk'),
       'before_widget' => '<section id="%1$s" class="widget %2$s">',
       'after_widget'  => '</section>',
       'before_title'  => '<h2 class="widget-title">',
@@ -147,8 +147,8 @@ function simple_widgets_init()
   register_sidebar(
     array(
       'name'          => __('Footer 2', 'simplefolk'),
-      'id'            => 'sidebar-5',
-      'description'   => __('Add widgets here to appear in your footer.', 'simplefolk'),
+      'id'            => 'footer-2',
+      'description'   => __('Add widgets here to appear in your footer column two.', 'simplefolk'),
       'before_widget' => '<section id="%1$s" class="widget %2$s">',
       'after_widget'  => '</section>',
       'before_title'  => '<h2 class="widget-title">',
@@ -157,6 +157,54 @@ function simple_widgets_init()
   );
 }
 add_action('widgets_init', 'simple_widgets_init');
+
+
+///////////////////////////////////
+//                               //
+//    Light/Dark Mode toggle     //
+//                               //
+///////////////////////////////////
+/**
+ * @return string HTML for the sun/moon toggle 
+ */
+function createLightSwitch($item)
+{
+  $lightSwitch = <<<END
+  <li>
+  <input id="mode-toggle" type="checkbox" />
+  <label class="mode-button-container" for="mode-toggle">
+      <div class="mode-button">
+          <svg class="lightsoff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 32 32">
+              <title>sun</title>
+              <path
+                  d="M16 26c1.105 0 2 0.895 2 2v2c0 1.105-0.895 2-2 2s-2-0.895-2-2v-2c0-1.105 0.895-2 2-2zM16 6c-1.105 0-2-0.895-2-2v-2c0-1.105 0.895-2 2-2s2 0.895 2 2v2c0 1.105-0.895 2-2 2zM30 14c1.105 0 2 0.895 2 2s-0.895 2-2 2h-2c-1.105 0-2-0.895-2-2s0.895-2 2-2h2zM6 16c0 1.105-0.895 2-2 2h-2c-1.105 0-2-0.895-2-2s0.895-2 2-2h2c1.105 0 2 0.895 2 2zM25.899 23.071l1.414 1.414c0.781 0.781 0.781 2.047 0 2.828s-2.047 0.781-2.828 0l-1.414-1.414c-0.781-0.781-0.781-2.047 0-2.828s2.047-0.781 2.828 0zM6.101 8.929l-1.414-1.414c-0.781-0.781-0.781-2.047 0-2.828s2.047-0.781 2.828 0l1.414 1.414c0.781 0.781 0.781 2.047 0 2.828s-2.047 0.781-2.828 0zM25.899 8.929c-0.781 0.781-2.047 0.781-2.828 0s-0.781-2.047 0-2.828l1.414-1.414c0.781-0.781 2.047-0.781 2.828 0s0.781 2.047 0 2.828l-1.414 1.414zM6.101 23.071c0.781-0.781 2.047-0.781 2.828 0s0.781 2.047 0 2.828l-1.414 1.414c-0.781 0.781-2.047 0.781-2.828 0s-0.781-2.047 0-2.828l1.414-1.414z">
+              </path>
+              <path
+                  d="M16 8c-4.418 0-8 3.582-8 8s3.582 8 8 8c4.418 0 8-3.582 8-8s-3.582-8-8-8zM16 21c-2.761 0-5-2.239-5-5s2.239-5 5-5 5 2.239 5 5-2.239 5-5 5z">
+              </path>
+          </svg>
+          <svg class="lightson" version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+              viewBox="0 0 24 24">
+              <title>crescent_moon</title>
+              <path
+                  d="M9.984 2.016q4.172 0 7.102 2.93t2.93 7.055-2.93 7.055-7.102 2.93q-2.719 0-4.969-1.313 2.297-1.313 3.633-3.633t1.336-5.039-1.336-5.039-3.633-3.633q2.25-1.313 4.969-1.313z">
+              </path>
+          </svg>
+      </div>
+  </label>
+  </li>
+  END;
+  return $item . $lightSwitch;
+}
+
+add_filter('wp_nav_menu_items', 'createLightSwitch');
+
+// TODO : Add customizer and options for which menu to target
+// function addTargetMenus($target)
+// {
+// }
+// add_action('wp_nav_menu_items', 'addTargetMenus');
 
 
 ////////////////////////////////////////
@@ -1030,7 +1078,6 @@ function the_breadcrumb()
       echo '<div id="crumbs" class="breadcrumb"><a href="' . $homeLink . '">' . $home . '</a></div>';
     }
   } else {
-
     echo '<div id="crumbs"><a href="' . $homeLink . '">' . $home . '</a> ' . $delimiter . ' ';
     // archive / category
     if (is_archive()) {
