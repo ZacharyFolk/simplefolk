@@ -6,7 +6,7 @@
 //                                    //
 ////////////////////////////////////////
 
-define('SIMPLE_THEME_VERSION', '2.0.0');
+define('SIMPLE_THEME_VERSION', '2.0.1');
 
 function main_scripts()
 {
@@ -1244,10 +1244,13 @@ function photo_meta_callback($post)
   // [camera] 
   // converted ex: NIKON D10 => Nikon D10
   $exif_camera = empty($imageEXIF['camera']) ? '' :  $imageEXIF['camera'];
-  $fixCase = explode(' ', $exif_camera);
-  $capitalFirst = strtolower($fixCase[0]);
-  $capitalFirst = ucwords($capitalFirst);
-  $exif_camera = $capitalFirst . ' ' .  $fixCase[1];
+  if (!empty($exif_camera)) :
+    $fixCase = explode(' ', $exif_camera);
+    $cam1 = $fixCase[0];
+    $capitalFirst = strtolower($cam1);
+    $capitalFirst = ucwords($capitalFirst);
+    $exif_camera = $capitalFirst . ' ' .  $fixCase[1];
+  endif;
   $meta_camera = esc_attr(get_post_meta(get_the_ID(), 'camera', true));
   $camera_value = empty($meta_camera) ? $exif_camera : $meta_camera;
 
@@ -1258,24 +1261,29 @@ function photo_meta_callback($post)
 
   // [shutter_speed] 
   $exif_shutter =  empty($imageEXIF['shutter_speed']) ? '' :  $imageEXIF['shutter_speed'];
-  $exif_shutter = float2rat($exif_shutter);
+  if (!empty($exif_shutter)) :
+    $exif_shutter = float2rat($exif_shutter);
+  endif;
   $meta_shutter = esc_attr(get_post_meta(get_the_ID(), 'shutter', true));
   $shutter_value = empty($meta_shutter) ? $exif_shutter : $meta_shutter;
 
   // [focal_length] 
   // lens focal length (in millimeters (mm))
 
-  $exif_focal = empty($imageEXIF['focal_length']) ? '' :  $imageEXIF['focal_length'];
+  $exif_focal = empty($imageEXIF['focal_length']) ? '' :  $imageEXIF['focal_length'] . 'mm';
   $meta_focal = esc_attr(get_post_meta(get_the_ID(), 'focal', true));
-  $focal_value = empty($meta_focal) ? $exif_focal . 'mm' : $meta_focal;
+  $focal_value = empty($meta_focal) ? $exif_focal  : $meta_focal;
 
   // [created_timestamp] 
   // unix timestamp converted, eg: 1471244893 => August 15, 2016, 7:08 AM
   // date("F j, Y, g:i a")
 
   $exif_time = empty($imageEXIF['created_timestamp']) ? '' :  $imageEXIF['created_timestamp'];
+  $converted_time = '';
+  if (!empty($exif_time)) :
+    $converted_time = date("F j, Y, g:i A", $exif_time);
+  endif;
   $meta_time = esc_attr(get_post_meta(get_the_ID(), 'time', true));
-  $converted_time = date("F j, Y, g:i A", $exif_time);
   $time_value = empty($meta_time) ? $converted_time : $meta_time;
   ?>
 <p>

@@ -1,4 +1,3 @@
-
     ======================== [o] SIMPLE FOLK [o] =========================>>>
 
                                       ___
@@ -85,7 +84,13 @@ You can check it out on [my photography site](https://www.folkphotography.com).
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.0.0] - 2022-09-10
+## [2.0.1] - 2022-09-08
+
+### Fixed
+
+- errors when missing exif data
+
+## [2.0.0] - 2022-09-08
 
 ### Added
 
