@@ -111,7 +111,7 @@ const lightbox = GLightbox({
 // do this and change format so all images for the lightbox are .glightbox > figure > a (link to full size)
 
 const lightbox2 = GLightbox({
-  selector: ' .single-post-gallery figure a',
+  selector: ' .single-post figure a',
   skin: 'clean simple',
 });
 

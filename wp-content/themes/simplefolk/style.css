@@ -500,8 +500,12 @@ figcaption {
 /* #primary {
   width: 75%;
 } */
+
+#primary {
+  padding: 60px;
+}
 #secondary {
-  width: 35%;
+  min-width: 30%;
   padding: 40px 50px 40px 10px;
 }
 #secondary h1 {
@@ -801,7 +805,19 @@ article.type-post figcaption {
 .single-cat-link {
   margin: 4px;
 }
-
+.single-post .content-wrap {
+  max-width: 1960px;
+  margin: 0 auto;
+}
+.single-post .main-image {
+  float: left;
+}
+.single-post .post_title {
+  display: inline-block;
+  margin: 20px 0 0;
+  padding-top: 20px;
+  font-size: 130%;
+}
 .single-post .main-image img {
   /* TODO : Should replace this with srcset variations? */
   max-width: 100%;
@@ -1000,6 +1016,9 @@ a.buttonish {
   #primary,
   #secondary {
     width: 100%;
+  }
+  .single-main {
+    flex-direction: column;
   }
   .wrap {
     flex-direction: column;
