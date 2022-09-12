@@ -619,6 +619,11 @@ body.page #secondary {
   min-width: 300px;
   padding: 40px 50px 40px 10px;
 }
+
+/* Guttenberg overrides */
+.wp-block-image .alignright {
+  margin-bottom: 1em;
+}
 /* ***************
 *                *
 *    Main Nav    *
@@ -806,11 +811,12 @@ article.type-post figcaption {
   margin: 4px;
 }
 .single-post .content-wrap {
-  max-width: 1960px;
+  max-width: 1620px;
   margin: 0 auto;
 }
 .single-post .main-image {
   float: left;
+  max-width: 300px;
 }
 .single-post .post_title {
   display: inline-block;
@@ -822,14 +828,14 @@ article.type-post figcaption {
   /* TODO : Should replace this with srcset variations? */
   max-width: 100%;
   height: auto;
-  padding: 20px;
+  padding: 10px;
   background-color: var(--warm-00);
-  margin: 0 20px;
+  margin: 0 10px;
 }
 
 #post_title h1 {
-  font-size: 1.2em;
-  font-weight: 300;
+  font-size: 1.8em;
+  font-weight: 500;
   margin: 0;
 }
 #photo_tag_container a {

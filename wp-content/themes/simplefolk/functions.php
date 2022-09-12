@@ -1263,6 +1263,47 @@ function photo_meta_callback($post)
   $exif_shutter =  empty($imageEXIF['shutter_speed']) ? '' :  $imageEXIF['shutter_speed'];
   if (!empty($exif_shutter)) :
     $exif_shutter = float2rat($exif_shutter);
+
+    wut($exif_shutter);
+
+    $ExposureTime = '';
+    $arrExposureTime = explode('/', $exif_shutter);
+    wut($arrExposureTime);
+    // Sanity check for zero denominator.
+    if ($arrExposureTime[1] == 0) {
+      $ExposureTime = '<sup>1</sup>/? sec';
+      // In case numerator is zero.
+    } elseif ($arrExposureTime[0] == 0) {
+      $ExposureTime = '<sup>0</sup>/' . $arrExposureTime[1] . ' sec';
+      // When denominator is 1, display time in whole seconds, minutes, and/or hours.
+    } elseif ($arrExposureTime[1] == 1) {
+      // In the Seconds range.
+      if ($arrExposureTime[0] < 60) {
+        $ExposureTime = $arrExposureTime[0] . ' s';
+        // In the Minutes range.
+      } elseif (($arrExposureTime[0] >= 60) && ($arrExposureTime[0] < 3600)) {
+        $ExposureTime = gmdate("i\m:s\s", $arrExposureTime[0]);
+        // In the Hours range.
+      } else {
+        $ExposureTime = gmdate("H\h:i\m:s\s", $arrExposureTime[0]);
+      }
+      // When inverse is evenly divisable, show reduced fractional exposure.
+    } elseif (($arrExposureTime[1] % $arrExposureTime[0]) == 0) {
+      $ExposureTime = '<sup>1</sup>/' . $arrExposureTime[1] / $arrExposureTime[0] . ' sec';
+      // If the value is greater or equal to 3/10, which is the smallest standard
+      // exposure value that doesn't divid evenly, show it in decimal form.
+    } elseif (($arrExposureTime[0] / $arrExposureTime[1]) >= 3 / 10) {
+      $ExposureTime = round(($arrExposureTime[0] / $arrExposureTime[1]), 1) . ' sec';
+      // If all else fails, just display it as it was found.
+    } else {
+      $ExposureTime = '<sup>' . $arrExposureTime[0] . '</sup>/' . $arrExposureTime[1] . ' sec';
+    }
+
+
+    wut($ExposureTime);
+
+
+
   endif;
   $meta_shutter = esc_attr(get_post_meta(get_the_ID(), 'shutter', true));
   $shutter_value = empty($meta_shutter) ? $exif_shutter : $meta_shutter;
