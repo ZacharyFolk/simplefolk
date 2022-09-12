@@ -741,16 +741,19 @@ function wp_title_home($title)
  * 
  * @return string The description of the page based on this fallback:
  * 1) Check if custom meta description ('meta_desc') is defined from the page or post 
- * 2) If no meta description and it is a single post check for image caption 
- * 3) No meta, no caption, then just shows default site description
+ * 2) If no meta_desc then use custom excerpt
+ * 3) No custom excerpt then auto excerpt generated WP with 260 char limit
+ * 4) No auto excerpt (no text) and it is a single post check for image caption 
+ * 5) No meta, no excerpts, no caption, then it just shows default site description
  */
 function get_meta_description()
 {
   $field = get_post_meta(get_queried_object_id(), 'meta_desc', true);
   if (is_single()) {
+    $post_excerpt = the_excerpt();
     $image_id = get_post_thumbnail_id();
     $image_caption =  wp_get_attachment_caption($image_id);
-    $desc = (empty($field) ? (empty($image_caption) ? get_bloginfo('description') : $image_caption) : $field);
+    $desc = (empty($field) ? (empty($post_excerpt) ? (empty($image_caption) ? get_bloginfo('description') : $image_caption) : $post_excerpt) : $field);
   } else {
     $desc = (empty($field) ?  get_bloginfo('description')  : $field);
   }
@@ -1263,12 +1266,9 @@ function photo_meta_callback($post)
   $exif_shutter =  empty($imageEXIF['shutter_speed']) ? '' :  $imageEXIF['shutter_speed'];
   if (!empty($exif_shutter)) :
     $exif_shutter = float2rat($exif_shutter);
-
-    wut($exif_shutter);
-
     $ExposureTime = '';
     $arrExposureTime = explode('/', $exif_shutter);
-    wut($arrExposureTime);
+    // wut($arrExposureTime);
     // Sanity check for zero denominator.
     if ($arrExposureTime[1] == 0) {
       $ExposureTime = '<sup>1</sup>/? sec';
@@ -1291,18 +1291,14 @@ function photo_meta_callback($post)
     } elseif (($arrExposureTime[1] % $arrExposureTime[0]) == 0) {
       $ExposureTime = '<sup>1</sup>/' . $arrExposureTime[1] / $arrExposureTime[0] . ' sec';
       // If the value is greater or equal to 3/10, which is the smallest standard
-      // exposure value that doesn't divid evenly, show it in decimal form.
+      // exposure value that doesn't divide evenly, show it in decimal form.
     } elseif (($arrExposureTime[0] / $arrExposureTime[1]) >= 3 / 10) {
       $ExposureTime = round(($arrExposureTime[0] / $arrExposureTime[1]), 1) . ' sec';
       // If all else fails, just display it as it was found.
     } else {
       $ExposureTime = '<sup>' . $arrExposureTime[0] . '</sup>/' . $arrExposureTime[1] . ' sec';
     }
-
-
-    wut($ExposureTime);
-
-
+  //  wut($ExposureTime);
 
   endif;
   $meta_shutter = esc_attr(get_post_meta(get_the_ID(), 'shutter', true));
