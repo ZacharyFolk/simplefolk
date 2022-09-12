@@ -842,6 +842,10 @@ article.type-post figcaption {
   font-weight: 300;
   text-transform: lowercase;
 }
+.post-meta p {
+  font-size: 80%;
+  margin: 0.2em 0;
+}
 
 /* ********************
 *                     *

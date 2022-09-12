@@ -10,9 +10,10 @@ while (have_posts()) :
 <div class="content-wrap single-post">
     <main id="main" class="single-main" role="main">
         <div id="primary" class="content-area">
-
             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                <?php if (has_post_thumbnail()) : ?>
+                <?php if (has_post_thumbnail()) :
+                        // TODO : Add customizer for multiple styles here, eg: top landscape, float left, float right, full, etc.. 
+                    ?>
                 <figure class="main-image">
                     <a class="glightbox" data-caption="<?php echo $image_caption; ?>"
                         href="<?php the_post_thumbnail_url(); ?>">
@@ -25,6 +26,22 @@ while (have_posts()) :
                         endif;
                     endif; ?>
                 <?php echo the_title('<div id="post_title"><h1>', '</h1></div>'); ?>
+                <div class="post-meta">
+                    <p>Published : <?php the_time('F jS, Y');
+                                        echo " at ";
+                                        the_time('g:i a'); ?>
+                    </p>
+                    <?php
+                        $u_time = get_the_time('U');
+                        $u_modified_time = get_the_modified_time('U');
+                        if ($u_modified_time >= $u_time + 86400) {
+                            echo "<p>Last modified : ";
+                            the_modified_time('F jS, Y');
+                            echo " at ";
+                            the_modified_time();
+                            echo "</p> ";
+                        } ?>
+                </div>
                 <?php the_content(); ?>
 
             </article>
