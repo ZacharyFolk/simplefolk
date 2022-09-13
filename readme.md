@@ -4,7 +4,7 @@
                              .==.____/[=]\ _______
                              |_---___________[o]_|
                             /|    _ /  --  \     |\
-                            ||   (_// /''\ \\    ||
+                            ||   (_// /''\ \\    ||`
                             ||     \\ \../ //    ||
                             \|      \\ __ //     |/
                              ---------------------
@@ -39,7 +39,20 @@ You can check it out on [my photography site](https://www.folkphotography.com).
 
     Setting Up
 
-[coming soon]
+This theme is geared towards sites that have a lot images. Most of the items here are updates to the Media Library.
+
+- [Home Page](#home)
+- [Featured Gallery](#featured)
+- [Photo Meta](#meta)
+- [Google Analytics](#ga)
+
+### Home Page {#home}
+
+### Featured Gallery {#featured}
+
+### Photo Meta {#meta}
+
+### Google Analytics {#ga}
 
 ---
 
