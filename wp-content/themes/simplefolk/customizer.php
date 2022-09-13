@@ -73,6 +73,32 @@ function simplefolk_customizer_settings($wp_customize)
         'type' => 'text'
     ));
 
+
+    ///////////////////////////
+    //                       //
+    //    Facebook settings    //
+    //                       //
+    ///////////////////////////
+
+
+    $wp_customize->add_section('facebook_settings', array(
+        'title'      => 'Facebook settings',
+        'priority'   => 40,
+    ));
+    $wp_customize->add_setting('app_id', array(
+        'transport'   => 'refresh',
+    ));
+
+    $wp_customize->add_control('app_id', array(
+        'label'        => 'Application ID',
+        'description' => 'Insert key for Facewbook App ID',
+        'section'    => 'facebook_settings',
+        'settings'   => 'app_id',
+        'type' => 'text'
+    ));
+
+
+
     /////////////////////////
     //                     //
     //    Theme options    //

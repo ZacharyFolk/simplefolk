@@ -731,6 +731,30 @@ function wp_title_home($title)
   return $title;
 }
 
+
+////////////////////////////
+//                        //
+//    Add Facebook SDK    //
+//                        //
+////////////////////////////
+function getFBSDK()
+{
+  echo <<<END
+
+  END;
+}
+add_action('wp_head', 'getFBSDK');
+
+
+// FB Share button 
+
+function get_fb_button()
+{
+  echo <<<END
+
+END;
+}
+
 //////////////////////////////////////
 //                                  //
 //    Optimize page descriptions    //
@@ -767,14 +791,14 @@ function get_meta_description()
 //                           //
 ///////////////////////////////
 
-function new_excerpt_more($more)
-{
-  global $post;
-  return '… <a title="View the full post: ' . get_the_title($post->ID) . '" href="' . get_permalink($post->ID) . '">' . '<span class="more">Read more &raquo;</span>' . '</a>';
-}
-add_filter('excerpt_more', 'new_excerpt_more');
+// function new_excerpt_more($more)
+// {
+//   global $post;
+//   return '… <a title="View the full post: ' . get_the_title($post->ID) . '" href="' . get_permalink($post->ID) . '">' . '<span class="more">Read more &raquo;</span>' . '</a>';
+// }
+// add_filter('excerpt_more', 'new_excerpt_more');
 
-//////////////////////////////
+// //////////////////////////////
 //                          //
 //    Gallery by tag    //
 //                          //

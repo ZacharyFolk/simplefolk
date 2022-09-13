@@ -3,6 +3,7 @@
     <?php language_attributes(); ?>>
 <?php get_template_part('commentapalooza'); ?>
 <?php $analytics_key =  esc_attr(get_theme_mod('analytics_key')); ?>
+<?php $fb_app_id =  esc_attr(get_theme_mod('app_id')); ?>
 
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
@@ -11,6 +12,27 @@
     <title><?php wp_title(''); ?></title>
     <meta name="description" content="<?php echo get_meta_description(); ?>">
     <?php wp_head(); ?>
+
+    <!--// FACEBOOK //-->
+    <meta property="og:url" content="<?php echo get_permalink(); ?>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="<?php echo wp_title(''); ?>" />
+    <meta property="og:description" content="<?php echo htmlspecialchars(get_meta_description()); ?>" />
+    <meta property="og:image" content="<?php echo the_post_thumbnail_url('full'); ?>" />
+    <meta property="fb:app_id" content="<?php echo $fb_app_id; ?>" />
+
+    <!--// TWITTER //-->
+
+    <meta name=”twitter:card” content=”summary_large_image”>
+    <meta name=”twitter:site” content=”<?php echo the_permalink(); ?>">
+    <meta name="twitter:creator" content="@klofcaz">
+    <meta name="twitter:title" content="<?php echo the_title(); ?>">
+    <meta name="twitter:description" ”" content="<?php echo get_meta_description(); ?>">
+    <meta name=" twitter:image" content="<?php echo the_post_thumbnail_url('full'); ?>">
+
+
+
+
     <?php if ($analytics_key) : ?>
     <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $analytics_key; ?>"></script>
     <script>
@@ -20,14 +42,23 @@
         dataLayer.push(arguments);
     }
     gtag('js', new Date());
-
     gtag('config', '<?php echo $analytics_key; ?>');
     </script>
     <?php endif; ?>
+
 </head>
 
 <body <?php body_class(); ?>>
     <?php wp_body_open(); ?>
+
+
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous"
+        src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v14.0&appId=<?php echo $fb_app_id; ?>&autoLogAppEvents=1"
+        nonce="wl4Sh8jW"></script>
+
+
+
     <section class="top-nav">
         <div id="site_branding">
             <?php echo get_site_info(); ?>

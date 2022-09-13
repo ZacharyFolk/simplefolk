@@ -842,11 +842,27 @@ article.type-post figcaption {
   font-weight: 300;
   text-transform: lowercase;
 }
-.post-meta p {
-  font-size: 80%;
-  margin: 0.2em 0;
+
+.post-meta {
+  display: flex;
 }
 
+.post-meta p {
+  font-size: 80%;
+  margin: 0.5em 0.5em 1em 0;
+}
+
+.share-buttons {
+  display: flex;
+}
+.share-buttons svg {
+  cursor: pointer;
+  margin-left: 12px;
+  fill: var(--warm-8);
+}
+.share-buttons svg:hover {
+  fill: var(--warm-10);
+}
 /* ********************
 *                     *
 *    Simple Modal     *
