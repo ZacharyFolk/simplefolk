@@ -53,7 +53,7 @@ $tag_list = explode(',', esc_attr(get_theme_mod('tag_list')));
             'post_type' => 'attachment',
             'post_status' => 'inherit', // if do publish here it will only display ones that are attached to something
             'posts_per_page' => $num_posts,
-            'orderby' => 'random',
+            'orderby' => 'rand',
             'tax_query' => array(
                 array(
                     'taxonomy' => 'category',
