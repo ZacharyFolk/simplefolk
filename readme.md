@@ -1,10 +1,10 @@
-    ======================== [o] SIMPLE FOLK [o] =========================>>>
+    ======================== [o] SIMPLE FOLK [o] =========================
 
                                       ___
                              .==.____/[=]\ _______
                              |_---___________[o]_|
                             /|    _ /  --  \     |\
-                            ||   (_// /''\ \\    ||`
+                            ||   (_// /''\ \\    ||s
                             ||     \\ \../ //    ||
                             \|      \\ __ //     |/
                              ---------------------
@@ -42,23 +42,27 @@ You can check it out on [my photography site](https://www.folkphotography.com).
 This theme is geared towards sites that have a lot images. Most of the items here are updates to the Media Library.
 
 - [Home Page](#home)
-- [Featured Gallery](#featured)
+- [Latest Uploads](#latest)
+- [Featured Project](#featured)
 - [Photo Meta](#meta)
+- [Light Mode](#mode)
+
+- [SEO](#seo)
 - [Google Analytics](#ga)
 
-### Home Page {#home}
+#### Home Page {#home}
 
-### Featured Gallery {#featured}
+#### Latest Uploads {#latest}
 
-### Photo Meta {#meta}
+#### Featured Project {#featured}
 
-### Google Analytics {#ga}
+#### Photo Meta {#meta}
 
----
+#### Light Mode {#mode}
 
-    Options
+#### SEO {#seo}
 
-[coming soon]
+#### Google Analytics {#ga}
 
 ---
 
@@ -96,12 +100,6 @@ This theme is geared towards sites that have a lot images. Most of the items her
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [2.0.1] - 2022-09-08
-
-### Fixed
-
-- errors when missing exif data
 
 ## [2.0.0] - 2022-09-08
 
