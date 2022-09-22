@@ -512,8 +512,12 @@ figcaption {
   margin: 0 0 0.5em;
 }
 
+/* Home */
+
 .home-top-container {
   display: flex;
+  margin: 0 auto;
+  max-width: 1960px;
 }
 .home-top-container img {
   max-width: 100%;
@@ -534,6 +538,10 @@ figcaption {
   padding: 0 20px;
 }
 
+.home-aside-1 /* for featured posts */ {
+  padding-top: 40px;
+}
+
 .more {
   width: 100%;
   float: left;
@@ -545,6 +553,8 @@ figcaption {
 }
 .featured-cat-banner {
   position: relative;
+  max-width: 560px;
+  margin: 0 auto;
 }
 .featured-cat-banner h3 {
   background-color: rgba(0, 0, 0, 0.5);
@@ -563,7 +573,14 @@ figcaption {
   margin: 0px 0 0;
   position: relative;
 }
+.featured-cat-banner img {
+  max-width: 100%;
+}
 
+.category-link {
+  text-align: right;
+  margin: 10px 10px 0 0;
+}
 /* Tags Page */
 
 .tag-container article {
@@ -784,6 +801,16 @@ body.page #secondary {
   max-width: 100%;
   height: auto;
   margin: 0 auto;
+}
+
+.single-attachment .wrap {
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.single-attachment #secondary {
+  max-width: 760px;
+  min-width: 540px;
 }
 
 /* *******************
@@ -1039,9 +1066,16 @@ a.buttonish {
   }
 }
 @media only screen and (max-width: 1100px) {
+  #primary {
+    padding: 0;
+  }
   #primary,
   #secondary {
     width: 100%;
+  }
+  .single-attachment #secondary {
+    min-width: 100%;
+    padding: 10px 20px;
   }
   .single-main {
     flex-direction: column;
