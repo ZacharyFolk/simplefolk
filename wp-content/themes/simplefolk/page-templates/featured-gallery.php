@@ -32,9 +32,10 @@ $tag_list = explode(',', esc_attr(get_theme_mod('tag_list')));
                 <button type="button" class="active" data-category="*">All</button>
                 <?php else :
                             if ($post_tags) :
-                                $tag_name = $post_tags->name;
+                                $tag_name = strtolower($post_tags->name);
+                                $tag_name_link = str_replace(" ", "-", $tag_name)
                             ?>
-                <button type="button" data-category=".tag-<?php echo trim(esc_attr($tag_name)); ?>">
+                <button type="button" data-category=".tag-<?php echo trim(esc_attr($tag_name_link)); ?>">
                     <?php echo esc_html($tag_name); ?>
                 </button>
                 <?php endif;
