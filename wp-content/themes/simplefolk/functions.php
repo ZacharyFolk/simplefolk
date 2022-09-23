@@ -755,6 +755,44 @@ function get_fb_button()
 END;
 }
 
+
+/////////////////////////////////////////
+//                                     //
+//    Get loop with excluded terms     //
+//                                     //
+/////////////////////////////////////////
+/**
+ * Perform get_terms querty with list of excluded slugs
+ * @param array $exclusions An array of slug names to be excluded. Default : empty array //* TODO : Replace this with values from customizer // 
+ * @param string $tax Type of taxonomy for query. Default : 'category'
+ * @return array of objects from the query
+ */
+function get_terms_with_exclusions($exclusions = array(), $tax = 'category')
+{
+  $ids_to_exclude = array();
+  $get_terms_to_exclude = get_terms(
+    array(
+      'fields'    => 'ids',
+      'slug'      => $exclusions,
+      'taxonomy' => $tax
+    )
+  );
+
+  if (!is_wp_error($get_terms_to_exclude) && count($get_terms_to_exclude) > 0) {
+    $ids_to_exclude = $get_terms_to_exclude;
+  }
+
+  $new_query = get_terms(
+    array(
+      'taxonomy' => $tax,
+      'hide_empty' => false,
+      'exclude' => $ids_to_exclude
+    )
+  );
+
+  return $new_query;
+}
+
 //////////////////////////////////////
 //                                  //
 //    Optimize page descriptions    //

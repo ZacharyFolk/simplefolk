@@ -588,10 +588,17 @@ figcaption {
   float: left;
   position: relative;
   overflow: hidden;
+  margin: 10px 1%;
+  border: 1px solid var(--warm-3);
+  max-width: 98%;
+}
+.tag-container article:hover {
+  border-color: var(--warm-7);
 }
 
 .tag-banner a {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 }
 

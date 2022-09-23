@@ -86,20 +86,20 @@ if (elem) {
   });
 }
 
-var tags = document.querySelector('.tag-container');
+// var tags = document.querySelector('.tag-container');
 
-if (tags) {
-  imagesLoaded(elem, function (instance) {
-    var iso = new Isotope(elem, {
-      itemSelector: '.archive-card',
-      layoutMode: 'masonry',
-      masonry: {
-        columnWidth: '.archive-card',
-        gutter: 0,
-      },
-    });
-  });
-}
+// if (tags) {
+//   imagesLoaded(tags, function (instance) {
+//     var iso = new Isotope(tags, {
+//       itemSelector: '.archive-card',
+//       layoutMode: 'masonry',
+//       masonry: {
+//         columnWidth: '.dumb-masonry-sizer',
+//         fitWidth: true,
+//       },
+//     });
+//   });
+// }
 
 // https://github.com/biati-digital/glightbox/blob/master/README.md
 const lightbox = GLightbox({

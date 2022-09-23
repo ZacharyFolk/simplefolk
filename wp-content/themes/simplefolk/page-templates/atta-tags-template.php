@@ -27,11 +27,8 @@ $all_tags = get_terms(
             <article class="archive-card tag-banner">
                 <a href="<?php echo $tag_link; ?>"
                     title="View all photos tagged with #<?php echo strtolower($tag_name); ?>" />
-
-
                 <?php get_tag_display('post_tag', $single_tag); ?>
                 </a>
-
             </article>
 
             <?php endforeach; ?>

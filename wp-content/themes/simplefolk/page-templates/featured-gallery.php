@@ -15,7 +15,6 @@ $tag_list = explode(',', esc_attr(get_theme_mod('tag_list')));
         </h2>
         <?php
 
-
         // Build button filters set from customizer tag_list
         // Display list of ones that match attachments that have that tag
         if ($tag_list) : ?>
@@ -24,7 +23,6 @@ $tag_list = explode(',', esc_attr(get_theme_mod('tag_list')));
             <label class="hashtag-container" for="tag_toggle">
                 <span class="icon-tag"></span>
             </label>
-
             <div class="tag-buttons">
                 <?php $i = 0;
                     foreach ($tag_list as $tag) :
@@ -49,6 +47,8 @@ $tag_list = explode(',', esc_attr(get_theme_mod('tag_list')));
     </div>
     <div class="archive-container">
         <?php
+        // TODO : get_terms_with_exclusions() does not work with this query because id is not required, slugs already work
+        // instead could give this it's own function and use same customizer values for terms array()
         $args = array(
             'post_type' => 'attachment',
             'post_status' => 'inherit', // if do publish here it will only display ones that are attached to something
