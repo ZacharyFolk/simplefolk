@@ -936,6 +936,7 @@ function this_archive_cats_thumbs()
     );
     $atta_query = new WP_Query($args);
     if ($atta_query->have_posts()) :
+      echo '<h3>More from the ' . strtolower($category_name) . ' project:</h3>';
       echo '<div id="cat_thumbs">';
       while ($atta_query->have_posts()) :
         $atta_query->the_post();
@@ -1172,25 +1173,18 @@ function the_breadcrumb()
         echo '<a href="' . $ref . '">Tags</a>' . $delimiter;
       }
       if (strpos($ref, 'projects') !== false) {
-        echo '<a href="/projects/">Projects</a>' . $delimiter;
+
+        $the_cat = get_the_category();
+        if ($the_cat) :
+          $cat_name = $the_cat[0]->name;
+          $cat_link = get_category_link($the_cat[0]->cat_ID);
+          $cat_link_HTML = '<a href="' . $cat_link . '">' . $cat_name . '</a>';
+          echo '<a href="/projects/">Projects</a>' . $delimiter . $cat_link_HTML . $delimiter;
+        endif;
       }
       echo ' ' . $before . get_the_title() . $after;
     }
-    // if (is_archive()) {
 
-
-    //   // $tax = get_queried_object()->taxonomy;
-    //   // // NOTE : This is not great - reconsider this whole naming convention for the taxonomy
-    //   // // Maybe should just scrape url for whatever these pages are called
-    //   // wut($tax);
-    //   // echo '<a href="">Tags</a> ' . $delimiter . ' ' . $before . get_the_title() . $after;
-    //   // // $part = explode('-', $tax);
-    //   // $slug = get_queried_object()->slug;
-    //   // wut($slug);
-    //   // wut($part[1]);
-    //   // wut(get_queried_object());
-    //   // echo '<a href="/' . $part[1] . '">' . $part[1] . '</a> ' . $delimiter . ' ' . $before . $slug . $after;
-    // } 
     if (!is_single() && !is_page() && get_post_type() != 'post' && !is_404()) {
       // $post_type = get_post_type_object(get_post_type());
       // echo $before . $post_type->labels->singular_name . $after;
@@ -1218,7 +1212,6 @@ function the_breadcrumb()
         echo ' ' . $delimiter . ' ' . $before . get_the_title() . $after;
       }
     }
-
     echo '</div>';
   }
 }
