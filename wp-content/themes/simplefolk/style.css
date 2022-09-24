@@ -888,6 +888,8 @@ article.type-post figcaption {
 
 .share-buttons {
   display: flex;
+  align-items: center;
+  margin: 10px 0;
 }
 .share-buttons svg {
   cursor: pointer;
