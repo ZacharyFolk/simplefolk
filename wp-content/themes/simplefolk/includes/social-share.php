@@ -1,3 +1,11 @@
+<?php
+
+$the_tags = get_the_tags();
+$tag_array = wp_list_pluck($the_tags, 'name');
+$tag_list = implode(', ', $tag_array);
+
+?>
+
 <div class="share-buttons">
     <span> Share this post: </span>
     <?php // get_fb_button(); // 
