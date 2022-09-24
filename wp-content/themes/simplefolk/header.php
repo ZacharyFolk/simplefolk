@@ -29,10 +29,6 @@
     <meta name="twitter:title" content="<?php echo the_title(); ?>">
     <meta name="twitter:description" content="<?php echo get_meta_description(); ?>">
     <meta name="twitter:image" content="<?php echo the_post_thumbnail_url('full'); ?>">
-
-
-
-
     <?php if ($analytics_key) : ?>
     <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $analytics_key; ?>"></script>
     <script>

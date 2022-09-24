@@ -1311,21 +1311,23 @@ function the_breadcrumb()
       // was a tag or category.  If neither then it just defaults to the root.  
       // TODO : This along with actual permalink path need to be consistent
       // Does this cause duplicate content SEO problems?
+      if (isset($_SERVER['HTTP_REFERER'])) {
 
-      $ref = ($_SERVER['HTTP_REFERER']);
-      // search string for 'tags' 
-      if (strpos($ref, 'tags') !== false) {
-        echo '<a href="' . $ref . '">Tags</a>' . $delimiter;
-      }
-      if (strpos($ref, 'projects') !== false) {
+        $ref = ($_SERVER['HTTP_REFERER']);
+        // search string for 'tags' 
+        if (strpos($ref, 'tags') !== false) {
+          echo '<a href="' . $ref . '">Tags</a>' . $delimiter;
+        }
+        if (strpos($ref, 'projects') !== false) {
 
-        $the_cat = get_the_category();
-        if ($the_cat) :
-          $cat_name = $the_cat[0]->name;
-          $cat_link = get_category_link($the_cat[0]->cat_ID);
-          $cat_link_HTML = '<a href="' . $cat_link . '">' . $cat_name . '</a>';
-          echo '<a href="/projects/">Projects</a>' . $delimiter . $cat_link_HTML . $delimiter;
-        endif;
+          $the_cat = get_the_category();
+          if ($the_cat) :
+            $cat_name = $the_cat[0]->name;
+            $cat_link = get_category_link($the_cat[0]->cat_ID);
+            $cat_link_HTML = '<a href="' . $cat_link . '">' . $cat_name . '</a>';
+            echo '<a href="/projects/">Projects</a>' . $delimiter . $cat_link_HTML . $delimiter;
+          endif;
+        }
       }
       echo ' ' . $before . get_the_title() . $after;
     }
