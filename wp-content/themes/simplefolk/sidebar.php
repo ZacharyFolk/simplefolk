@@ -10,5 +10,11 @@ if (!is_active_sidebar('sidebar-1')) {
 ?>
 
 <aside id="secondary" class="widget-area" aria-label="<?php esc_attr_e('Blog Sidebar', 'simplefolk'); ?>">
-    <?php dynamic_sidebar('sidebar-1'); ?>
+    <?php
+    if (is_page('about')) :
+        dynamic_sidebar('about-1');
+    else :
+        dynamic_sidebar('sidebar-1');
+    endif;
+    ?>
 </aside>

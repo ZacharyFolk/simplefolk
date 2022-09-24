@@ -36,6 +36,7 @@ function simple_admin_css()
     );
   }
 }
+// TODO : Is it correct to be hooking this twice like this?
 add_action('admin_print_styles', 'simple_admin_css');
 add_action('wp_enqueue_scripts', 'simple_admin_css');
 
@@ -149,6 +150,18 @@ function simple_widgets_init()
       'name'          => __('Footer 2', 'simplefolk'),
       'id'            => 'footer-2',
       'description'   => __('Add widgets here to appear in your footer column two.', 'simplefolk'),
+      'before_widget' => '<section id="%1$s" class="widget %2$s">',
+      'after_widget'  => '</section>',
+      'before_title'  => '<h2 class="widget-title">',
+      'after_title'   => '</h2>',
+    )
+  );
+
+  register_sidebar(
+    array(
+      'name'          => __('About Sidebar', 'simplefolk'),
+      'id'            => 'about-1',
+      'description'   => __('Add widgets here to appear in your sidebar on About page.', 'simplefolk'),
       'before_widget' => '<section id="%1$s" class="widget %2$s">',
       'after_widget'  => '</section>',
       'before_title'  => '<h2 class="widget-title">',
@@ -318,6 +331,119 @@ function featured_cat_card($catID)
   echo '<div class="category-link" style="text-align: right"><a title="View all photos from the ' . get_cat_name($catID) . ' collection" href="' . get_category_link($catID) . '">View collection &raquo; </a>';
 }
 
+
+
+
+////////////////////////////////////////
+//                                    //
+//    Featured Tag widget        //
+//                                    //
+////////////////////////////////////////
+
+/**
+ * 
+ * Creates a widget that allows to select from dropdown of all tags
+ * Selected tag will generate a small gallery of thumbs from that tag
+ * Tag thumbnail, title, and link to archive collection
+ */
+class tag_thumbs_widget extends WP_Widget
+{
+
+  function __construct()
+  {
+    parent::__construct(
+
+      'tag_thumbs_widget',
+      __('Tag thumbs', 'simplefolk'),
+      array('description' => __('Get random collection of images from specific tag', 'simplefolk'),)
+    );
+  }
+
+  public function widget($args, $instance)
+  {
+    $title = apply_filters('widget_title', $instance['title']);
+    $tag = apply_filters('widget_text', $instance['tag']);
+
+    echo $args['before_widget'];
+    if (!empty($title)) {
+      echo $args['before_title'] . $title . $args['after_title'];
+    }
+    featured_tag_card($tag);
+    echo $args['after_widget'];
+  }
+
+  public function form($instance)
+  {
+    if (isset($instance['title'])) {
+      $title = $instance['title'];
+    } else {
+      $title = __('New title', 'simplefolk');
+    }
+    if (isset($instance['tag'])) {
+      $tag = $instance['tag'];
+    } else {
+      $tag = '';
+    }
+
+  ?>
+<?php if ($tag) {
+      featured_tag_card($tag);
+    }
+    ?>
+<p>
+    <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
+    <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>"
+        name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
+</p>
+<p>
+    <label for="<?php echo $this->get_field_id('tag'); ?>">
+        Select featured tag:
+        <select class="widefat" id="<?php echo $this->get_field_id('tag'); ?>"
+            name="<?php echo $this->get_field_name('tag'); ?>" />
+        <?php
+        echo '<option>' . __('No Category', 'simplefolk') . '</option>';
+        $args = array('show_option_none' => 'No Category', 'hide_empty' => 0);
+        $tags = get_tags($args);
+        foreach ($tags as $t) :
+          $selected = ($tag ==  $t->term_id) ? 'selected' : '';
+          echo '<option value="' . $t->term_id . '" ' . $selected . '>' . $t->name . '</option>';
+        endforeach; ?>
+        </select>
+    </label>
+</p>
+<?php
+  }
+  public function update($new_instance, $old_instance)
+  {
+    $instance = array();
+    $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
+    $instance['tag'] = (!empty($new_instance['tag'])) ? strip_tags($new_instance['tag']) : '';
+    return $instance;
+  }
+}
+
+function load_tag_thumb_widget()
+{
+  register_widget('tag_thumbs_widget');
+}
+add_action('widgets_init', 'load_tag_thumb_widget');
+
+/**
+ * Returns card elements from a category id
+ * HTML of category name, description, and attachment
+ * @param string $catID Category id to build elements
+ * @return string HTML of image with category title and description
+ * 
+ * */
+function featured_tag_card($tag)
+{
+
+  $name = get_term($tag);
+  getThumbGallery('post_tag', $name);
+}
+
+
+
 ////////////////////////////////////////////////////
 //                                                //
 //    Create new permalink for archive pages      //
@@ -405,7 +531,7 @@ add_image_size('tiny_thumb', 80, 80, true);
 function new_image_sizes($size_names)
 {
   $new_sizes = array(
-    'landscape_thumb' => 'Landscape Thumbmail',
+    'landscape_thumb' => 'Landscape Thumbmail 750x220',
     'square_hero' => 'Square 450',
     'tiny_thumb' => 'Square 80'
 
@@ -431,12 +557,12 @@ add_filter('max_srcset_image_width', 'disable_wp_responsive_images');
  * Returns the site title and description
  * TODO : Include option for logo and hook with customizer
  *
- * @since .01
  * @return string The html that contains title and description
  */
 function get_site_info()
 {
   $blog_info    = get_bloginfo('name');
+  // todo
   $show_title   = (true === get_theme_mod('display_title_and_tagline', true));
   ?>
 <?php if ($blog_info) : ?>
@@ -466,7 +592,6 @@ function get_site_info()
 
 /**
  * Returns a random image from a selected category
- * @since 0.0.1
  * @param string $cat Category name to retrieve from, default is 'uncategorized'
  * @return string HTML generated from get_the_post_thumbnail 
  * */
@@ -593,12 +718,13 @@ function get_tag_display($tax, $single_tag)
   // Note :  Found passing slug breaks this because the spaces are hyphenated
   //   $single_tag->name for $term seems to work ok
 
+
   $term = $single_tag->name;
   if ($term) {
     $args = array(
       'post_type' => 'attachment',
       'post_status' => 'inherit',
-      'posts_per_page' => 10,
+      'posts_per_page' => -1,
       'orderby' => 'rand',
       'tax_query' => array(
         array(
@@ -612,7 +738,6 @@ function get_tag_display($tax, $single_tag)
     $name = '#' . strtolower($term);
     $tag_banner_array = array('<span>' . $name . '</span>');
 
-
     $query = new WP_Query($args);
     if ($query->have_posts()) :
       while ($query->have_posts()) : $query->the_post();
@@ -625,27 +750,60 @@ function get_tag_display($tax, $single_tag)
       endwhile;
     endif;
 
-
     shuffle($tag_banner_array);
-
-
-
     foreach ($tag_banner_array as $output) {
       echo $output;
     }
   }
 }
 
+/** 
+ * Returns thumb gallery for particular term
+ */
 
+
+function getThumbGallery($tax, $term)
+{
+
+  if ($tax && $term) :
+    $name = $term->name;
+    $args = array(
+      'post_type' => 'attachment',
+      'post_status' => 'inherit',
+      'posts_per_page' => -1,
+      'orderby' => 'rand',
+      'tax_query' => array(
+        array(
+          'taxonomy' => $tax,
+          'field'    => 'name',
+          'terms'    => $name,
+        ),
+      ),
+    );
+
+    $query = new WP_Query($args);
+    if ($query->have_posts()) :
+      echo '<div id="tag_thumbs">';
+
+      while ($query->have_posts()) : $query->the_post();
+        $id = get_the_ID();
+        get_lightbox_image($id, 'tiny_thumb');
+
+      endwhile;
+      echo '</div>';
+    endif;
+  endif;
+}
 
 /**
  * Returns a random image from attachments with that category id
  * @param int $id (required) - Category id (term_id)  
  * @param string $size (optional) - Default value of 'thumbnail'
+ * @param string $tax (optional) - Default 'category'
  * @return string HTML of random image src 
  * 
  * */
-function get_attachment_by_cat_id($id, $size = 'thumbnail')
+function get_attachment_by_cat_id($id, $size = 'thumbnail', $tax = 'category')
 {
   $args = array(
     'post_type' => 'attachment',
@@ -654,7 +812,7 @@ function get_attachment_by_cat_id($id, $size = 'thumbnail')
     'orderby' => 'rand',
     'tax_query' => array(
       array(
-        'taxonomy' => 'category',
+        'taxonomy' => $tax,
         'field'    => 'term_id',
         'terms'    => $id,
       ),
@@ -687,11 +845,11 @@ function get_attachment_by_cat_id($id, $size = 'thumbnail')
  */
 
 
-function get_lightbox_image($id)
+function get_lightbox_image($id, $size = "medium_large")
 {
   $full_image_link = wp_get_attachment_image_url($id, 'full');
   $slide_class = "full-meta-" . $id;
-  $atta_img = wp_get_attachment_image($id, 'medium_large');
+  $atta_img = wp_get_attachment_image($id, $size);
   if ($atta_img) :
     echo '<a href="' . $full_image_link . '" 
   class="glightbox"
@@ -966,19 +1124,6 @@ function remove_width_attribute($html)
   $html = preg_replace('/(width|height)="\d*"\s/', "", $html);
   return $html;
 }
-
-/**
- * ? Still need this function
- * Prevent WP from adding <p> tags on all post types
- */
-
-function disable_wp_auto_p($content)
-{
-  remove_filter('the_content', 'wpautop');
-  remove_filter('the_excerpt', 'wpautop');
-  return $content;
-}
-add_filter('the_content', 'disable_wp_auto_p', 0);
 
 
 //////////////////////////////////////////////////////

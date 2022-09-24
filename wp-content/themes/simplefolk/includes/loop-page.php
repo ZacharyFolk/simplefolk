@@ -8,21 +8,12 @@ if (have_posts()) {
         <figure class="entry-thumb-content">
             <?php the_post_thumbnail(); ?>
         </figure>
-    </div><!-- end.post-image-content -->
+    </div>
     <?php } ?>
     <div class="entry-content">
         <?php the_content(); ?>
-    </div> <!-- entry-content clearfix-->
-    <?php
-            wp_link_pages(array(
-                'before'            => '<div style="clear: both;"></div><div class="pagination clearfix">' . esc_html__('Pages:', 'simplefolk'),
-                'after'             => '</div>',
-                'link_before'       => '<span>',
-                'link_after'        => '</span>',
-                'pagelink'          => '%',
-                'echo'              => 1
-            ));
-            comments_template(); ?>
+    </div>
+
 </article>
 <?php }
 } else { ?>

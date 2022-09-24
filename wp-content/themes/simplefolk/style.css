@@ -640,7 +640,7 @@ body.page #primary {
 }
 body.page #secondary {
   width: 35%;
-  min-width: 300px;
+  min-width: 340px;
   padding: 40px 50px 40px 10px;
 }
 
@@ -838,7 +838,7 @@ article.type-post figcaption {
 #cat_thumbs a,
 #tag_thumbs a {
   float: left;
-  min-width: 150px;
+  min-width: 80px;
   margin: 4px;
 }
 .single-cat-link {
