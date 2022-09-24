@@ -23,12 +23,12 @@
 
     <!--// TWITTER //-->
 
-    <meta name=”twitter:card” content=”summary_large_image”>
-    <meta name=”twitter:site” content=”<?php echo the_permalink(); ?>">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="<?php echo the_permalink(); ?>">
     <meta name="twitter:creator" content="@klofcaz">
     <meta name="twitter:title" content="<?php echo the_title(); ?>">
-    <meta name="twitter:description" ”" content="<?php echo get_meta_description(); ?>">
-    <meta name=" twitter:image" content="<?php echo the_post_thumbnail_url('full'); ?>">
+    <meta name="twitter:description" content="<?php echo get_meta_description(); ?>">
+    <meta name="twitter:image" content="<?php echo the_post_thumbnail_url('full'); ?>">
 
 
 
