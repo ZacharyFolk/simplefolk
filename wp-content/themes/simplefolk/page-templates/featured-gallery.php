@@ -26,16 +26,25 @@ $tag_list = explode(',', esc_attr(get_theme_mod('tag_list')));
             <div class="tag-buttons">
                 <?php $i = 0;
                     foreach ($tag_list as $tag) :
-                        $post_tags = get_term_by('slug', $tag, 'post_tag');
+                        $post_tags = get_term_by('slug', $tag, 'hashtags');
                         if ($i == 0) :
                     ?>
                 <button type="button" class="active" data-category="*">All</button>
+                <?php
+                            if ($post_tags) :
+                                $tag_name = strtolower($post_tags->name);
+                                $tag_name_link = str_replace(" ", "-", $tag_name)
+                            ?>
+                <button type="button" data-category=".hashtags-<?php echo trim(esc_attr($tag_name_link)); ?>">
+                    <?php echo esc_html($tag_name); ?>
+                </button>
+                <?php endif; ?>
                 <?php else :
                             if ($post_tags) :
                                 $tag_name = strtolower($post_tags->name);
                                 $tag_name_link = str_replace(" ", "-", $tag_name)
                             ?>
-                <button type="button" data-category=".tag-<?php echo trim(esc_attr($tag_name_link)); ?>">
+                <button type="button" data-category=".hashtags-<?php echo trim(esc_attr($tag_name_link)); ?>">
                     <?php echo esc_html($tag_name); ?>
                 </button>
                 <?php endif;

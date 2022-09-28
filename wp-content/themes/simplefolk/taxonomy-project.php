@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Template Name: Attachment Category Template
+ * Template Name: Project Taxonomy Template
  */
 get_header();
 $all_cats = get_terms_with_exclusions(['exclude', 'asset'], 'projects');

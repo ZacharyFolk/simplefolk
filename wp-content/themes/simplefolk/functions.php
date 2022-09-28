@@ -6,7 +6,7 @@
 //                                    //
 ////////////////////////////////////////
 
-define('SIMPLE_THEME_VERSION', '2.0.1');
+define('SIMPLE_THEME_VERSION', '0.1.0');
 
 function main_scripts()
 {
@@ -24,21 +24,21 @@ include('customizer.php');
 
 // Load styles for admin area
 
-function simple_admin_css()
-{
-  if (is_admin()) {
-    wp_enqueue_style(
-      "simple_admin",
-      get_bloginfo('template_directory') . "/simple_admin.css",
-      false,
-      false,
-      "all"
-    );
-  }
-}
+// function simple_admin_css()
+// {
+//   if (is_admin()) {
+//     wp_enqueue_style(
+//       "simple_admin",
+//       get_bloginfo('template_directory') . "/simple_admin.css",
+//       false,
+//       false,
+//       "all"
+//     );
+//   }
+// }
 // TODO : Is it correct to be hooking this twice like this?
-add_action('admin_print_styles', 'simple_admin_css');
-add_action('wp_enqueue_scripts', 'simple_admin_css');
+// add_action('admin_print_styles', 'simple_admin_css');
+// add_action('wp_enqueue_scripts', 'simple_admin_css');
 
 //////////////////////////////////
 //                              //
@@ -54,7 +54,6 @@ function remove_gutenberg_block_library_css()
   }
 }
 
-
 add_action('wp_enqueue_scripts', 'remove_gutenberg_block_library_css', 100);
 
 ///////////////////////////////////////////////
@@ -64,27 +63,136 @@ add_action('wp_enqueue_scripts', 'remove_gutenberg_block_library_css', 100);
 ///////////////////////////////////////////////
 
 
-function add_media_cats()
+// function add_media_cats()
+// {
+//   register_taxonomy_for_object_type(
+//     'category',
+//     'attachment'
+//   );
+// }
+
+// add_action('init', 'add_media_cats');
+
+
+// function add_media_tags()
+// {
+//   register_taxonomy_for_object_type(
+
+//     'post_tag',
+//     'attachment'
+//   );
+// }
+
+// add_action('init', 'add_media_tags');
+
+
+
+////////////////////////////////////////
+//                                    //
+//    Create Photography Post Type    //
+//                                    //
+////////////////////////////////////////
+
+// function photography_post()
+// {
+
+//   $labels = array(
+//     'name'               => _x('Photos', 'post type general name'),
+//     'singular_name'      => _x('Photo', 'post type singular name'),
+//     'add_new'            => _x('Add New', 'book'),
+//     'add_new_item'       => __('Add New Photo'),
+//     'edit_item'          => __('Edit Photo'),
+//     'new_item'           => __('New Photo'),
+//     'all_items'          => __('All Photos'),
+//     'view_item'          => __('View Photo'),
+//     'search_items'       => __('Search Photos'),
+//     'not_found'          => __('No photos found'),
+//     'not_found_in_trash' => __('No photos found in the Trash'),
+//     'parent_item_colon'  => ’,
+//     'menu_name'          => 'Photos'
+//   );
+
+//   $args = array(
+//     'labels'              => $labels,
+//     'description'         => 'Gallery to upload and organize photos',
+//     'public'              => true,
+//     'menu_position'       => 5,
+//     'supports'            => array('title', 'editor', 'thumbnail', 'excerpt', 'comments'),
+//     'has_archive'         => true,
+
+//   );
+//   register_post_type('photography', $args);
+// }
+
+
+// add_action('init', 'photography_post');
+
+
+///////////////////////////////////////////
+//                                       //
+//    Custom taxonomy for attachments    //
+//                                       //
+///////////////////////////////////////////
+
+
+function simple_register_attachments_tax()
 {
-  register_taxonomy_for_object_type(
-    'category',
-    'attachment'
+  register_taxonomy(
+    'projects',
+    'attachment',
+    array(
+      'labels' =>  array(
+        'name'              => 'Projects',
+        'singular_name'     => 'Project',
+        'search_items'      => 'Search Projects',
+        'all_items'         => 'All Projects',
+        'edit_item'         => 'Edit Projects',
+        'update_item'       => 'Update Project',
+        'add_new_item'      => 'Add New Project',
+        'new_item_name'     => 'New Project Name',
+        'menu_name'         => 'Projects',
+      ),
+      'public' => true,
+      'hierarchical' => true,
+      'sort' => true,
+      'show_admin_column' => true,
+      'rewrite' => array('slug' => 'project', 'with_front' => false)
+    )
+  );
+  // wp_insert_term(
+  //   'Exclude Category',
+  //   'projects',
+  //   array(
+  //     'description'  => 'This category is used to exlude any media from featured posts and archives.',
+  //     'slug'     => 'exclude'
+  //   )
+  // );
+
+
+  register_taxonomy(
+    'hashtags',
+    'attachment',
+    array(
+      'labels' =>  array(
+        'name'              => 'Hashtags',
+        'singular_name'     => 'Hashtag',
+        'search_items'      => 'Search Hashtags',
+        'all_items'         => 'All Hashtags',
+        'edit_item'         => 'Edit Hashtags',
+        'update_item'       => 'Update Hashtag',
+        'add_new_item'      => 'Add New Hashtag',
+        'new_item_name'     => 'New Hashtag Name',
+
+      ),
+      'public' => true,
+      'hierarchical' => false,
+      'sort' => true,
+      'show_admin_column' => true,
+      'rewrite' => array('slug' => 'hashtags', 'with_front' => false)
+    )
   );
 }
-
-add_action('init', 'add_media_cats');
-
-
-function add_media_tags()
-{
-  register_taxonomy_for_object_type(
-
-    'post_tag',
-    'attachment'
-  );
-}
-
-add_action('init', 'add_media_tags');
+add_action('init', 'simple_register_attachments_tax', 0);
 
 ////////////////////////////
 //                        //
@@ -323,12 +431,13 @@ add_action('widgets_init', 'load_cat_thumb_widget');
  * */
 function featured_cat_card($catID)
 {
+  $name = strtolower(get_term($catID)->name);
   echo '<div class="featured-cat-banner">';
-  echo get_attachment_by_cat_id($catID, 'landscape_thumb');
-  echo '<header><h3>' . get_cat_name($catID) . '</h3></header>';
+  echo get_attachment_by_cat_id($catID, 'landscape_thumb', 'projects');
+  echo '<header><h3>' . $name . '</h3></header>';
   echo '</div>';
   echo category_description($catID);
-  echo '<div class="category-link" style="text-align: right"><a title="View all photos from the ' . get_cat_name($catID) . ' collection" href="' . get_category_link($catID) . '">View collection &raquo; </a>';
+  echo '<div class="category-link" style="text-align: right"><a title="View all photos from the ' . $name . ' collection" href="' . get_category_link($catID) . '">View collection &raquo; </a>';
 }
 
 
@@ -1300,6 +1409,7 @@ function the_breadcrumb()
         echo $catLink  . $delimiter . $before . ' ' . single_cat_title('', false) . $after;
       }
     }
+    // is_tax()
     if (is_tag()) {
       echo $tagLink  . $delimiter . $before . ' ' . get_queried_object()->name . $after;
     } elseif (is_single() && !is_attachment()) {
@@ -1382,9 +1492,6 @@ function light_mode($classes)
 add_filter('body_class', 'light_mode');
 
 
-
-
-
 /////////////////////////
 // Metaboxes //
 /////////////////////////
@@ -1395,7 +1502,7 @@ add_filter('body_class', 'light_mode');
 
 function photo_meta_boxes()
 {
-  add_meta_box('simple_exif', 'Photo Meta', 'photo_meta_callback', 'attachment', 'side', 'high');
+  add_meta_box('simple_exif', 'Photo Meta', 'photo_meta_callback', 'attachment', 'side', 'low');
 }
 add_action('add_meta_boxes_attachment', 'photo_meta_boxes');
 
@@ -1528,18 +1635,18 @@ function photo_meta_callback($post)
 <p>
     <label for="camera">Camera : </label>
     <input id="camera" type="text" name="camera" style="margin-right: 10px; width: 100%"
-        value="<?php echo $camera_value; ?>">
+        value="<?php echo $camera_value; ?>" />
 
 </p>
 <p>
     <label for="iso">ISO : </label>
     <input id="iso" type="text" name="iso" style="margin-right: 10px; width:100%; text-align: center;"
-        value="<?php echo $iso_value; ?>">
+        value="<?php echo $iso_value; ?>" />
 </p>
 <p>
     <label for="aperture">Aperture : </label>
     <input id="aperture" type="text" name="aperture" style="margin-right: 10px; width:100%; text-align: center;"
-        value="<?php echo $aperture_value; ?>">
+        value="<?php echo $aperture_value; ?>" />
     <span class="extra-info">
         This value is displayed with ƒ prefix
     </span>
@@ -1547,28 +1654,28 @@ function photo_meta_callback($post)
 <p>
     <label for="shutter">Shutter : </label>
     <input id="shutter" type="text" name="shutter" style="margin-right: 10px; width:100%; text-align: center;"
-        value="<?php echo $shutter_value; ?>">
+        value="<?php echo $shutter_value; ?>" />
 </p>
 <p>
     <label for="focal">Focal Length : </label>
     <input id="focal" type="text" name="focal" style="margin-right: 10px; width:100%"
-        value="<?php echo $focal_value; ?>">
+        value="<?php echo $focal_value; ?>" />
 </p>
 <p>
     <label for="film">Film type : </label>
     <input id="film" type="text" name="film" style="margin-right: 10px; width: 100%"
-        value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'film', true)); ?>">
+        value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'film', true)); ?>" />
 </p>
 <p>
     <label for="time">Time of creation : </label>
-    <input id="time" type="text" name="time" style="margin-right: 10px; width:100%" value="<?php echo $time_value; ?>">
+    <input id="time" type="text" name="time" style="margin-right: 10px; width:100%"
+        value="<?php echo $time_value; ?>" />
 </p>
 <p>
     <label for="location">Location : </label>
     <input id="location" type="text" name="location" style="margin-right: 10px; width: 100%"
-        value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'location', true)); ?>">
+        value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'location', true)); ?>" />
 </p>
-
 
 <p>
     <label for="print_available">Prints Available?</label>
@@ -1584,8 +1691,8 @@ function photo_meta_callback($post)
     <?php
     }
     ?>
-    </div>
-    <?php
+</p>
+<?php
 }
 
 /**
@@ -1758,4 +1865,4 @@ function wp_get_attachment($attachment_id)
 
 
 
-  ?>
+?>

@@ -7,7 +7,7 @@ get_header();
 
 $all_tags = get_terms(
     array(
-        'taxonomy' => 'post_tag',
+        'taxonomy' => 'hashtags',
         'hide_empty' => false,
     )
 );
@@ -23,14 +23,12 @@ $all_tags = get_terms(
                 $tag_description = $single_tag->description;
                 $id = $single_tag->term_id;
             ?>
-
             <article class="archive-card tag-banner">
                 <a href="<?php echo $tag_link; ?>"
                     title="View all photos tagged with #<?php echo strtolower($tag_name); ?>" />
-                <?php get_tag_display('post_tag', $single_tag); ?>
+                <?php get_tag_display('hashtags', $single_tag); ?>
                 </a>
             </article>
-
             <?php endforeach; ?>
         </div>
     </main>

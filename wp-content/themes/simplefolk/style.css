@@ -4,7 +4,7 @@ Theme URI: https://folkphotography.com
 Author: Zachary Folk
 Author URI: https://folkphotography.com
 Description: A very stripped down theme for folkphotography
-Version: 2.0.1
+Version: 0.1.0
 Text Domain: simplefolk
 License: GNU General Public License version 3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -564,7 +564,7 @@ figcaption {
   text-align: center;
   text-transform: uppercase;
   font-weight: 800;
-  color: #404040;
+  color: var(--warm-8);
   text-emphasis: inherit;
   font-size: 1.4em;
   -webkit-text-fill-color: var(--warm-8);
