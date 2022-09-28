@@ -1584,8 +1584,8 @@ function photo_meta_callback($post)
     <?php
     }
     ?>
-    </div>
-    <?php
+</p>
+<?php
 }
 
 /**
@@ -1758,4 +1758,4 @@ function wp_get_attachment($attachment_id)
 
 
 
-  ?>
+?>
