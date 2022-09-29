@@ -24,21 +24,21 @@ include('customizer.php');
 
 // Load styles for admin area
 
-// function simple_admin_css()
-// {
-//   if (is_admin()) {
-//     wp_enqueue_style(
-//       "simple_admin",
-//       get_bloginfo('template_directory') . "/simple_admin.css",
-//       false,
-//       false,
-//       "all"
-//     );
-//   }
-// }
+function simple_admin_css()
+{
+  if (is_admin()) {
+    wp_enqueue_style(
+      "simple_admin",
+      get_bloginfo('template_directory') . "/simple_admin.css",
+      false,
+      false,
+      "all"
+    );
+  }
+}
 // TODO : Is it correct to be hooking this twice like this?
-// add_action('admin_print_styles', 'simple_admin_css');
-// add_action('wp_enqueue_scripts', 'simple_admin_css');
+add_action('admin_print_styles', 'simple_admin_css');
+add_action('wp_enqueue_scripts', 'simple_admin_css');
 
 //////////////////////////////////
 //                              //
@@ -138,35 +138,35 @@ add_action('wp_enqueue_scripts', 'remove_gutenberg_block_library_css', 100);
 function simple_register_attachments_tax()
 {
   register_taxonomy(
-    'projects',
+    'collections',
     'attachment',
     array(
       'labels' =>  array(
-        'name'              => 'Projects',
+        'name'              => 'Collections',
         'singular_name'     => 'Project',
-        'search_items'      => 'Search Projects',
-        'all_items'         => 'All Projects',
-        'edit_item'         => 'Edit Projects',
+        'search_items'      => 'Search Collections',
+        'all_items'         => 'All Collections',
+        'edit_item'         => 'Edit Collections',
         'update_item'       => 'Update Project',
         'add_new_item'      => 'Add New Project',
         'new_item_name'     => 'New Project Name',
-        'menu_name'         => 'Projects',
+        'menu_name'         => 'Collections',
       ),
       'public' => true,
       'hierarchical' => true,
       'sort' => true,
       'show_admin_column' => true,
-      'rewrite' => array('slug' => 'project', 'with_front' => false)
+      'rewrite' => array('slug' => 'collections', 'with_front' => false)
     )
   );
-  // wp_insert_term(
-  //   'Exclude Category',
-  //   'projects',
-  //   array(
-  //     'description'  => 'This category is used to exlude any media from featured posts and archives.',
-  //     'slug'     => 'exclude'
-  //   )
-  // );
+  wp_insert_term(
+    'Exclude Images',
+    'collections',
+    array(
+      'description'  => 'This is used to exlude media from featured posts and archives.',
+      'slug'     => 'exclude'
+    )
+  );
 
 
   register_taxonomy(
@@ -193,6 +193,35 @@ function simple_register_attachments_tax()
   );
 }
 add_action('init', 'simple_register_attachments_tax', 0);
+
+
+///////////////////////////////////////////////
+//                                           //
+//    Create Root Pages for new taxonomy     //
+//                                           //
+///////////////////////////////////////////////
+
+
+add_action('admin_init', 'add_collections_page');
+function add_collections_page()
+{
+  if (!get_option('mytheme_installed')) {
+    $new_page_id = wp_insert_post(array(
+      'post_title'     => 'Collections',
+      'post_type'      => 'page',
+      'post_name'      => 'collections',
+      'comment_status' => 'closed',
+      'ping_status'    => 'closed',
+      'post_content'   => '',
+      'post_status'    => 'publish',
+      'post_author'    => get_user_by('id', 1)->user_id,
+      'menu_order'     => 0,
+      'page_template'  => 'collections-template.php'
+    ));
+
+    update_option('mytheme_installed', true);
+  }
+}
 
 ////////////////////////////
 //                        //
@@ -330,7 +359,7 @@ add_filter('wp_nav_menu_items', 'createLightSwitch');
 
 ////////////////////////////////////////
 //                                    //
-//    Featured projects widget        //
+//    Featured collection widget        //
 //                                    //
 ////////////////////////////////////////
 
@@ -348,8 +377,8 @@ class project_thumbs_widget extends WP_Widget
     parent::__construct(
 
       'project_thumbs_widget',
-      __('Project thumbs', 'simplefolk'),
-      array('description' => __('Get random collection of images from specific project(category)', 'simplefolk'),)
+      __('Featured Collection', 'simplefolk'),
+      array('description' => __('Get random collection of images from specific collection', 'simplefolk'),)
     );
   }
 
@@ -391,13 +420,19 @@ class project_thumbs_widget extends WP_Widget
 </p>
 <p>
     <label for="<?php echo $this->get_field_id('cat'); ?>">
-        Select featured project:
+        Select featured collectrion:
         <select class="widefat" id="<?php echo $this->get_field_id('cat'); ?>"
             name="<?php echo $this->get_field_name('cat'); ?>" />
         <?php
         echo '<option>' . __('No Category', 'simplefolk') . '</option>';
         $args = array('show_option_none' => 'No Category', 'hide_empty' => 0);
-        $categories = get_categories($args);
+        $tax = 'collections';
+        $categories =  get_terms(
+          array(
+            'taxonomy' => $tax,
+            'hide_empty' => false,
+          )
+        );
         foreach ($categories as $category) :
           $selected = ($cat ==  $category->term_id) ? 'selected' : '';
           echo '<option value="' . $category->term_id . '" ' . $selected . '>' . $category->name . '</option>';
@@ -426,14 +461,15 @@ add_action('widgets_init', 'load_cat_thumb_widget');
  * Returns card elements from a category id
  * HTML of category name, description, and attachment
  * @param string $catID Category id to build elements
+ * @param string $tax Taxonmy type to generate, default = collections
  * @return string HTML of image with category title and description
  * 
  * */
-function featured_cat_card($catID)
+function featured_cat_card($catID, $tax = 'collections')
 {
   $name = strtolower(get_term($catID)->name);
   echo '<div class="featured-cat-banner">';
-  echo get_attachment_by_cat_id($catID, 'landscape_thumb', 'projects');
+  echo get_attachment_by_cat_id($catID, 'landscape_thumb', $tax);
   echo '<header><h3>' . $name . '</h3></header>';
   echo '</div>';
   echo category_description($catID);
@@ -820,7 +856,7 @@ function get_random_atta_img_src_by_term($tax, $term = '')
  * Returns the display for each tag on the root tags/ page 
  * @param string $tax Taxonomy to use for the query eg: post_tag
  * @param object $single_tag WP_Term Object
- * @return string HTML generated from get_the_post_thumbnail 
+ * @return string HTML generated from get_the_post_thumbnail - the element is sized depending on the number of images for that term
  * */
 function get_tag_display($tax, $single_tag)
 {
@@ -940,6 +976,31 @@ function get_attachment_by_cat_id($id, $size = 'thumbnail', $tax = 'category')
   endif;
 }
 
+/**
+ * 
+ */
+function get_hashtags()
+{
+  $prefix = '#';
+  $separator = ' ';
+  $output = '';
+  $string = '';
+  $hashtags =  get_terms(
+    array(
+      'taxonomy' => 'hashtags',
+      'hide_empty' => false,
+    )
+  );
+
+  if (!empty($hashtags)) :
+    foreach ($hashtags as $hashtag) :
+      $output .= '<a title="View all photos with the tag #' . strtolower($hashtag->name) . '"
+        href="' . esc_attr(get_tag_link($hashtag->term_id)) . '">' . $prefix . __($hashtag->name) . '</a>' . $separator;
+    endforeach;
+    $string .= trim($output, $separator);
+  endif;
+  echo $string;
+}
 //////////////////////////////////
 //                              //
 //    Get image and lightbox    //
@@ -1135,59 +1196,19 @@ function get_gallery_by_tag($post_tag)
   endif;
 }
 
-////////////////////////////////////////////////
-//                                            //
-//    Sidebar Thumbs from current category    //
-//                                            //
-////////////////////////////////////////////////
+/**
+ * Returns collection of thumbs for current collection
+ * @param string $id
+ * @return string HTML gallery of images that link to their single attachment page
+ * 
+ */
 
-function this_cats_thumbs()
+function this_collections_thumbs($id)
 {
-  $the_cat = get_the_category();
-  if ($the_cat) :
-    $category_name = $the_cat[0]->name;
-    $category_link = get_category_link($the_cat[0]->cat_ID);
 
-    $num_posts = $the_cat[0]->category_count;
-    $args = array(
-      'post_type' => 'post',
-      'post_status' => 'publish',
-      'category_name' => $category_name,
-      'post__not_in' => array(get_the_ID()),
-      'posts_per_page' => 9,
-    );
-    $arr_posts = new WP_Query($args);
-    echo   '<p>Category: ' . $category_name . '</p>';
-    if ($arr_posts->have_posts()) :
-
-      echo '<div id="cat_thumbs">';
-
-      while ($arr_posts->have_posts()) :
-        $arr_posts->the_post();
-        if (has_post_thumbnail()) :
-        ?>
-<a href="<?php the_permalink(); ?>">
-    <?php get_img_with_sizes('thumbnail'); ?>
-</a>
-<?php endif;
-      endwhile;
-      echo '</div>';
-    endif;
-    if ($num_posts > 9) :
-      echo '<div class="single-cat-link">View all of the <a href="' . $category_link . '">' . $category_name . ' collection &gt; &gt;</a></div>';
-    endif;
-  endif;
-}
-
-function this_archive_cats_thumbs()
-{
-  $the_cat = get_the_category();
-
-  if ($the_cat) :
-    $category_name = $the_cat[0]->name;
-    $category_term_id = (int)$the_cat[0]->term_id;
-    $category_link = get_term_link($category_term_id);
-
+  $collection =  get_the_terms($id, 'collections');
+  if ($collection) :
+    $name = $collection[0]->name;
     $args = array(
       'post_type' => 'attachment',
       'post_status' => 'inherit',
@@ -1195,15 +1216,15 @@ function this_archive_cats_thumbs()
       'post__not_in' => array(get_the_ID()),
       'tax_query' => array(
         array(
-          'taxonomy' => 'category',
+          'taxonomy' => 'collections',
           'field' => 'slug',
-          'terms' => $category_name,
+          'terms' => $name,
         )
       ),
     );
     $atta_query = new WP_Query($args);
     if ($atta_query->have_posts()) :
-      echo '<h3>More from the ' . strtolower($category_name) . ' project:</h3>';
+      echo '<h3>More from the ' . strtolower($name) . ' collection:</h3>';
       echo '<div id="cat_thumbs">';
       while ($atta_query->have_posts()) :
         $atta_query->the_post();
@@ -1214,10 +1235,11 @@ function this_archive_cats_thumbs()
         }
       endwhile;
       echo '</div>';
-
     endif;
   endif;
 }
+
+
 
 
 /**
@@ -1389,7 +1411,9 @@ function the_breadcrumb()
   $before = '<span class="current">'; // tag before the current crumb
   $after = '</span>'; // tag after the current crumb
   $catLink = '<a href="/projects/"> Projects</a> ';
-  $tagLink = '<a href="/tags/">Tags</a>';
+  $tagLink =  '<a href="/tags/">tags</a>';
+  $hashtagLink = '<a href="/hashtags/">hashtags</a>';
+  $collectionLink = '<a href="/projects/"> Projects</a> ';
 
   global $post;
   $homeLink = get_bloginfo('url');
@@ -1409,27 +1433,36 @@ function the_breadcrumb()
         echo $catLink  . $delimiter . $before . ' ' . single_cat_title('', false) . $after;
       }
     }
-    // is_tax()
-    if (is_tag()) {
-      echo $tagLink  . $delimiter . $before . ' ' . get_queried_object()->name . $after;
-    } elseif (is_single() && !is_attachment()) {
-      echo ' ' . $before . get_the_title() . $after;
+    if (is_tax('hashtags')) {
+      echo $hashtagLink  . $delimiter . $before . ' ' . get_queried_object()->name . $after;
     }
+    // is_tax()
+    // if (is_tag()) {
+    //   echo $tagLink  . $delimiter . $before . ' ' . get_queried_object()->name . $after;
+    // } elseif (is_single() && !is_attachment()) {
+    //   echo ' ' . $before . get_the_title() . $after;
+    // }
+
+
     if (is_attachment()) {
 
       // NOTE: This may be unorthodox, reason is to distinguish between if the previous page
-      // was a tag or category.  If neither then it just defaults to the root.  
+      // was from custom terms (hashtag and collections).  If neither then it just defaults to the root.  
       // TODO : This along with actual permalink path need to be consistent
       // Does this cause duplicate content SEO problems?
-      if (isset($_SERVER['HTTP_REFERER'])) {
 
+
+      if (isset($_SERVER['HTTP_REFERER'])) {
         $ref = ($_SERVER['HTTP_REFERER']);
-        // search string for 'tags' 
-        if (strpos($ref, 'tags') !== false) {
-          echo '<a href="' . $ref . '">Tags</a>' . $delimiter;
+
+        if (strpos($ref, 'hashtags') !== false) {
+          $parts = explode('/hashtags/', $ref);
+          $hashtag_name = str_replace('/', '', $parts[1]);
+          $hashtag_path = $parts[0] . '/hashtags/';
+          echo '<a href="' . $hashtag_path . '">hashtags</a>' . $delimiter;
+          echo '<a href="' . $hashtag_path . $parts[1] . '"> ' . $hashtag_name . '</a>' . $delimiter;
         }
         if (strpos($ref, 'projects') !== false) {
-
           $the_cat = get_the_category();
           if ($the_cat) :
             $cat_name = $the_cat[0]->name;
@@ -1748,6 +1781,9 @@ function display_photo_meta($id)
       echo '<p>' . $core_meta['description'] . '</p>';
     }
   }
+
+  get_hashtags();
+
   $attachment_fields = get_post_custom($attachment_id);
 
   echo '<ul class="photo-exif">';
@@ -1759,14 +1795,12 @@ function display_photo_meta($id)
     endif;
   }
 
-
   if (array_key_exists('iso', $attachment_fields)) {
     $iso = $attachment_fields['iso'][0];
     if ($iso) :
       echo '<li>ISO: ' . $iso . '</li>';
     endif;
   }
-
 
   if (array_key_exists('aperture', $attachment_fields)) {
     $aperture = $attachment_fields['aperture'][0];

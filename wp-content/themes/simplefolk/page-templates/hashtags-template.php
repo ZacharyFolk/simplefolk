@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Template Name: Attachment Tags Root Template
+ * Template Name: Attachment Hashtags Root Template
  */
 get_header();
 

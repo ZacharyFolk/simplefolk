@@ -22,7 +22,3 @@
 //    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀    //
 //                                      //
 //////////////////////////////////////////
-get_header();
-echo 'I am index.php';
-get_template_part('includes/loop', 'single');
-get_footer();

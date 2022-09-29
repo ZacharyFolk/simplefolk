@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Template Name: Attachment Category Template
+ * Template Name: Collections Template
  */
 get_header();
-$all_cats = get_terms_with_exclusions(['exclude', 'asset'], 'projects');
+$all_cats = get_terms_with_exclusions(['exclude', 'asset'], 'collections');
 ?>
 
 <div id="primary_full_width">

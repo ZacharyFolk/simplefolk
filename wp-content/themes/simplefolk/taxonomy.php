@@ -1,28 +1,16 @@
 <?php
 
 /**
- * Template Name: Project Taxonomy Template
+ * Template Name: Attachment Hashtag Template
  */
 get_header();
-$all_cats = get_terms_with_exclusions(['exclude', 'asset'], 'projects');
 ?>
-
-<div id="primary_full_width">
-    <main id="main" class="site-main">
+<div id="primary_full-width" class="content-area">
+    <main id="main" class="site-main" role="main">
         <div class="archive-container">
-            <?php
-            foreach ($all_cats as $cat) :
-                $id = $cat->term_id;
-            ?>
-            <article class="archive-card">
-                <div class="archive-wrap">
-                    <?php featured_cat_card($id); ?>
-                </div>
-            </article>
-            </a>
-            <?php endforeach; ?>
+            <?php get_template_part('includes/loop', 'archive'); ?>
         </div>
     </main>
 </div>
-
-<?php get_footer(); ?>
+<?php
+get_footer();
