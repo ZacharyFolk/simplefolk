@@ -1049,15 +1049,17 @@ function get_attachment_by_cat_id($id, $size = 'thumbnail', $tax = 'category')
 /**
  * 
  */
-function get_hashtags()
+function get_hashtags($id)
 {
   $prefix = '#';
   $separator = ' ';
   $output = '';
   $string = '';
-  $hashtags =  get_terms(
+  $hashtags =  wp_get_post_terms(
+    $id,
+    'hashtags',
     array(
-      'taxonomy' => 'hashtags',
+
       'hide_empty' => false,
     )
   );
@@ -1861,7 +1863,7 @@ function display_photo_meta($id)
     }
   }
 
-  get_hashtags();
+  get_hashtags($id);
 
   $attachment_fields = get_post_custom($attachment_id);
 
