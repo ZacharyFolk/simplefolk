@@ -1484,10 +1484,8 @@ function the_breadcrumb()
   $showCurrent = 1; // 1 - show current post/page title in breadcrumbs, 0 - don't show
   $before = '<span class="current">'; // tag before the current crumb
   $after = '</span>'; // tag after the current crumb
-  $catLink = '<a href="/projects/"> Projects</a> ';
-  $tagLink =  '<a href="/tags/">tags</a>';
   $hashtagLink = '<a href="/hashtags/">hashtags</a>';
-  $collectionLink = '<a href="/projects/"> Projects</a> ';
+  $collectionRootLink = '<a href="/collections/"> Collections</a> ';
 
   global $post;
   $homeLink = get_bloginfo('url');
@@ -1504,7 +1502,7 @@ function the_breadcrumb()
         if ($thisCat->parent != 0) {
           echo get_category_parents($thisCat->parent, true, ' ' . $delimiter . ' ');
         }
-        echo $catLink  . $delimiter . $before . ' ' . single_cat_title('', false) . $after;
+        echo $collectionRootLink  . $delimiter . $before . ' ' . single_cat_title('', false) . $after;
       }
     }
     if (is_tax('hashtags')) {
@@ -1541,7 +1539,7 @@ function the_breadcrumb()
             $collection_name = $collection[0]->name;
             $collection_link = get_term_link($collection_name, 'collections');
             $collection_link_HTML = '<a href="' . $collection_link . '">' . $collection_name . '</a>';
-            echo '<a href="/projects/">Projects</a>' . $delimiter . $collection_link_HTML . $delimiter;
+            echo $collectionRootLink . $delimiter . $collection_link_HTML . $delimiter;
           };
         }
       }
