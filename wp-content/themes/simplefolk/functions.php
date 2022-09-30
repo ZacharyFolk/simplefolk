@@ -248,11 +248,11 @@ add_action('init', 'simple_register_attachments_tax', 0);
 //                                           //
 ///////////////////////////////////////////////
 
-
 add_action('admin_init', 'add_collections_page');
 function add_collections_page()
 {
-  if (!get_option('mytheme_installed')) {
+  if (!get_option('collections_installed')) {  // TODO : This does not seem to ever run because of this
+
     $new_page_id = wp_insert_post(array(
       'post_title'     => 'Collections',
       'post_type'      => 'page',
@@ -266,7 +266,7 @@ function add_collections_page()
       'page_template'  => 'page-templates/collections-template.php'
     ));
 
-    update_option('mytheme_installed', true);
+    update_option('collections_installed', true);
   }
 }
 
@@ -274,7 +274,7 @@ function add_collections_page()
 add_action('admin_init', 'add_hashtags_page');
 function add_hashtags_page()
 {
-  if (!get_option('mytheme_installed')) {
+  if (!get_option('hashtags_installed')) {
     $new_page_id = wp_insert_post(array(
       'post_title'     => 'Hashtags',
       'post_type'      => 'page',
@@ -288,7 +288,7 @@ function add_hashtags_page()
       'page_template'  => 'page-templates/hashtags-template.php'
     ));
 
-    update_option('mytheme_installed', true);
+    update_option('hashtags_installed', true);
   }
 }
 
