@@ -56,6 +56,53 @@ function remove_gutenberg_block_library_css()
 
 add_action('wp_enqueue_scripts', 'remove_gutenberg_block_library_css', 100);
 
+
+////////////////////////////
+//                        //
+//    Create main menu    //
+//                        //
+////////////////////////////
+
+
+function create_main_nav()
+{
+  register_nav_menu('top-nav', __('Top Nav'));
+}
+add_action('init', 'create_main_nav');
+
+
+$menu_name   = 'Main Menu';
+$menu_exists = wp_get_nav_menu_object($menu_name);
+$menu_location = 'top-nav';
+
+if (!$menu_exists) {
+  $menu_id = wp_create_nav_menu($menu_name);
+
+  wp_update_nav_menu_item($menu_id, 0, array(
+    'menu-item-title'  =>  __('About', 'textdomain'),
+    'menu-item-url'    => home_url('/about/'),
+    'menu-item-status' => 'publish'
+  ));
+  wp_update_nav_menu_item($menu_id, 0, array(
+    'menu-item-title'  =>  __('Collections', 'textdomain'),
+    'menu-item-url'    => home_url('/collections/'),
+    'menu-item-status' => 'publish'
+  ));
+
+  wp_update_nav_menu_item($menu_id, 0, array(
+    'menu-item-title'  =>  __('Hashtags', 'textdomain'),
+    'menu-item-url'    => home_url('/hashtags/'),
+    'menu-item-status' => 'publish'
+  ));
+
+  if (!has_nav_menu($menu_location)) {
+
+    $locations = get_theme_mod('nav_menu_locations');
+    $locations[$menu_location] = $menu_id;
+    set_theme_mod('nav_menu_locations', $locations);
+  }
+}
+
 ///////////////////////////////////////////////
 //                                           //
 //    Add tags and category to media page    //
@@ -1097,10 +1144,12 @@ END;
  */
 function get_terms_with_exclusions($exclusions = array(), $tax = 'category')
 {
+
   $ids_to_exclude = array();
   $get_terms_to_exclude = get_terms(
     array(
       'fields'    => 'ids',
+      'hide_empty' => false,
       'slug'      => $exclusions,
       'taxonomy' => $tax
     )
@@ -1451,7 +1500,6 @@ function the_breadcrumb()
       // TODO : This along with actual permalink path need to be consistent
       // Does this cause duplicate content SEO problems?
 
-
       if (isset($_SERVER['HTTP_REFERER'])) {
         $ref = ($_SERVER['HTTP_REFERER']);
 
@@ -1461,19 +1509,27 @@ function the_breadcrumb()
           $hashtag_path = $parts[0] . '/hashtags/';
           echo '<a href="' . $hashtag_path . '">hashtags</a>' . $delimiter;
           echo '<a href="' . $hashtag_path . $parts[1] . '"> ' . $hashtag_name . '</a>' . $delimiter;
-        }
-        if (strpos($ref, 'projects') !== false) {
-          $the_cat = get_the_category();
-          if ($the_cat) :
-            $cat_name = $the_cat[0]->name;
-            $cat_link = get_category_link($the_cat[0]->cat_ID);
-            $cat_link_HTML = '<a href="' . $cat_link . '">' . $cat_name . '</a>';
-            echo '<a href="/projects/">Projects</a>' . $delimiter . $cat_link_HTML . $delimiter;
-          endif;
+        } else {
+          // did not come from hashtag page then show as child of collection;
+          $collection = get_the_terms($post, 'collections');
+          if ($collection) {
+            $collection_name = $collection[0]->name;
+            $collection_link = get_term_link($collection_name, 'collections');
+            $collection_link_HTML = '<a href="' . $collection_link . '">' . $collection_name . '</a>';
+            echo '<a href="/projects/">Projects</a>' . $delimiter . $collection_link_HTML . $delimiter;
+          };
         }
       }
+
       echo ' ' . $before . get_the_title() . $after;
     }
+
+
+
+
+
+
+
 
     if (!is_single() && !is_page() && get_post_type() != 'post' && !is_404()) {
       // $post_type = get_post_type_object(get_post_type());

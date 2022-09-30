@@ -82,19 +82,20 @@
             </div>
         </label>
 
-        <?php if (has_nav_menu('primary')) : ?>
+
         <ul class="menu">
-            <?php if (has_nav_menu('primary')) :
-                    wp_nav_menu(
-                        array(
-                            'container' => '',
-                            'theme_location' => 'primary',
-                            'items_wrap'     => '%3$s',
-                        )
-                    );
-                endif; ?>
+            <?php if (has_nav_menu('top-nav')) :
+
+                wp_nav_menu(
+                    array(
+                        'container' => '',
+                        'theme_location' => 'top-nav',
+                        'items_wrap'     => '%3$s',
+                    )
+                );
+            endif; ?>
         </ul>
-        <?php endif; ?>
+
     </section>
     <div id="crumb_wrap">
         <?php echo the_breadcrumb(); ?>
