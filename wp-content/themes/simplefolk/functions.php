@@ -263,12 +263,35 @@ function add_collections_page()
       'post_status'    => 'publish',
       'post_author'    => get_user_by('id', 1)->user_id,
       'menu_order'     => 0,
-      'page_template'  => 'collections-template.php'
+      'page_template'  => 'page-templates/collections-template.php'
     ));
 
     update_option('mytheme_installed', true);
   }
 }
+
+
+add_action('admin_init', 'add_hashtags_page');
+function add_hashtags_page()
+{
+  if (!get_option('mytheme_installed')) {
+    $new_page_id = wp_insert_post(array(
+      'post_title'     => 'Hashtags',
+      'post_type'      => 'page',
+      'post_name'      => 'hashtags',
+      'comment_status' => 'closed',
+      'ping_status'    => 'closed',
+      'post_content'   => '',
+      'post_status'    => 'publish',
+      'post_author'    => get_user_by('id', 1)->user_id,
+      'menu_order'     => 0,
+      'page_template'  => 'page-templates/hashtags-template.php'
+    ));
+
+    update_option('mytheme_installed', true);
+  }
+}
+
 
 ////////////////////////////
 //                        //
