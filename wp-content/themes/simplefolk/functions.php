@@ -206,6 +206,7 @@ function simple_register_attachments_tax()
       'rewrite' => array('slug' => 'collections', 'with_front' => false)
     )
   );
+
   wp_insert_term(
     'Exclude Images',
     'collections',
@@ -1668,12 +1669,14 @@ function photo_meta_callback($post)
   // [camera] 
   // converted ex: NIKON D10 => Nikon D10
   $exif_camera = empty($imageEXIF['camera']) ? '' :  $imageEXIF['camera'];
+
   if (!empty($exif_camera)) :
     $fixCase = explode(' ', $exif_camera);
     $cam1 = $fixCase[0];
     $capitalFirst = strtolower($cam1);
     $capitalFirst = ucwords($capitalFirst);
-    $exif_camera = $capitalFirst . ' ' .  $fixCase[1];
+
+    $exif_camera = empty($fixCase[1]) ? $capitalFirst : $capitalFirst . ' ' .  $fixCase[1];
   endif;
   $meta_camera = esc_attr(get_post_meta(get_the_ID(), 'camera', true));
   $camera_value = empty($meta_camera) ? $exif_camera : $meta_camera;
@@ -1840,6 +1843,9 @@ function simple_save_meta($post_id)
       update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
     }
   }
+
+  // TODO:  set values to custom taxonomy here?
+
 }
 
 /**
