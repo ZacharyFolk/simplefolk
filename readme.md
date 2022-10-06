@@ -97,6 +97,19 @@ some of the features you can expect.
 
     Changelog
 
+## [0.2.0] - 2022-10-06
+
+### Removed
+
+- Core Tax and Category from the archive pages
+- All associated pages for the category and tag taxonomy
+
+### Added
+
+- Custom taxonomy Collections to replace Categories
+- Custom taxonomy Hashtags to replace Tags
+- Automates building of pages - hashtags and collections to be used for archives
+
 ## [0.1.0] - 2022-09-24
 
 ### Removed
