@@ -571,7 +571,7 @@ class tag_thumbs_widget extends WP_Widget
 
       'tag_thumbs_widget',
       __('Tag thumbs', 'simplefolk'),
-      array('description' => __('Get random collection of images from specific tag', 'simplefolk'),)
+      array('description' => __('Get random collection of images from specific hashtag', 'simplefolk'),)
     );
   }
 
@@ -619,7 +619,16 @@ class tag_thumbs_widget extends WP_Widget
         <?php
         echo '<option>' . __('No Category', 'simplefolk') . '</option>';
         $args = array('show_option_none' => 'No Category', 'hide_empty' => 0);
-        $tags = get_tags($args);
+
+        $tags =  get_terms(
+          array(
+            'taxonomy' => 'hashtags',
+            'hide_empty' => false,
+          )
+        );
+
+
+        wut($tags);
         foreach ($tags as $t) :
           $selected = ($tag ==  $t->term_id) ? 'selected' : '';
           echo '<option value="' . $t->term_id . '" ' . $selected . '>' . $t->name . '</option>';
@@ -655,7 +664,7 @@ function featured_tag_card($tag)
 {
 
   $name = get_term($tag);
-  getThumbGallery('post_tag', $name);
+  getThumbGallery('hashtags', $name);
 }
 
 

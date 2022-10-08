@@ -1,19 +1,21 @@
-    ======================== [o] SIMPLE FOLK [o] =========================
+    ========================================= [o] SIMPLE FOLK [o] ==========================================
 
-                                      ___
-                             .==.____/[=]\ _______
-                             |_---___________[o]_|
-                            /|    _ /  --  \     |\
-                            ||   (_// /''\ \\    ||s
-                            ||     \\ \../ //    ||
-                            \|      \\ __ //     |/
-                             ---------------------
+                                                      ___
+                                             .==.____/[=]\ _______
+                                             |_---___________[o]_|
+                                            /|    _ /  --  \     |\
+                                            ||   (_// /''\ \\    ||
+                                            ||     \\ \../ //    ||
+                                            \|      \\ __ //     |/
+                                             ---------------------
 
-Simple Folk is a WordPress theme built for photographers. It is focused on using the media library as the main tool to organize and build content.
+Simple Folk is a WordPress theme built for photographers.
+The focus is on your photography and organize and present it using the media library.
+The goal is for it to be incredibly simple and attention is on the photography.
 
     Features
 
-- **Fast** - Speed and good coding is a priority, see below for Lighthouse test results
+- **Fast** - Speed is a major priority. See below for performance test results.
 - **Enhanced Media Library** - Organize and display your images all from the media library.
 - **Meta data** - EXIF (Camera type, shutter speed, etc.. ) imported and additional fields for film cameras.
 - **Blog** - All the usual WordPress post functionality still exists along with the media content.
@@ -73,25 +75,25 @@ some of the features you can expect.
 
     Browser
 
-[coming soon]
+So far this has only been tested in the following browsers.
+
+- Chrome
+- Edge
 
 ---
 
     Contributing
 
-[coming soon]
+You can be a great help to this project by using and reporting any bugs or features that you would like to see.
+Please open a new issue and explain the problem or feature request there.
 
 ---
 
     Donate
 
-[coming soon]
-
----
-
-    Support
-
-[coming soon]
+Your messages and support are so appreciated and a huge motivation for me.  
+If you want to show some love please [share and support my work](https://folkphotography.com) and
+you can also boost my day when you [buy me a coffee](https://www.buymeacoffee.com/folkphotography).
 
 ---
 
