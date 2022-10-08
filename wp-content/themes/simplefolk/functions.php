@@ -1518,6 +1518,9 @@ function the_breadcrumb()
     if (is_tax('hashtags')) {
       echo $hashtagLink  . $delimiter . $before . ' ' . get_queried_object()->name . $after;
     }
+    if (is_tax('collections')) {
+      echo $collectionRootLink  . $delimiter . $before . ' ' . get_queried_object()->name . $after;
+    }
     // is_tax()
     // if (is_tag()) {
     //   echo $tagLink  . $delimiter . $before . ' ' . get_queried_object()->name . $after;
