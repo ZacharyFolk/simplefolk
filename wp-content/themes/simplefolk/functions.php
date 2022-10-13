@@ -252,8 +252,7 @@ add_action('init', 'simple_register_attachments_tax', 0);
 add_action('admin_init', 'add_collections_page');
 function add_collections_page()
 {
-  if (!get_option('collections_installed')) {  // TODO : This does not seem to ever run because of this
-
+  if (!get_option('collections_installed')) {
     $new_page_id = wp_insert_post(array(
       'post_title'     => 'Collections',
       'post_type'      => 'page',
@@ -293,7 +292,26 @@ function add_hashtags_page()
   }
 }
 
+add_action('admin_init', 'add_blog_page');
+function add_blog_page()
+{
+  if (!get_option('blog_page_installed')) {
+    $new_page_id = wp_insert_post(array(
+      'post_title'     => 'Blog',
+      'post_type'      => 'page',
+      'post_name'      => 'blog',
+      'comment_status' => 'closed',
+      'ping_status'    => 'closed',
+      'post_content'   => '',
+      'post_status'    => 'publish',
+      'post_author'    => get_user_by('id', 1)->user_id,
+      'menu_order'     => 0,
+      'page_template'  => 'page-templates/blog-template.php'
+    ));
 
+    update_option('blog_page_installed', true);
+  }
+}
 ////////////////////////////
 //                        //
 //    Register widgets    //
