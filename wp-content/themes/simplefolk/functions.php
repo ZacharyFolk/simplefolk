@@ -557,12 +557,13 @@ add_action('widgets_init', 'load_cat_thumb_widget');
 function featured_cat_card($catID, $tax = 'collections')
 {
   $name = strtolower(get_term($catID)->name);
+  echo '<a title="View all photos from the ' . $name . ' collection" href="' . get_category_link($catID) . '">';
   echo '<div class="featured-cat-banner">';
   echo get_attachment_by_cat_id($catID, 'landscape_thumb', $tax);
   echo '<header><h3>' . $name . '</h3></header>';
-  echo '</div>';
+  echo '</div></a>';
   echo category_description($catID);
-  echo '<div class="category-link" style="text-align: right"><a title="View all photos from the ' . $name . ' collection" href="' . get_category_link($catID) . '">View collection &raquo; </a>';
+  //  echo '<div class="category-link" style="text-align: right"><a title="View all photos from the ' . $name . ' collection" href="' . get_category_link($catID) . '">View collection &raquo; </a>';
 }
 
 
