@@ -84,11 +84,16 @@ if (!$menu_exists) {
     'menu-item-status' => 'publish'
   ));
   wp_update_nav_menu_item($menu_id, 0, array(
+    'menu-item-title'  =>  __('Blog', 'textdomain'),
+    'menu-item-url'    => home_url('/blog/'),
+    'menu-item-status' => 'publish'
+  ));
+
+  wp_update_nav_menu_item($menu_id, 0, array(
     'menu-item-title'  =>  __('Collections', 'textdomain'),
     'menu-item-url'    => home_url('/collections/'),
     'menu-item-status' => 'publish'
   ));
-
   wp_update_nav_menu_item($menu_id, 0, array(
     'menu-item-title'  =>  __('Hashtags', 'textdomain'),
     'menu-item-url'    => home_url('/hashtags/'),

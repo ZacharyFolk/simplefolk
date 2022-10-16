@@ -123,4 +123,62 @@ function simplefolk_customizer_settings($wp_customize)
         'settings'   => 'gutenberg_blocks',
         'type' => 'checkbox'
     ));
+
+
+
+    ////////////////////////////
+    //                        //
+    //    Footer settings     //
+    //                        //
+    ////////////////////////////
+
+
+    $wp_customize->add_section('footer_settings', array(
+        'title'      => 'Footer settings',
+        'priority'   => 40,
+    ));
+    $wp_customize->add_setting('copyright_info', array(
+        'transport'   => 'refresh',
+    ));
+    $wp_customize->add_setting('fb_link', array(
+        'transport'   => 'refresh',
+    ));
+    $wp_customize->add_setting('twit_link', array(
+        'transport'   => 'refresh',
+    ));
+    $wp_customize->add_setting('ig_link', array(
+        'transport'   => 'refresh',
+    ));
+
+    $wp_customize->add_control('copyright_info', array(
+        'label'        => 'Copyright Name',
+        'description' => 'Insert name to use for copyright information. Will print it as "Copyright {Your Name} {Current Date}, All rights reserved.',
+        'section'    => 'footer_settings',
+        'settings'   => 'copyright_info',
+        'type' => 'text'
+    ));
+
+    $wp_customize->add_control('fb_link', array(
+        'label'        => 'Facebook User Name',
+        'description' => 'Insert name to link to Facebook Page.',
+        'section'    => 'footer_settings',
+        'settings'   => 'fb_link',
+        'type' => 'text'
+    ));
+
+    $wp_customize->add_control('twit_link', array(
+        'label'        => 'Twitter Link',
+        'description' => 'Insert Link to your Twitter Page.',
+        'section'    => 'footer_settings',
+        'settings'   => 'twit_link',
+        'type' => 'text'
+    ));
+
+    $wp_customize->add_control('ig_link', array(
+        'label'        => 'Instagram Link',
+        'description' => 'Insert Link to your Instagram Page.',
+        'section'    => 'footer_settings',
+        'settings'   => 'ig_link',
+        'type' => 'text'
+    ));
 }

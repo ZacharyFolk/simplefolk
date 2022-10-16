@@ -495,13 +495,29 @@ body {
 }
 footer {
   width: 100%;
+}
+.footer-wrap {
   display: flex;
-  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
 }
 footer .copyright {
   padding: 20px 60px;
 }
-
+#social_links {
+  display: flex;
+  scale: 0.6;
+}
+#social_links div {
+  margin: 0 10px;
+}
+#social_links div a:link,
+#social_links div a:visited {
+  opacity: 0.7;
+}
+#social_links div a:link:hover {
+  opacity: 1;
+}
 .content-wrap {
   max-width: 1971px;
   margin: 0 auto;
