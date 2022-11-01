@@ -99,6 +99,28 @@ you can also boost my day when you [buy me a coffee](https://www.buymeacoffee.co
 
     Changelog
 
+## [0.3.0] - 2022-10-17
+
+### Fixed
+
+- Hashtag widget
+- Breadcrumbs for collections #40
+- Added blog archive page and templage #42
+
+### Changed
+
+- Style of banners, removing the text link
+
+### Added
+
+- Configuration for Footer Copyright
+- Configurations for social media links
+- SVG of social media icons
+
+### Removed
+
+- Featured image from single post
+
 ## [0.2.0] - 2022-10-06
 
 ### Removed

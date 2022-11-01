@@ -6,7 +6,7 @@
 //                                    //
 ////////////////////////////////////////
 
-define('SIMPLE_THEME_VERSION', '0.2.0');
+define('SIMPLE_THEME_VERSION', '0.3.0');
 
 function main_scripts()
 {

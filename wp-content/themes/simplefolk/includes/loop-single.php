@@ -12,20 +12,6 @@ while (have_posts()) :
     <main id="main" class="single-main" role="main">
         <div id="primary" class="content-area">
             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                <?php if (has_post_thumbnail()) :
-                        // TODO : Add customizer for multiple styles here, eg: top landscape, float left, float right, full, etc.. 
-                    ?>
-                <figure class="main-image">
-                    <a class="glightbox" data-caption="<?php echo $image_caption; ?>"
-                        href="<?php the_post_thumbnail_url(); ?>">
-                        <?php get_img_with_sizes('square_hero'); ?>
-                    </a>
-                </figure>
-
-                <?php if ($image_caption) :
-                            echo '<figcaption>' . $image_caption . '</figcaption>';
-                        endif;
-                    endif; ?>
                 <?php echo the_title('<div id="post_title"><h1>', '</h1></div>'); ?>
                 <div class="post-meta">
                     <p>Published : <?php the_time('m/j/y g:i A'); // full dates : F jS, Y
