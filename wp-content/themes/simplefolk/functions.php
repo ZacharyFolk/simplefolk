@@ -1006,6 +1006,14 @@ function get_tag_display($tax, $single_tag)
   }
 }
 
+/**
+ * Returns image for open graph in header
+ */
+
+function get_graph_image($id)
+{
+  return is_attachment() ? wp_get_attachment_image_url($id, 'full') : the_post_thumbnail_url('full');
+}
 /** 
  * Returns thumb gallery for particular term
  */

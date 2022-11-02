@@ -5,6 +5,7 @@
 <?php $analytics_key =  esc_attr(get_theme_mod('analytics_key')); ?>
 <?php $fb_app_id =  esc_attr(get_theme_mod('app_id')); ?>
 
+
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,8 +19,9 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="<?php echo wp_title(''); ?>" />
     <meta property="og:description" content="<?php echo htmlspecialchars(get_meta_description()); ?>" />
-    <meta property="og:image" content="<?php echo the_post_thumbnail_url('full'); ?>" />
+    <meta property="og:image" content="<?php echo get_graph_image($post->ID) ?>" />
     <meta property="fb:app_id" content="<?php echo $fb_app_id; ?>" />
+
 
     <!--// TWITTER //-->
 
@@ -28,7 +30,7 @@
     <meta name="twitter:creator" content="@klofcaz">
     <meta name="twitter:title" content="<?php echo the_title(); ?>">
     <meta name="twitter:description" content="<?php echo get_meta_description(); ?>">
-    <meta name="twitter:image" content="<?php echo the_post_thumbnail_url('full'); ?>">
+    <meta name="twitter:image" content="<?php echo get_graph_image($post->ID); ?>">
     <?php if ($analytics_key) : ?>
     <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $analytics_key; ?>"></script>
     <script>
