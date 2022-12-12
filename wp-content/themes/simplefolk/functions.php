@@ -57,6 +57,16 @@ function remove_gutenberg_block_library_css()
 add_action('wp_enqueue_scripts', 'remove_gutenberg_block_library_css', 100);
 
 
+//////////////////////////////////////////
+//                                      //
+//    Remove some scripts from head     //
+//                                      //
+//////////////////////////////////////////
+
+remove_action('wp_head', 'print_emoji_detection_script', 7);
+remove_action('wp_print_styles', 'print_emoji_styles');
+remove_action('wp_head', 'wp_resource_hints', 2);
+
 ////////////////////////////
 //                        //
 //    Create main menu    //
@@ -1131,13 +1141,14 @@ function get_hashtags($id)
 
 function get_lightbox_image($id, $size = "medium_large")
 {
+  // todo: add configs for glightbox options
   $full_image_link = wp_get_attachment_image_url($id, 'full');
   $slide_class = "full-meta-" . $id;
   $atta_img = wp_get_attachment_image($id, $size);
   if ($atta_img) :
     echo '<a href="' . $full_image_link . '" 
   class="glightbox"
-  data-desc-position="bottom"  // todo: configs for this
+  data-desc-position="bottom"  
   data-glightbox="description: .' . $slide_class . '">';
     echo $atta_img;
     echo '</a>';
@@ -1146,10 +1157,6 @@ function get_lightbox_image($id, $size = "medium_large")
     echo '</div>';
   endif;
 }
-
-
-
-
 
 ///////////////////////////////////
 //                               //
@@ -1591,13 +1598,6 @@ function the_breadcrumb()
 
       echo ' ' . $before . get_the_title() . $after;
     }
-
-
-
-
-
-
-
 
     if (!is_single() && !is_page() && get_post_type() != 'post' && !is_404()) {
       // $post_type = get_post_type_object(get_post_type());

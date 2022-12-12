@@ -9,7 +9,7 @@ get_header();
 
 ?>
 <div id="primary_full-width">
-    <main id="main" class="site-main" role="main">
+    <main id="main" class="site-main">
         <div class="home-top-container">
             <div class="home-main-content">
                 <?php the_content(); ?>
