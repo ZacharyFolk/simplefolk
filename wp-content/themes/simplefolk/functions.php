@@ -22,23 +22,6 @@ add_action('wp_enqueue_scripts', 'main_scripts');
 
 include('customizer.php');
 
-// Load styles for admin area
-
-function simple_admin_css()
-{
-  if (is_admin()) {
-    wp_enqueue_style(
-      "simple_admin",
-      get_bloginfo('template_directory') . "/simple_admin.css",
-      false,
-      false,
-      "all"
-    );
-  }
-}
-// TODO : Is it correct to be hooking this twice like this?
-add_action('admin_print_styles', 'simple_admin_css');
-add_action('wp_enqueue_scripts', 'simple_admin_css');
 
 //////////////////////////////////
 //                              //
@@ -76,7 +59,7 @@ remove_action('wp_head', 'wp_resource_hints', 2);
 
 function create_main_nav()
 {
-  register_nav_menu('top-nav', __('Top Nav'));
+  register_nav_menu('top-nav', __('Top Nav', 'simplefolk'));
 }
 add_action('init', 'create_main_nav');
 
@@ -89,23 +72,23 @@ if (!$menu_exists) {
   $menu_id = wp_create_nav_menu($menu_name);
 
   wp_update_nav_menu_item($menu_id, 0, array(
-    'menu-item-title'  =>  __('About', 'textdomain'),
+    'menu-item-title'  =>  __('About', 'simplefolk'),
     'menu-item-url'    => home_url('/about/'),
     'menu-item-status' => 'publish'
   ));
   wp_update_nav_menu_item($menu_id, 0, array(
-    'menu-item-title'  =>  __('Blog', 'textdomain'),
+    'menu-item-title'  =>  __('Blog', 'simplefolk'),
     'menu-item-url'    => home_url('/blog/'),
     'menu-item-status' => 'publish'
   ));
 
   wp_update_nav_menu_item($menu_id, 0, array(
-    'menu-item-title'  =>  __('Collections', 'textdomain'),
+    'menu-item-title'  =>  __('Collections', 'simplefolk'),
     'menu-item-url'    => home_url('/collections/'),
     'menu-item-status' => 'publish'
   ));
   wp_update_nav_menu_item($menu_id, 0, array(
-    'menu-item-title'  =>  __('Hashtags', 'textdomain'),
+    'menu-item-title'  =>  __('Hashtags', 'simplefolk'),
     'menu-item-url'    => home_url('/hashtags/'),
     'menu-item-status' => 'publish'
   ));
@@ -117,77 +100,6 @@ if (!$menu_exists) {
     set_theme_mod('nav_menu_locations', $locations);
   }
 }
-
-///////////////////////////////////////////////
-//                                           //
-//    Add tags and category to media page    //
-//                                           //
-///////////////////////////////////////////////
-
-
-// function add_media_cats()
-// {
-//   register_taxonomy_for_object_type(
-//     'category',
-//     'attachment'
-//   );
-// }
-
-// add_action('init', 'add_media_cats');
-
-
-// function add_media_tags()
-// {
-//   register_taxonomy_for_object_type(
-
-//     'post_tag',
-//     'attachment'
-//   );
-// }
-
-// add_action('init', 'add_media_tags');
-
-
-
-////////////////////////////////////////
-//                                    //
-//    Create Photography Post Type    //
-//                                    //
-////////////////////////////////////////
-
-// function photography_post()
-// {
-
-//   $labels = array(
-//     'name'               => _x('Photos', 'post type general name'),
-//     'singular_name'      => _x('Photo', 'post type singular name'),
-//     'add_new'            => _x('Add New', 'book'),
-//     'add_new_item'       => __('Add New Photo'),
-//     'edit_item'          => __('Edit Photo'),
-//     'new_item'           => __('New Photo'),
-//     'all_items'          => __('All Photos'),
-//     'view_item'          => __('View Photo'),
-//     'search_items'       => __('Search Photos'),
-//     'not_found'          => __('No photos found'),
-//     'not_found_in_trash' => __('No photos found in the Trash'),
-//     'parent_item_colon'  => ’,
-//     'menu_name'          => 'Photos'
-//   );
-
-//   $args = array(
-//     'labels'              => $labels,
-//     'description'         => 'Gallery to upload and organize photos',
-//     'public'              => true,
-//     'menu_position'       => 5,
-//     'supports'            => array('title', 'editor', 'thumbnail', 'excerpt', 'comments'),
-//     'has_archive'         => true,
-
-//   );
-//   register_post_type('photography', $args);
-// }
-
-
-// add_action('init', 'photography_post');
 
 
 ///////////////////////////////////////////
@@ -230,7 +142,6 @@ function simple_register_attachments_tax()
       'slug'     => 'exclude'
     )
   );
-
 
   register_taxonomy(
     'hashtags',
@@ -454,12 +365,6 @@ function createLightSwitch($item)
 
 add_filter('wp_nav_menu_items', 'createLightSwitch');
 
-// TODO : Add customizer and options for which menu to target
-// function addTargetMenus($target)
-// {
-// }
-// add_action('wp_nav_menu_items', 'addTargetMenus');
-
 
 ////////////////////////////////////////
 //                                    //
@@ -583,7 +488,6 @@ function featured_cat_card($catID, $tax = 'collections')
 
 
 
-
 ////////////////////////////////////////
 //                                    //
 //    Featured Tag widget        //
@@ -641,7 +545,7 @@ class tag_thumbs_widget extends WP_Widget
     }
     ?>
 <p>
-    <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
+    <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'simplefolk'); ?></label>
     <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>"
         name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
 </p>
@@ -662,7 +566,7 @@ class tag_thumbs_widget extends WP_Widget
         );
 
 
-        wut($tags);
+        // wut($tags);
         foreach ($tags as $t) :
           $selected = ($tag ==  $t->term_id) ? 'selected' : '';
           echo '<option value="' . $t->term_id . '" ' . $selected . '>' . $t->name . '</option>';
@@ -701,24 +605,19 @@ function featured_tag_card($tag)
   getThumbGallery('hashtags', $name);
 }
 
-
-
 ////////////////////////////////////////////////////
 //                                                //
 //    Create new permalink for archive pages      //
 //                                                //
 ////////////////////////////////////////////////////
 
-
 // add_filter('attachment_link', 'updated_attachment_link', 20, 2);
 function updated_attachment_link($link, $attachment_id)
 {
 
   $attachment = get_post($attachment_id);
-
   // Only for attachments actually attached to a parent post
   if (!empty($attachment->post_parent)) {
-
     $parent_link = get_permalink($attachment->post_parent);
     // make the link compatible with permalink settings with or without "/" at the end
     $parent_link = rtrim($parent_link, "/");
@@ -1380,11 +1279,9 @@ function remove_width_attribute($html)
 }
 
 
-//////////////////////////////////////////////////////
-// //
+////////////////////////////////////////////////
 // Add featured post image in admin post list //
-// //
-//////////////////////////////////////////////////////
+///////////////////////////////////////////////
 
 /**
  * Add featured image column to WP admin panel - posts AND pages
@@ -1399,7 +1296,7 @@ add_filter('manage_posts_columns', 'j0e_add_thumbnail_column', 2);
 add_filter('manage_pages_columns', 'j0e_add_thumbnail_column', 2);
 function j0e_add_thumbnail_column($j0e_columns)
 {
-  $j0e_columns['j0e_thumb'] = __('Image');
+  $j0e_columns['j0e_thumb'] = __('Image', 'simplefolk');
   return $j0e_columns;
 }
 
@@ -1448,7 +1345,6 @@ function j0e_add_admin_styles()
 
 /**
  * Returns an image with alt, width, and height attributes
- * @since 0.8.2
  * @param string $size thumbnail | medium | medium-full | full
  * @return string HTML for image with attributes
  * */
@@ -2024,8 +1920,5 @@ function wp_get_attachment($attachment_id)
     'title' => $attachment->post_title
   );
 }
-
-
-
 
 ?>

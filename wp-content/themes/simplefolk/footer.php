@@ -49,7 +49,7 @@ $insta = get_theme_mod('ig_link');
         endif;
 
         if ($copyright) :
-            echo '<div class="copyright-container"> &copy; ' . esc_attr__('Copyright ' . $copyright . ' '  . date("Y") . ' , All right reserved ', 'photograph') . '</div>';
+            echo '<div class="copyright-container"> &copy; ' . sprintf(esc_attr__('Copyright %s  %s  All right reserved ', 'simplefolk'), $copyright, date("Y")) . '</div>';
         endif;
         ?>
     </div>
