@@ -2,18 +2,18 @@
 <html class="no-js" <?php language_attributes(); ?>>
 <?php $analytics_key =  esc_attr(get_theme_mod('analytics_key')); ?>
 <?php $fb_app_id =  esc_attr(get_theme_mod('app_id')); ?>
-<?php $graph_image = $post ? get_graph_image($post->ID) : null; ?>
+<?php // $graph_image = $post ? get_graph_image($post->ID) : null; 
+?>
 
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="profile" href="https://gmpg.org/xfn/11">
-    <title><?php wp_title(''); ?></title>
     <meta name="description" content="<?php echo get_meta_description(); ?>">
     <?php wp_head(); ?>
 
     <!--// FACEBOOK //-->
-
+    <!-- 
     <?php if ($graph_image) : ?>
     <meta property="og:url" content="<?php echo get_permalink(); ?>">
     <meta property="og:type" content="website">
@@ -29,7 +29,7 @@
     <meta name="twitter:title" content="<?php echo the_title(); ?>">
     <meta name="twitter:description" content="<?php echo get_meta_description(); ?>">
     <meta name="twitter:image" content="<?php echo $graph_image; ?>">
-    <?php endif; ?>
+    <?php endif; ?> -->
 
     <?php if ($analytics_key) : ?>
     <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $analytics_key; ?>"></script>
@@ -48,10 +48,10 @@
 
 <body <?php body_class(); ?>>
     <?php wp_body_open(); ?>
-    <div id="fb-root"></div>
+    <!-- <div id="fb-root"></div>
     <script async defer crossorigin="anonymous"
         src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v14.0&appId=<?php echo $fb_app_id; ?>&autoLogAppEvents=1"
-        nonce="wl4Sh8jW"></script>
+        nonce="wl4Sh8jW"></script> -->
     <section class="top-nav">
         <div id="site_branding">
             <?php echo get_site_info(); ?>

@@ -423,7 +423,7 @@ class project_thumbs_widget extends WP_Widget
     }
     ?>
 <p>
-    <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
+    <label for="<?php echo $this->get_field_id('title'); ?>"><?php __('Title:', 'simplefolk'); ?></label>
     <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>"
         name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
 </p>
@@ -545,7 +545,7 @@ class tag_thumbs_widget extends WP_Widget
     }
     ?>
 <p>
-    <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'simplefolk'); ?></label>
+    <label for="<?php echo $this->get_field_id('title'); ?>"><?php __('Title:', 'simplefolk'); ?></label>
     <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>"
         name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
 </p>
@@ -660,13 +660,29 @@ function wut($var, $exit = false)
   }
 }
 
-//////////////////////////////////////////////////
-//                                              //
-//     TODO : set up admin customize panel      //
-//                                              //
-//////////////////////////////////////////////////
+/////////////////////////
+//                     //
+//    Theme support    //
+//                     //
+/////////////////////////
+
+
 add_theme_support('custom-logo');
 add_theme_support('post-thumbnails');
+add_theme_support('align-wide');
+add_theme_support('title-tag');
+add_theme_support('automatic-feed-links');
+$args = array(
+  'search-form',
+  'comment-form',
+  'comment-list',
+  'gallery',
+  'caption',
+);
+add_theme_support('html5', $args);
+add_theme_support('responsive-embeds');
+add_theme_support('wp-block-styles');
+
 
 register_nav_menus(array(
   'primary' => __('Main Menu', 'simplefolk'),
@@ -1433,7 +1449,7 @@ function the_breadcrumb()
   $collectionRootLink = '<a href="/collections/"> Collections</a> ';
 
   global $post;
-  $homeLink = get_bloginfo('url');
+  $homeLink = esc_url(home_url());
   if (is_home() || is_front_page()) {
     if ($showOnHome == 1) {
       echo '<div id="crumbs" class="breadcrumb"><a href="' . $homeLink . '">' . $home . '</a></div>';

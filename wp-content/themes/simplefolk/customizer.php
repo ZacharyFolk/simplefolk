@@ -18,6 +18,7 @@ function simplefolk_customizer_settings($wp_customize)
     $wp_customize->add_setting('num_posts', array(
         'default'     => 10,
         'transport'   => 'refresh',
+        'sanitize_callback' => 'absint'
     ));
     $wp_customize->add_control('num_posts', array(
         'label'        => 'Number of posts',
@@ -30,6 +31,7 @@ function simplefolk_customizer_settings($wp_customize)
     $wp_customize->add_setting('featured_heading', array(
         'default'     => 'Featured Posts',
         'transport'   => 'refresh',
+        'sanitize_callback' => 'wp_filter_nohtml_kses'
     ));
     $wp_customize->add_control('featured_heading', array(
         'label'        => 'Gallery Heading',
@@ -41,6 +43,7 @@ function simplefolk_customizer_settings($wp_customize)
 
     $wp_customize->add_setting('tag_list', array(
         'transport'   => 'refresh',
+        'sanitize_callback' => 'wp_filter_nohtml_kses'
     ));
     $wp_customize->add_control('tag_list', array(
         'label'        => 'Featured Tags',
@@ -63,6 +66,8 @@ function simplefolk_customizer_settings($wp_customize)
     ));
     $wp_customize->add_setting('analytics_key', array(
         'transport'   => 'refresh',
+        'sanitize_callback' => 'wp_filter_nohtml_kses'
+
     ));
 
     $wp_customize->add_control('analytics_key', array(
@@ -87,6 +92,8 @@ function simplefolk_customizer_settings($wp_customize)
     ));
     $wp_customize->add_setting('app_id', array(
         'transport'   => 'refresh',
+        'sanitize_callback' => 'wp_filter_nohtml_kses'
+
     ));
 
     $wp_customize->add_control('app_id', array(
@@ -114,6 +121,7 @@ function simplefolk_customizer_settings($wp_customize)
     $wp_customize->add_setting('gutenberg_blocks', array(
         'default' => 0,
         'transport'   => 'refresh',
+        'sanitize_callback' => 'theme_slug_sanitize_checkbox'
     ));
 
     $wp_customize->add_control('gutenberg_blocks', array(
@@ -139,15 +147,20 @@ function simplefolk_customizer_settings($wp_customize)
     ));
     $wp_customize->add_setting('copyright_info', array(
         'transport'   => 'refresh',
+        'sanitize_callback' => 'wp_filter_nohtml_kses'
     ));
     $wp_customize->add_setting('fb_link', array(
         'transport'   => 'refresh',
+        'sanitize_callback' => 'esc_url_raw'
+
     ));
     $wp_customize->add_setting('twit_link', array(
         'transport'   => 'refresh',
+        'sanitize_callback' => 'esc_url_raw'
     ));
     $wp_customize->add_setting('ig_link', array(
         'transport'   => 'refresh',
+        'sanitize_callback' => 'esc_url_raw'
     ));
 
     $wp_customize->add_control('copyright_info', array(
