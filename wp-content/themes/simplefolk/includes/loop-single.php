@@ -20,17 +20,21 @@ while (have_posts()) :
                                         ?>
                     </p>
                     <?php
-                        $u_time = get_the_time('U');
-                        $u_modified_time = get_the_modified_time('U');
-                        if ($u_modified_time >= $u_time + 86400) {
-                            echo "<p> | Last modified : ";
-                            the_modified_time('m/j/y g:i A');
+                        // $u_time = get_the_time('U');
+                        // $u_modified_time = get_the_modified_time('U');
+                        // if ($u_modified_time >= $u_time + 86400) {
+                        //     echo "<p> | Last modified : ";
+                        //     the_modified_time('m/j/y g:i A');
 
-                            echo "</p> ";
-                        } ?>
+                        //     echo "</p> ";
+                        // }
+
+
+                        ?>
                 </div>
 
-                <?php get_template_part('includes/social-share'); ?>
+                <?php // get_template_part('includes/social-share'); 
+                    ?>
 
 
                 <?php the_content(); ?>
