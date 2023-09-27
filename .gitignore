@@ -26,7 +26,9 @@ wp-activate.php
 wp-comments-post.php
 wp-config-sample.php
 wp-content/index.php
-wp-content/plugins/
+wp-content/plugins/*
+!wp-content/plugins/wp-sync-db-master
+!wp-content/plugins/wp-sync-db-media-files-master
 wp-cron.php
 wp-links-opml.php
 wp-login.php
