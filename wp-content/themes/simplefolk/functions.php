@@ -6,7 +6,7 @@
 //                                    //
 ////////////////////////////////////////
 
-define('SIMPLE_THEME_VERSION', '0.3.0');
+define('SIMPLE_THEME_VERSION', '0.3.2');
 
 function main_scripts()
 {
@@ -335,7 +335,7 @@ add_action('widgets_init', 'simple_widgets_init');
 function createLightSwitch($item)
 {
   $lightSwitch = <<<END
-  <li>
+  <li id="event-toggle">
   <input id="mode-toggle" type="checkbox" />
   <label class="mode-button-container" for="mode-toggle">
       <div class="mode-button">
@@ -673,6 +673,8 @@ add_theme_support('align-wide');
 add_theme_support('title-tag');
 add_theme_support('automatic-feed-links');
 $args = array(
+  'script',
+  'style',
   'search-form',
   'comment-form',
   'comment-list',

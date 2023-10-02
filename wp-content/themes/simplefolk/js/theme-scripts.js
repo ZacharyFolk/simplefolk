@@ -7,26 +7,21 @@
 
 document.addEventListener('DOMContentLoaded', function () {
   const modebutton = document.querySelector('.mode-button');
+  const listItem = document.getElementById('event-toggle');
   const modetoggle = document.getElementById('mode-toggle');
 
-  if (modetoggle) {
-    modebutton.addEventListener('click', function (event) {
-      switchModes();
-    });
-  }
-  function switchModes() {
-    modetoggle.addEventListener('change', (e) => {
-      if (e.target.checked === true) {
-        document.body.classList.add('lightmode');
-        document.cookie = `mode=light; path=/; max-age=${60 * 60 * 24 * 14};`;
-      }
-      if (e.target.checked === false) {
-        document.body.classList.remove('lightmode');
-        document.cookie = `mode=dark; path=/; max-age=${60 * 60 * 24 * 14};`;
-        modetoggle.checked = false;
-      }
-    });
-  }
+  listItem.addEventListener('click', function () {
+    modetoggle.checked = !modetoggle.checked;
+    modetoggle.dispatchEvent(new Event('change'));
+    if (modetoggle.checked) {
+      document.body.classList.add('lightmode');
+      document.cookie = `mode=light; path=/; max-age=${60 * 60 * 24 * 14};`;
+    } else {
+      document.body.classList.remove('lightmode');
+      document.cookie = `mode=dark; path=/; max-age=${60 * 60 * 24 * 14};`;
+    }
+  });
+
 
   /**
    * Get the value of a cookie
