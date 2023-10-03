@@ -10,11 +10,22 @@ get_header();
 ?>
 <div id="primary_full-width">
     <main id="main" class="site-main">
+        <div class="home-full-width">
+            <?php
+                    if (is_active_sidebar('home-full-top')) : ?>
+            <aside class="widget-area" aria-label="<?php esc_attr_e('Home Full Top', 'simplefolk'); ?>">
+                <?php dynamic_sidebar('home-full-top'); ?>
+            </aside>
+            <?php endif; ?>
+        </div>
         <div class="home-top-container">
+
             <div class="home-main-content">
                 <?php the_content(); ?>
             </div>
             <div class="home-aside-container">
+
+
                 <div class="home-aside-1">
                     <?php
                     if (is_active_sidebar('home-1')) : ?>
