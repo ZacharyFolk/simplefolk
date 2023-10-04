@@ -13,7 +13,12 @@ function main_scripts()
   wp_enqueue_style('main',  get_theme_file_uri() . '/style.css', array(), SIMPLE_THEME_VERSION, 'all');
   wp_enqueue_style('glightbox',  get_theme_file_uri() . '/assets/glightbox/css/glightbox.min.css', array(), SIMPLE_THEME_VERSION, 'all');
   wp_enqueue_script('imagesloaded-pkgd', get_template_directory_uri() . '/js/imagesloaded.pkgd.min.js', array(), false, true);
+  wp_enqueue_script('embla', get_template_directory_uri() . '/js/embla/embla-carousel.js', array(), false, true);
+  wp_enqueue_script('embla-autoplay', get_template_directory_uri() . '/js/embla/embla-autoplay.js', array('embla'), false, true);
+
+
   wp_enqueue_script('isotope', get_template_directory_uri() . '/js/isotope.pkgd.min.js', array(), false, true);
+
   wp_enqueue_script('glightbox-script', get_template_directory_uri() . '/assets/glightbox/js/glightbox.min.js', array(), false, true);
   wp_enqueue_script('theme-scripts', get_template_directory_uri() . '/js/theme-scripts.js', array(), false, true);
 }
@@ -653,7 +658,9 @@ class collections_carousel_widget extends WP_Widget
       'hide_empty' => false,
     ));
 
-    echo '<div id="collection_carousel">';
+    echo '<div id="collection_carousel" class="embla">
+    <div class="embla__viewport">
+    <div class="embla__container">';
     foreach ($collections as $collection) {
       // Get attachments for the current collection ID
       $attachments = get_posts(array(
@@ -673,12 +680,33 @@ class collections_carousel_widget extends WP_Widget
         $random_attachment = $attachments[array_rand($attachments)]; // Get a random attachment
         $image_url = wp_get_attachment_image_url($random_attachment->ID, 'landscape_carousel');
         $collection_link = get_term_link($collection); // Get the link to the collection page
-        echo '<div class="carousel-slide"><div class="collection-image-list-item" style="background-image: url(' . esc_url($image_url) . ');">';
+        echo '<div class="embla__slide"><div class="collection-image-list-item" style="background-image: url(' . esc_url($image_url) . ');">';
         echo '<a class="collection-link" href="' . esc_url($collection_link) . '">' . esc_html($collection->name) . '</a>';
         echo '</div></div>';
       }
     }
-    echo '</div>';
+    echo '</div>
+    </div>
+    <div class="embla-buttons">
+    <button class="embla__prev">  
+    <svg class="embla__button__svg" viewBox="0 0 532 532">
+    <path
+      fill="currentColor"
+      d="M355.66 11.354c13.793-13.805 36.208-13.805 50.001 0 13.785 13.804 13.785 36.238 0 50.034L201.22 266l204.442 204.61c13.785 13.805 13.785 36.239 0 50.044-13.793 13.796-36.208 13.796-50.002 0a5994246.277 5994246.277 0 0 0-229.332-229.454 35.065 35.065 0 0 1-10.326-25.126c0-9.2 3.393-18.26 10.326-25.2C172.192 194.973 332.731 34.31 355.66 11.354Z"
+    >
+    </path>
+    </svg>
+  </button>
+    <button class="embla__next">
+    <svg class="embla__button__svg" viewBox="0 0 532 532">
+    <path
+      fill="currentColor"
+      d="M176.34 520.646c-13.793 13.805-36.208 13.805-50.001 0-13.785-13.804-13.785-36.238 0-50.034L330.78 266 126.34 61.391c-13.785-13.805-13.785-36.239 0-50.044 13.793-13.796 36.208-13.796 50.002 0 22.928 22.947 206.395 206.507 229.332 229.454a35.065 35.065 0 0 1 10.326 25.126c0 9.2-3.393 18.26-10.326 25.2-45.865 45.901-206.404 206.564-229.332 229.52Z"
+    ></path>
+  </svg>
+    </button>
+    </div>
+    </div>';
   }
   public function form($instance)
   {
