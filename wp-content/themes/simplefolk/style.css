@@ -1123,13 +1123,6 @@ article.type-post figcaption {
 *                     *
 ******************** */
 
-
-
-
-
-
-
-
 .collection-image-list-item {
   width: 100%;
   height: 100%;
@@ -1146,27 +1139,22 @@ article.type-post figcaption {
 
 #collection_carousel a:link,
 #collection_carousel a:visited {
-
-  /* background: linear-gradient(205deg, #fdc5c5, #e4efd9);
-  -webkit-background-clip: text;
-  color: transparent;
-  */
   text-transform: uppercase;
   font-weight: bold;
   font-size: 9vw;
   color: silver !important;
   text-shadow: 2px 9px 4px rgba(0, 0, 0, .6);
+  /* filter: blur(0.007em); */
+  opacity: 0.9;
+  /* transition: opacity 1s ease-out, filter 1s ease-out; */
+  transition: opacity 1s ease-out;
 
 }
 
 #collection_carousel a:hover {
   text-decoration: none;
-}
-
-.no-image {
-  /* Define styles for list items without images if needed */
-  background-color: #ccc;
-  /* Background color for list items without images */
+  filter: none;
+  opacity: 1;
 }
 
 

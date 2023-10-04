@@ -21,11 +21,12 @@ if ($atta_query->have_posts()) :
         $atta_query->the_post();
         $id = get_the_ID();
 ?>
-<article class="archive-card">
-    <?php get_lightbox_image($id); ?>
-</article>
+        <article class="archive-card">
+            <?php get_lightbox_image($id); ?>
+        </article>
 <?php
     endwhile;
 endif;
 wp_reset_postdata();
+
 ?>

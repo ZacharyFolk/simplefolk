@@ -11,7 +11,7 @@ define('SIMPLE_THEME_VERSION', '0.4.2');
 function main_scripts()
 {
   wp_enqueue_style('main',  get_theme_file_uri() . '/style.css', array(), SIMPLE_THEME_VERSION, 'all');
-  wp_enqueue_style('glightbox',  get_theme_file_uri() . '/assets/glightbox/css/glightbox.min.css', array(), SIMPLE_THEME_VERSION, 'all');
+  wp_enqueue_style('glightbox',  get_theme_file_uri() . '/assets/glightbox/css/glightbox.3.2.0.min.css', array(), SIMPLE_THEME_VERSION, 'all');
   wp_enqueue_script('imagesloaded-pkgd', get_template_directory_uri() . '/js/imagesloaded.pkgd.min.js', array(), false, true);
   wp_enqueue_script('embla', get_template_directory_uri() . '/js/embla/embla-carousel.js', array(), false, true);
   wp_enqueue_script('embla-autoplay', get_template_directory_uri() . '/js/embla/embla-autoplay.js', array('embla'), false, true);
@@ -19,7 +19,7 @@ function main_scripts()
 
   wp_enqueue_script('isotope', get_template_directory_uri() . '/js/isotope.pkgd.min.js', array(), false, true);
 
-  wp_enqueue_script('glightbox-script', get_template_directory_uri() . '/assets/glightbox/js/glightbox.min.js', array(), false, true);
+  wp_enqueue_script('glightbox-script', get_template_directory_uri() . '/assets/glightbox/js/glightbox.3.2.0.min.js', array(), false, true);
   wp_enqueue_script('theme-scripts', get_template_directory_uri() . '/js/theme-scripts.js', array(), false, true);
 }
 

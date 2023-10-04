@@ -5,11 +5,8 @@ while (have_posts()) :
     $image_caption =  wp_get_attachment_caption($image_id);
     $image = wp_get_attachment_image($image_id, 'large'); // set as w=0(auto) max height=900
     $full_image_link = wp_get_attachment_image_url($post->ID, 'full');
-
-
 ?>
 <div class="wrap">
-
     <div id="primary" class="content-area">
         <main id="main" class="site-main" role="main">
             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
