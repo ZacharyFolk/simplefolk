@@ -99,6 +99,25 @@ you can also boost my day when you [buy me a coffee](https://www.buymeacoffee.co
 
     Changelog
 
+## [0.4.2] - 2023-10-04
+
+### Fixed
+
+- z-index of menu and link - #54
+- Removed unnecessary type attributes - #50
+- Mobile link in glightbox to view full post
+
+### Updated
+
+- Various styles, better colors for light/dark modes
+- gLightbox core script 
+
+### Added
+
+- Deprecated db sync plugin
+- Carousel widget for full width collections banner
+
+
 ## [0.3.0] - 2022-10-17
 
 ### Fixed
@@ -144,4 +163,4 @@ you can also boost my day when you [buy me a coffee](https://www.buymeacoffee.co
 
     License
 
-[coming soon]
+This project is licensed under the GNU GPLv3 - see the [LICENSE.md](LICENSE.md) file for details

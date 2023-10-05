@@ -6,15 +6,20 @@
 //                                    //
 ////////////////////////////////////////
 
-define('SIMPLE_THEME_VERSION', '0.3.0');
+define('SIMPLE_THEME_VERSION', '0.4.2');
 
 function main_scripts()
 {
   wp_enqueue_style('main',  get_theme_file_uri() . '/style.css', array(), SIMPLE_THEME_VERSION, 'all');
-  wp_enqueue_style('glightbox',  get_theme_file_uri() . '/assets/glightbox/css/glightbox.min.css', array(), SIMPLE_THEME_VERSION, 'all');
+  wp_enqueue_style('glightbox',  get_theme_file_uri() . '/assets/glightbox/css/glightbox.3.2.0.min.css', array(), SIMPLE_THEME_VERSION, 'all');
   wp_enqueue_script('imagesloaded-pkgd', get_template_directory_uri() . '/js/imagesloaded.pkgd.min.js', array(), false, true);
+  wp_enqueue_script('embla', get_template_directory_uri() . '/js/embla/embla-carousel.js', array(), false, true);
+  wp_enqueue_script('embla-autoplay', get_template_directory_uri() . '/js/embla/embla-autoplay.js', array('embla'), false, true);
+
+
   wp_enqueue_script('isotope', get_template_directory_uri() . '/js/isotope.pkgd.min.js', array(), false, true);
-  wp_enqueue_script('glightbox-script', get_template_directory_uri() . '/assets/glightbox/js/glightbox.min.js', array(), false, true);
+
+  wp_enqueue_script('glightbox-script', get_template_directory_uri() . '/assets/glightbox/js/glightbox.3.2.0.min.js', array(), false, true);
   wp_enqueue_script('theme-scripts', get_template_directory_uri() . '/js/theme-scripts.js', array(), false, true);
 }
 
@@ -263,6 +268,18 @@ function simple_widgets_init()
 
   register_sidebar(
     array(
+      'name'          => __('Home Full Top', 'simplefolk'),
+      'id'            => 'home-full-top',
+      'description'   => __('Widget for full width column on top of home page.', 'simplefolk'),
+      'before_widget' => '<section id="%1$s" class="widget %2$s">',
+      'after_widget'  => '</section>',
+      'before_title'  => '<h2 class="widget-title">',
+      'after_title'   => '</h2>',
+    )
+  );
+
+  register_sidebar(
+    array(
       'name'          => __('Home Column 1', 'simplefolk'),
       'id'            => 'home-1',
       'description'   => __('Widget for column on home page.', 'simplefolk'),
@@ -335,8 +352,8 @@ add_action('widgets_init', 'simple_widgets_init');
 function createLightSwitch($item)
 {
   $lightSwitch = <<<END
-  <li>
-  <input id="mode-toggle" type="checkbox" />
+  <li id="event-toggle">
+  <input id="mode-toggle" type="checkbox">
   <label class="mode-button-container" for="mode-toggle">
       <div class="mode-button">
           <svg class="lightsoff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -605,6 +622,126 @@ function featured_tag_card($tag)
   getThumbGallery('hashtags', $name);
 }
 
+
+////////////////////////////////////////
+//                                    //
+//    Carousel widget                 //
+//                                    //
+////////////////////////////////////////
+
+
+
+/**
+ * 
+ * Creates a carousel from all of the collections
+ */
+class collections_carousel_widget extends WP_Widget
+{
+
+  function __construct()
+  {
+    parent::__construct(
+      'collections_carousel_widget',
+      __('Collection Carousel', 'simplefolk'),
+      array('description' => __('Display a carousel built from the collections', 'simplefolk'),)
+    );
+  }
+
+  public function widget($args, $instance)
+  {
+    $title = apply_filters('widget_title', $instance['title']);
+
+    echo $args['before_widget'];
+    if (!empty($title)) {
+      echo $args['before_title'] . $title . $args['after_title'];
+    }
+
+    // Get all published collections
+    $collections = get_terms(array(
+      'taxonomy' => 'collections',
+      'hide_empty' => false,
+    ));
+
+    echo '<div id="collection_carousel" class="embla">
+    <div class="embla__viewport">
+    <div class="embla__container">';
+    foreach ($collections as $collection) {
+      // Get attachments for the current collection ID
+      $attachments = get_posts(array(
+        'post_type' => 'attachment',
+        'posts_per_page' => -1,
+        'orderby' => 'rand',
+        'tax_query' => array(
+          array(
+            'taxonomy' => 'collections',
+            'field' => 'id',
+            'terms' => $collection->term_id,
+          ),
+        ),
+      ));
+
+      if (!empty($attachments)) {
+        $random_attachment = $attachments[array_rand($attachments)]; // Get a random attachment
+        $image_url = wp_get_attachment_image_url($random_attachment->ID, 'landscape_carousel');
+        $collection_link = get_term_link($collection); // Get the link to the collection page
+        echo '<div class="embla__slide"><div class="collection-image-list-item" style="background-image: url(' . esc_url($image_url) . ');">';
+        echo '<a class="collection-link" href="' . esc_url($collection_link) . '">' . esc_html($collection->name) . '</a>';
+        echo '</div></div>';
+      }
+    }
+    echo '</div>
+    </div>
+    <div class="embla-buttons">
+    <button class="embla__prev">  
+    <svg class="embla__button__svg" viewBox="0 0 532 532">
+    <path
+      fill="currentColor"
+      d="M355.66 11.354c13.793-13.805 36.208-13.805 50.001 0 13.785 13.804 13.785 36.238 0 50.034L201.22 266l204.442 204.61c13.785 13.805 13.785 36.239 0 50.044-13.793 13.796-36.208 13.796-50.002 0a5994246.277 5994246.277 0 0 0-229.332-229.454 35.065 35.065 0 0 1-10.326-25.126c0-9.2 3.393-18.26 10.326-25.2C172.192 194.973 332.731 34.31 355.66 11.354Z"
+    >
+    </path>
+    </svg>
+  </button>
+    <button class="embla__next">
+    <svg class="embla__button__svg" viewBox="0 0 532 532">
+    <path
+      fill="currentColor"
+      d="M176.34 520.646c-13.793 13.805-36.208 13.805-50.001 0-13.785-13.804-13.785-36.238 0-50.034L330.78 266 126.34 61.391c-13.785-13.805-13.785-36.239 0-50.044 13.793-13.796 36.208-13.796 50.002 0 22.928 22.947 206.395 206.507 229.332 229.454a35.065 35.065 0 0 1 10.326 25.126c0 9.2-3.393 18.26-10.326 25.2-45.865 45.901-206.404 206.564-229.332 229.52Z"
+    ></path>
+  </svg>
+    </button>
+    </div>
+    </div>';
+  }
+  public function form($instance)
+  {
+    $title = isset($instance['title']) ? esc_attr($instance['title']) : '';
+
+    // Input field for entering the widget title
+  ?>
+<p>
+    <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
+    <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>"
+        name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+</p>
+<?php
+  }
+
+  public function update($new_instance, $old_instance)
+  {
+    $instance = array();
+    $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
+    return $instance;
+  }
+}
+
+function load_carousel_collections_widget()
+{
+  register_widget('collections_carousel_widget');
+}
+
+add_action('widgets_init', 'load_carousel_collections_widget');
+
+
 ////////////////////////////////////////////////////
 //                                                //
 //    Create new permalink for archive pages      //
@@ -673,6 +810,8 @@ add_theme_support('align-wide');
 add_theme_support('title-tag');
 add_theme_support('automatic-feed-links');
 $args = array(
+  'script',
+  'style',
   'search-form',
   'comment-form',
   'comment-list',
@@ -696,7 +835,7 @@ register_nav_menus(array(
 //                       //
 ///////////////////////////
 
-
+add_image_size('landscape_carousel', 1600, 650, true);
 add_image_size('landscape_thumb', 750, 220, true);
 add_image_size('square_hero', 450, 450, true);
 add_image_size('tiny_thumb', 80, 80, true);
@@ -705,6 +844,7 @@ add_image_size('tiny_thumb', 80, 80, true);
 function new_image_sizes($size_names)
 {
   $new_sizes = array(
+    'landscape_carousel' => 'Landscape Carousel 1600 x 650',
     'landscape_thumb' => 'Landscape Thumbmail 750x220',
     'square_hero' => 'Square 450',
     'tiny_thumb' => 'Square 80'
@@ -1063,11 +1203,11 @@ function get_lightbox_image($id, $size = "medium_large")
   if ($atta_img) :
     echo '<a href="' . $full_image_link . '" 
   class="glightbox"
-  data-desc-position="bottom"  
+  data-desc-position="right"  
   data-glightbox="description: .' . $slide_class . '">';
     echo $atta_img;
     echo '</a>';
-    echo '<div class="glightbox-desc ' . $slide_class .  '">'; // hidden element that shows in modal
+    echo '<div class="glightbox-desc ' . $slide_class .  '">';
     modal_display_photo_meta($id);
     echo '</div>';
   endif;
@@ -1822,7 +1962,6 @@ function display_photo_meta($id)
       echo '<p>' . $core_meta['description'] . '</p>';
     }
   }
-
   get_hashtags($id);
 
   $attachment_fields = get_post_custom($attachment_id);
@@ -1906,6 +2045,8 @@ function modal_display_photo_meta($id)
   $image_caption =  wp_get_attachment_caption($attachment_id);
   $image_link = get_attachment_link();
 
+  $attachment_fields = get_post_custom($attachment_id);
+  // wut($attachment_fields);
   if ($image_title) :
     echo '<h1>' . $image_title . '</h1>';
   endif;
@@ -1913,9 +2054,10 @@ function modal_display_photo_meta($id)
     echo '<p>' . $image_caption . '</p>';
   endif;
   if ($image_link) :
-    echo '<a href ="' . $image_link . '"> View more &raquo; </a>';
+    echo '<a href ="' . $image_link . '">View full post &raquo; </a>';
   endif;
 }
+
 /**
  * Return all of the data from attachment
 

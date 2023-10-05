@@ -7,49 +7,44 @@
 
 document.addEventListener('DOMContentLoaded', function () {
   const modebutton = document.querySelector('.mode-button');
+  const listItem = document.getElementById('event-toggle');
   const modetoggle = document.getElementById('mode-toggle');
-
-  if (modetoggle) {
-    modebutton.addEventListener('click', function (event) {
-      switchModes();
-    });
-  }
-  function switchModes() {
-    modetoggle.addEventListener('change', (e) => {
-      if (e.target.checked === true) {
+  if (listItem) {
+    listItem.addEventListener('click', function () {
+      modetoggle.checked = !modetoggle.checked;
+      modetoggle.dispatchEvent(new Event('change'));
+      if (modetoggle.checked) {
         document.body.classList.add('lightmode');
         document.cookie = `mode=light; path=/; max-age=${60 * 60 * 24 * 14};`;
-      }
-      if (e.target.checked === false) {
+      } else {
         document.body.classList.remove('lightmode');
         document.cookie = `mode=dark; path=/; max-age=${60 * 60 * 24 * 14};`;
-        modetoggle.checked = false;
       }
     });
-  }
 
-  /**
-   * Get the value of a cookie
-   * Source: https://gist.github.com/wpsmith/6cf23551dd140fb72ae7
-   * @param  {String} name  The name of the cookie
-   * @return {String}       The cookie value
-   */
-  function getCookie(name) {
-    let value = `; ${document.cookie}`;
-    let parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-  }
-
-  // load this early?
-  function cookieCheck() {
-    let mode = getCookie('mode');
-    if (mode == 'light') {
-      modetoggle.checked = true;
-      document.body.classList.add('lightmode');
+    /**
+     * Get the value of a cookie
+     * Source: https://gist.github.com/wpsmith/6cf23551dd140fb72ae7
+     * @param  {String} name  The name of the cookie
+     * @return {String}       The cookie value
+     */
+    function getCookie(name) {
+      let value = `; ${document.cookie}`;
+      let parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
     }
-  }
 
-  cookieCheck();
+    // load this early?
+    function cookieCheck() {
+      let mode = getCookie('mode');
+      if (mode == 'light') {
+        modetoggle.checked = true;
+        document.body.classList.add('lightmode');
+      }
+    }
+
+    cookieCheck();
+  }
 });
 
 /////////////////////////////////////////
@@ -101,9 +96,11 @@ if (elem) {
 //   });
 // }
 
+
 // https://github.com/biati-digital/glightbox/blob/master/README.md
 const lightbox = GLightbox({
   skin: 'clean simple',
+  moreLength: 0
 });
 
 // this is kind of painful but I see options are either build a custom Guttenberg gallery
@@ -115,6 +112,22 @@ const lightbox2 = GLightbox({
   skin: 'clean simple',
 });
 
-// lightbox.on('open', () => {
-//   alert('i am opening');
-// });
+
+/* Carousel for Collections Widget */
+
+const rootNode = document.querySelector('.embla')
+const viewportNode = rootNode.querySelector('.embla__viewport')
+const prevButtonNode = rootNode.querySelector('.embla__prev')
+const nextButtonNode = rootNode.querySelector('.embla__next')
+
+
+const options = { loop: true }
+const autoplayOptions = {
+  delay: 4000,
+  stopOnInteraction: true,
+  stopOnMouseEnter: true,
+}
+const plugins = [EmblaCarouselAutoplay(autoplayOptions)]
+const embla = EmblaCarousel(viewportNode, options, plugins)
+prevButtonNode.addEventListener('click', embla.scrollPrev, false)
+nextButtonNode.addEventListener('click', embla.scrollNext, false)
