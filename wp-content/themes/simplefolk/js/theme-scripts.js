@@ -96,9 +96,11 @@ if (elem) {
 //   });
 // }
 
+
 // https://github.com/biati-digital/glightbox/blob/master/README.md
 const lightbox = GLightbox({
   skin: 'clean simple',
+  moreLength: 0
 });
 
 // this is kind of painful but I see options are either build a custom Guttenberg gallery
@@ -109,6 +111,9 @@ const lightbox2 = GLightbox({
   selector: ' .single-post figure a',
   skin: 'clean simple',
 });
+
+
+/* Carousel for Collections Widget */
 
 const rootNode = document.querySelector('.embla')
 const viewportNode = rootNode.querySelector('.embla__viewport')
