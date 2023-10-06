@@ -1177,7 +1177,7 @@ article.type-post figcaption {
   font-weight: bold;
   font-size: 9vw;
   color: silver !important;
-  text-shadow: 2px 9px 4px rgba(0, 0, 0, .6);
+  text-shadow: 4px 6px 4px rgba(0, 0, 0, .7);
   /* filter: blur(0.007em); */
   opacity: 0.9;
   /* transition: opacity 1s ease-out, filter 1s ease-out; */
@@ -1520,6 +1520,10 @@ a.buttonish {
     width: 100%;
   }
 
+
+  .embla__slide {
+    height: 260px;
+  }
 
   .tax-header {
     flex-direction: column;

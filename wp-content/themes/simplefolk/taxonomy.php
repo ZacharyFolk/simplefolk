@@ -4,12 +4,8 @@
  * Template Name: Attachment Hashtag Template
  */
 get_header();
-
 // Get the ID of the current queried object (custom taxonomy term)
 $term = get_queried_object();
-
-
-
 ?>
 <div class="tax-header">
     <div class="tax-name">
@@ -17,9 +13,9 @@ $term = get_queried_object();
     </div>
     <?php if (!empty($term->description)) : ?>
 
-    <div class="tax-desc">
-        <?php echo $term->description; ?>
-    </div>
+        <div class="tax-desc">
+            <?php echo $term->description; ?>
+        </div>
     <?php endif; ?>
 </div>
 <div id="primary_full-width" class="content-area">
