@@ -281,6 +281,10 @@ button.active {
   border: 10px solid var(--warm-00);
 }
 
+.share-buttons h3 {
+  border-bottom: 1px solid var(--warm-4);
+}
+
 footer {
   border-top: 1px solid var(--warm-2);
 }
@@ -305,6 +309,15 @@ footer {
   border-bottom: 2px solid #000;
 }
 
+.tax-header {
+  background: var(--warm-00);
+  color: var(--warm-7);
+  border-bottom: 1px solid var(--warm-1);
+}
+
+.tax-name {
+  text-shadow: 3px 2px 4px var(--warm-1);
+}
 
 @media (max-width: 767px) {
   .menu>li {
@@ -337,7 +350,7 @@ body.lightmode {
 }
 
 body.lightmode #primary {
-  background-color: var(--warm-8);
+  background-color: var(--warm-10);
 }
 
 body.lightmode .post-excerpt {
@@ -441,6 +454,16 @@ body.lightmode .tag-banner span {
   background-color: var(--warm-7);
 }
 
+body.lightmode .tax-header {
+  background: var(--warm-7);
+  color: var(--warm-2);
+  border-bottom: 1px solid var(--warm-1);
+}
+
+body.lightmode .tax-name {
+  text-shadow: 3px 2px 4px var(--warm-8);
+}
+
 @media (max-width: 767px) {
   body.lightmode .menu>li {
     color: var(--warm-2);
@@ -484,6 +507,13 @@ h2 {
 
 div.simple .gslide-description {
   background-color: var(--warm-00);
+}
+
+/* override to fix unsticking the sticky footer */
+@media (min-width: 769px) {
+  .glightbox-open {
+    height: 100% !important;
+  }
 }
 
 /* Keeping this for now if we want to override the clean theme with div.simple */
@@ -642,12 +672,12 @@ figcaption {
 
 #primary {
   padding: 20px;
-
+  margin-top: 40px;
 }
 
 #secondary {
   min-width: 30%;
-  padding: 40px;
+  padding: 30PX 20px;
 }
 
 #secondary h1 {
@@ -810,9 +840,7 @@ body.page #secondary {
   display: flex;
   align-items: center;
   padding: 20px 40px;
-  background: var(--warm-7);
-  color: var(--warm-3);
-  border-bottom: 1px solid var(--warm-1);
+
 
 }
 
@@ -823,8 +851,7 @@ body.page #secondary {
   text-transform: uppercase;
   white-space: nowrap;
   padding-right: 20px;
-  font-weight: 700;
-  text-shadow: 3px 2px 4px rgb(235 235 235 / 80%)
+  font-weight: 600;
 }
 
 .tax-desc {
@@ -834,6 +861,18 @@ body.page #secondary {
 /* Guttenberg overrides */
 .wp-block-image .alignright {
   margin-bottom: 1em;
+}
+
+/* Testing out animated opacity on images */
+.archive-container a img,
+#cat_thumbs a img {
+  opacity: .8;
+  transition: opacity .25s ease-out;
+}
+
+.archive-container a img:hover,
+#cat_thumbs a img:hover {
+  opacity: 1
 }
 
 /* ***************
@@ -1042,6 +1081,7 @@ article.type-post figcaption {
 #tag_thumbs {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 #cat_thumbs a,
@@ -1082,9 +1122,9 @@ article.type-post figcaption {
 }
 
 #post_title h1 {
-  font-size: 1.8em;
+  font-size: 2.8em;
   font-weight: 500;
-  margin: 0;
+  margin: 20px 0 0;
 }
 
 #photo_tag_container a {
@@ -1104,17 +1144,26 @@ article.type-post figcaption {
 .share-buttons {
   display: flex;
   align-items: center;
-  margin: 10px 0;
+  margin: 30px 0;
+}
+
+.share-buttons h3 {
+  padding-bottom: 6px;
+  margin: 8px 0;
 }
 
 .share-buttons svg {
   cursor: pointer;
   margin-left: 12px;
   fill: var(--warm-8);
+  opacity: .75;
+  transition: opacity .25s ease-out;
 }
 
 .share-buttons svg:hover {
   fill: var(--warm-10);
+  opacity: 1;
+
 }
 
 /* *************************
@@ -1572,6 +1621,12 @@ a.buttonish {
 
   .single-attachment .wrap {
     margin: 0 auto;
+  }
+
+  /* no hover effect on phones */
+  .archive-container a img,
+  #cat_thumbs a img {
+    opacity: 1
   }
 }
 
