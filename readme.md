@@ -99,6 +99,19 @@ you can also boost my day when you [buy me a coffee](https://www.buymeacoffee.co
 
     Changelog
 
+
+## [0.5.2] - 2023-10-09
+
+- Replaced isotope and imagesLoaded JS with basic CSS
+
+### Fixed
+
+- z-index of menu and link - #54
+- Removed unnecessary type attributes - #50
+- Mobile link in glightbox to view full post
+
+
+
 ## [0.4.2] - 2023-10-04
 
 ### Fixed

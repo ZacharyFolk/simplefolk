@@ -56,46 +56,34 @@ document.addEventListener('DOMContentLoaded', function () {
 var elem = document.querySelector('.archive-container');
 
 if (elem) {
-  imagesLoaded(elem, function (instance) {
-    var iso = new Isotope(elem, {
-      itemSelector: '.archive-card',
-      layoutMode: 'masonry',
-      masonry: {
-        columnWidth: '.archive-card',
-        gutter: 0,
-      },
-    });
+  document.addEventListener('DOMContentLoaded', function () {
+    var tagButtons = document.querySelectorAll('.tag-buttons button');
+    var articles = document.querySelectorAll('.archive-card');
 
-    var tagFilters = document.querySelectorAll('.tag-buttons button');
-
-    tagFilters.forEach(function (button) {
+    tagButtons.forEach(function (button) {
       button.addEventListener('click', function () {
         var filterValue = this.getAttribute('data-category');
-        iso.arrange({ filter: filterValue });
-        document
-          .querySelector('.tag-buttons button.active')
-          .classList.remove('active');
+        console.log(filterValue); // Check if the correct filter value is obtained
+
+        document.querySelector('.tag-buttons button.active').classList.remove('active');
         this.classList.add('active');
+
+        articles.forEach(function (article) {
+          var articleCategories = article.classList;
+          var classNameWithoutDot = filterValue.slice(1);
+          console.log(articleCategories.contains(classNameWithoutDot))
+          if (filterValue === '*' || articleCategories.contains(classNameWithoutDot)) {
+            article.classList.remove('hide');
+            article.classList.add('show');
+          } else {
+            article.classList.remove('show');
+            article.classList.add('hide');
+          }
+        });
       });
     });
   });
-}
-
-// var tags = document.querySelector('.tag-container');
-
-// if (tags) {
-//   imagesLoaded(tags, function (instance) {
-//     var iso = new Isotope(tags, {
-//       itemSelector: '.archive-card',
-//       layoutMode: 'masonry',
-//       masonry: {
-//         columnWidth: '.dumb-masonry-sizer',
-//         fitWidth: true,
-//       },
-//     });
-//   });
-// }
-
+};
 
 // https://github.com/biati-digital/glightbox/blob/master/README.md
 const lightbox = GLightbox({
@@ -119,8 +107,6 @@ const rootNode = document.querySelector('.embla')
 const viewportNode = rootNode.querySelector('.embla__viewport')
 const prevButtonNode = rootNode.querySelector('.embla__prev')
 const nextButtonNode = rootNode.querySelector('.embla__next')
-
-
 const options = { loop: true }
 const autoplayOptions = {
   delay: 4000,
@@ -131,3 +117,5 @@ const plugins = [EmblaCarouselAutoplay(autoplayOptions)]
 const embla = EmblaCarousel(viewportNode, options, plugins)
 prevButtonNode.addEventListener('click', embla.scrollPrev, false)
 nextButtonNode.addEventListener('click', embla.scrollNext, false)
+
+

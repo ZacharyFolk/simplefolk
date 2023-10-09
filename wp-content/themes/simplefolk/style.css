@@ -6,7 +6,7 @@ Author URI: https://folkphotography.com
 Description: A very stripped down theme for folkphotography
 Tested up to: 6.1
 Requires PHP: 5.6
-Version: 0.4.2
+Version: 0.5.2
 Text Domain: simplefolk
 License: GNU General Public License version 3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -1412,16 +1412,36 @@ article.type-post figcaption {
   *    Archive Pages    *
   *                     *
   ******************** */
-
-.archive-container article {
-  width: 25%;
+.archive-container {
+  columns: 4 300px;
+  column-gap: 1rem;
 }
 
-.archive-container article {
-  padding: 10px;
-  float: left;
-  position: relative;
+.archive-card {
+  padding-bottom: 10px;
+}
+
+.archive-card.show {
+  height: auto;
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
+.archive-card.hide {
+  height: 0;
+  opacity: 0;
+  padding: 0;
   overflow: hidden;
+  transition: opacity 1s ease;
+}
+
+.archive-container article {}
+
+.archive-container article {
+  /* padding: 10px; */
+  /* float: left; */
+  /* position: relative; */
+  /* overflow: hidden; */
 }
 
 .archive-container header {
@@ -1630,7 +1650,7 @@ a.buttonish {
   }
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1240px) {
+/* @media only screen and (min-width: 768px) and (max-width: 1240px) {
   .archive-container article {
     width: 50%;
   }
@@ -1638,19 +1658,11 @@ a.buttonish {
   .featured-gallery-content {
     padding: 0 20px;
   }
-}
+} */
 
-@media only screen and (min-width: 1241px) and (max-width: 1700px) {
-  .archive-container article {
-    width: 33.3%;
-  }
+/*   */
 
-  .featured-gallery-content {
-    padding: 0 20px;
-  }
-}
-
-@media only screen and (min-width: 1701px) and (max-width: 1900px) {
+/* @media only screen and (min-width: 1701px) and (max-width: 1900px) {
   .archive-container article {
     width: 25%;
   }
@@ -1660,4 +1672,4 @@ a.buttonish {
   .archive-container article {
     width: 20%;
   }
-}
+} */
