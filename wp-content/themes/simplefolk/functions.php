@@ -2075,4 +2075,47 @@ function wp_get_attachment($attachment_id)
   );
 }
 
+
+
+// COMMENTS
+
+
+function custom_comment($comment, $args, $depth) {
+  $GLOBALS['comment'] = $comment;
+  ?>
+<li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
+    <article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
+        <footer class="comment-meta">
+            <div class="comment-author-avatar">
+                <?php echo get_avatar($comment, 64); ?>
+            </div>
+            <div class="comment-author vcard">
+                <?php printf('<b class="fn">%s</b> <span class="says">%s</span>', get_comment_author_link(), esc_html__('says:', 'simplefolk')); ?>
+            </div>
+            <div class="comment-metadata">
+                <a href="<?php echo esc_url(get_comment_link($comment->comment_ID)); ?>">
+                    <?php printf('<time datetime="%1$s">%2$s</time>', get_comment_time('c'), sprintf(__('%1$s at %2$s', 'simplefolk'), get_comment_date(), get_comment_time())); ?>
+                </a>
+                <?php edit_comment_link(__('Edit', 'simplefolk'), '<span class="edit-link">', '</span>'); ?>
+            </div>
+        </footer>
+        <div class="comment-content">
+            <?php comment_text(); ?>
+        </div>
+        <div class="reply">
+            <?php
+              comment_reply_link(array_merge($args, array(
+                  'depth' => $depth,
+                  'max_depth' => $args['max_depth'],
+                  'before' => '<span class="reply-link">',
+                  'after' => '</span>',
+              )));
+              ?>
+        </div>
+    </article>
+    <?php
+}
+
+
+
 ?>

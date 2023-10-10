@@ -40,6 +40,15 @@ while (have_posts()) :
                 <?php the_content(); ?>
 
             </article>
+
+            <?php
+                echo 'derp';
+                // Check if comments are open or if there are comments.
+                if (comments_open() || get_comments_number()) {
+                    echo ' yes';
+                    comments_template();
+                }
+                ?>
         </div>
         <?php get_sidebar(); ?>
     </main>
