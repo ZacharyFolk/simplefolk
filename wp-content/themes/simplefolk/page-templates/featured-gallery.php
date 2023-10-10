@@ -18,42 +18,42 @@ $tag_list = explode(',', esc_attr(get_theme_mod('tag_list')));
         // Build button filters set from customizer tag_list
         // Display list of ones that match attachments that have that tag
         if ($tag_list) : ?>
-        <div class="filter-by-tag">
-            <input id="tag_toggle" type="checkbox" />
-            <label class="hashtag-container" for="tag_toggle">
-                <span class="icon-tag"></span>
-            </label>
-            <div class="tag-buttons">
-                <?php $i = 0;
+            <div class="filter-by-tag">
+                <input id="tag_toggle" title="Toggle Tags" type="checkbox">
+                <label class="hashtag-container" for="tag_toggle">
+                    <span class="icon-tag">#</span>
+                </label>
+                <div class="tag-buttons">
+                    <?php $i = 0;
                     foreach ($tag_list as $tag) :
                         $post_tags = get_term_by('slug', $tag, 'hashtags');
                         if ($i == 0) :
                     ?>
-                <button type="button" class="active" data-category="*">All</button>
-                <?php
+                            <button type="button" class="active" data-category="*">All</button>
+                            <?php
                             if ($post_tags) :
                                 $tag_name = strtolower($post_tags->name);
                                 $tag_name_link = str_replace(" ", "-", $tag_name)
                             ?>
-                <button type="button" data-category=".hashtags-<?php echo trim(esc_attr($tag_name_link)); ?>">
-                    <?php echo esc_html($tag_name); ?>
-                </button>
-                <?php endif; ?>
-                <?php else :
+                                <button type="button" data-category=".hashtags-<?php echo trim(esc_attr($tag_name_link)); ?>">
+                                    <?php echo esc_html($tag_name); ?>
+                                </button>
+                            <?php endif; ?>
+                            <?php else :
                             if ($post_tags) :
                                 $tag_name = strtolower($post_tags->name);
                                 $tag_name_link = str_replace(" ", "-", $tag_name)
                             ?>
-                <button type="button" data-category=".hashtags-<?php echo trim(esc_attr($tag_name_link)); ?>">
-                    <?php echo esc_html($tag_name); ?>
-                </button>
+                                <button type="button" data-category=".hashtags-<?php echo trim(esc_attr($tag_name_link)); ?>">
+                                    <?php echo esc_html($tag_name); ?>
+                                </button>
                 <?php endif;
                         endif;
                         $i++;
                     endforeach;
                 endif; ?>
+                </div>
             </div>
-        </div>
     </div>
     <div class="archive-container">
         <?php
@@ -79,9 +79,9 @@ $tag_list = explode(',', esc_attr(get_theme_mod('tag_list')));
             while ($atta_query->have_posts()) :
                 $atta_query->the_post();
                 $id = get_the_ID(); ?>
-        <article <?php post_class('archive-card'); ?>>
-            <?php get_lightbox_image($id); ?>
-        </article>
+                <article <?php post_class('archive-card'); ?>>
+                    <?php get_lightbox_image($id); ?>
+                </article>
         <?php
             endwhile;
         endif;

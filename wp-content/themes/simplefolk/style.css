@@ -6,7 +6,7 @@ Author URI: https://folkphotography.com
 Description: A very stripped down theme for folkphotography
 Tested up to: 6.1
 Requires PHP: 5.6
-Version: 0.5.2
+Version: 0.5.3
 Text Domain: simplefolk
 License: GNU General Public License version 3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -1628,7 +1628,7 @@ a.buttonish {
     background-color: rgb(255, 255, 255, 0.8);
     z-index: 970;
     top: 0px;
-    padding: 0 30px;
+    padding: 0 10px;
   }
 
   .tag-buttons button {
