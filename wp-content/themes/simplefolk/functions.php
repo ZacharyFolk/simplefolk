@@ -682,7 +682,7 @@ class collections_carousel_widget extends WP_Widget
     echo '</div>
     </div>
     <div class="embla-buttons">
-    <button class="embla__prev">  
+    <button class="embla__prev" title="Previous image">  
     <svg class="embla__button__svg" viewBox="0 0 532 532">
     <path
       fill="currentColor"
@@ -691,7 +691,7 @@ class collections_carousel_widget extends WP_Widget
     </path>
     </svg>
   </button>
-    <button class="embla__next">
+    <button class="embla__next" title="Next image">
     <svg class="embla__button__svg" viewBox="0 0 532 532">
     <path
       fill="currentColor"
@@ -1189,11 +1189,13 @@ function get_lightbox_image($id, $size = "medium_large")
   $full_image_link = wp_get_attachment_image_url($id, 'full');
   $slide_class = "full-meta-" . $id;
   $atta_img = wp_get_attachment_image($id, $size);
+  $image_title = get_the_title($id);
+
   if ($atta_img) :
     echo '<a href="' . $full_image_link . '" 
   class="glightbox"
   data-desc-position="right"  
-  data-glightbox="description: .' . $slide_class . '">';
+  data-glightbox="description: .' . $slide_class . '" title="Open ' . esc_attr($image_title) . ' full size">';
     echo $atta_img;
     echo '</a>';
     echo '<div class="glightbox-desc ' . $slide_class .  '">';
