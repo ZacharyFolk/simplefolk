@@ -103,19 +103,20 @@ const lightbox2 = GLightbox({
 
 /* Carousel for Collections Widget */
 
-const rootNode = document.querySelector('.embla')
-const viewportNode = rootNode.querySelector('.embla__viewport')
-const prevButtonNode = rootNode.querySelector('.embla__prev')
-const nextButtonNode = rootNode.querySelector('.embla__next')
-const options = { loop: true }
-const autoplayOptions = {
-  delay: 4000,
-  stopOnInteraction: true,
-  stopOnMouseEnter: true,
+const rootNode = document.querySelector('.embla');
+
+if (rootNode) {
+  const viewportNode = rootNode.querySelector('.embla__viewport')
+  const prevButtonNode = rootNode.querySelector('.embla__prev')
+  const nextButtonNode = rootNode.querySelector('.embla__next')
+  const options = { loop: true }
+  const autoplayOptions = {
+    delay: 4000,
+    stopOnInteraction: true,
+    stopOnMouseEnter: true,
+  }
+  const plugins = [EmblaCarouselAutoplay(autoplayOptions)]
+  const embla = EmblaCarousel(viewportNode, options, plugins)
+  prevButtonNode.addEventListener('click', embla.scrollPrev, false)
+  nextButtonNode.addEventListener('click', embla.scrollNext, false)
 }
-const plugins = [EmblaCarouselAutoplay(autoplayOptions)]
-const embla = EmblaCarousel(viewportNode, options, plugins)
-prevButtonNode.addEventListener('click', embla.scrollPrev, false)
-nextButtonNode.addEventListener('click', embla.scrollNext, false)
-
-
