@@ -16,6 +16,7 @@ function main_scripts()
   wp_enqueue_script('embla-autoplay', get_template_directory_uri() . '/js/embla/embla-autoplay.js', array('embla'), false, true);
   wp_enqueue_script('glightbox-script', get_template_directory_uri() . '/assets/glightbox/js/glightbox.3.2.0.min.js', array(), false, true);
   wp_enqueue_script('theme-scripts', get_template_directory_uri() . '/js/theme-scripts.js', array(), false, true);
+  wp_enqueue_script('comment-ajax', get_template_directory_uri() . '/js/comment-ajax.js', array(), '1.0', true);
 }
 
 add_action('wp_enqueue_scripts', 'main_scripts');
@@ -487,12 +488,12 @@ add_action('widgets_init', 'load_cat_thumb_widget');
  * */
 function featured_cat_card($catID, $tax = 'collections')
 {
-  $name = strtolower(get_term($catID)->name);
-  echo '<a title="View all photos from the ' . $name . ' collection" href="' . get_category_link($catID) . '">';
-  echo '<div class="featured-cat-banner">';
-  echo get_attachment_by_cat_id($catID, 'landscape_thumb', $tax);
-  echo '<header><h3>' . $name . '</h3></header>';
-  echo '</div></a>';
+  // $name = strtolower(get_term($catID)->name);
+  // echo '<a title="View all photos from the ' . $name . ' collection" href="' . get_category_link($catID) . '">';
+  // echo '<div class="featured-cat-banner">';
+  // echo get_attachment_by_cat_id($catID, 'landscape_thumb', $tax);
+  // echo '<header><h3>' . $name . '</h3></header>';
+  // echo '</div></a>';
   // echo category_description($catID);
   //  echo '<div class="category-link" style="text-align: right"><a title="View all photos from the ' . $name . ' collection" href="' . get_category_link($catID) . '">View collection &raquo; </a>';
 }
@@ -2079,10 +2080,80 @@ function wp_get_attachment($attachment_id)
 
 // COMMENTS
 
+// Need this to be able to check for user info if user is logged in
+function localize_current_user()
+{
+  if (is_user_logged_in()) {
+    $current_user = wp_get_current_user();
+    wp_localize_script('comment-ajax', 'ajax_params', array(
+      'ajax_url' => admin_url('admin-ajax.php'),
+      'nonce' => wp_create_nonce('comment_nonce'),
+      'current_user' => array(
+        'ID' => $current_user->ID,
+        'display_name' => $current_user->display_name,
+        'user_email' => $current_user->user_email
+      )
+    ));
+  } else {
+    wp_localize_script('comment-ajax', 'ajax_params', array(
+      'ajax_url' => admin_url('admin-ajax.php'),
+      'nonce' => wp_create_nonce('comment_nonce'),
+      'current_user' => false
+    ));
+  }
+}
+add_action('wp_enqueue_scripts', 'localize_current_user');
 
-function custom_comment($comment, $args, $depth) {
+
+// AJAX handler for comments
+function submit_comment_form()
+{
+  check_ajax_referer('comment_nonce', 'nonce');
+
+  // Get the submitted data
+  $comment_post_ID = sanitize_text_field($_POST['comment_post_ID']);
+  $author = isset($_POST['author']) ? sanitize_text_field($_POST['author']) : '';
+  $comment_content = isset($_POST['comment']) ? sanitize_text_field($_POST['comment']) : '';
+  $email = isset($_POST['email']) ? sanitize_email($_POST['email']) : ''; // Get email value
+
+
+
+  // Check if name and message are provided
+  if (empty($author) || empty($comment_content)) {
+
+    $response = array('success' => false, 'message' => 'Name and message are required fields.');
+  } else {
+    // Prepare comment data
+    $comment_data = array(
+      'comment_post_ID' => $comment_post_ID,
+      'comment_author' => $author,
+      'comment_content' => $comment_content,
+      'email' => $email,
+      'comment_author_url' => '', // Set to empty string if not provided
+      'comment_author_email' => $email, // Use provided email or set to empty string
+    );
+
+    // Create the comment
+    $comment_id = wp_new_comment($comment_data);
+
+    if ($comment_id) {
+      $response = array('success' => true, 'message' => 'Your comment has been submitted successfully.');
+    } else {
+      $response = array('success' => false, 'message' => 'Error occurred while processing your comment.');
+    }
+  }
+
+  // Send JSON response
+  wp_send_json($response);
+}
+
+add_action('wp_ajax_submit_comment_form', 'submit_comment_form');
+add_action('wp_ajax_nopriv_submit_comment_form', 'submit_comment_form');
+
+function custom_comment($comment, $args, $depth)
+{
   $GLOBALS['comment'] = $comment;
-  ?>
+?>
 <li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
     <article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
         <footer class="comment-meta">
@@ -2090,32 +2161,79 @@ function custom_comment($comment, $args, $depth) {
                 <?php echo get_avatar($comment, 64); ?>
             </div>
             <div class="comment-author vcard">
-                <?php printf('<b class="fn">%s</b> <span class="says">%s</span>', get_comment_author_link(), esc_html__('says:', 'simplefolk')); ?>
+                <?php echo get_comment_author_link() ?>
             </div>
             <div class="comment-metadata">
-                <a href="<?php echo esc_url(get_comment_link($comment->comment_ID)); ?>">
-                    <?php printf('<time datetime="%1$s">%2$s</time>', get_comment_time('c'), sprintf(__('%1$s at %2$s', 'simplefolk'), get_comment_date(), get_comment_time())); ?>
-                </a>
+                <?php printf('<time datetime="%1$s">%2$s</time>', get_comment_time('c'), sprintf(__('%1$s at %2$s', 'simplefolk'), get_comment_date(), get_comment_time())); ?>
+                <span class="comment-permalink">
+                    <a href="<?php echo esc_url(get_comment_link($comment->comment_ID)); ?>" title="Comment link">Link
+                    </a>
+                </span>
                 <?php edit_comment_link(__('Edit', 'simplefolk'), '<span class="edit-link">', '</span>'); ?>
             </div>
         </footer>
         <div class="comment-content">
             <?php comment_text(); ?>
         </div>
-        <div class="reply">
-            <?php
-              comment_reply_link(array_merge($args, array(
-                  'depth' => $depth,
-                  'max_depth' => $args['max_depth'],
-                  'before' => '<span class="reply-link">',
-                  'after' => '</span>',
-              )));
-              ?>
-        </div>
+        <?php
+      comment_reply_link(array_merge($args, array(
+        'depth' => $depth,
+        'max_depth' => $args['max_depth'],
+        'before' => '<span class="reply-link">',
+        'after' => '</span>',
+      )));
+      ?>
     </article>
     <?php
 }
 
+// Prevents Wordpress from setting user as anonymous if it can not locate their account
+function set_comment_user($comment_data)
+{
+  if (!is_user_logged_in() && empty($comment_data['comment_author_email'])) {
+    $comment_data['user_ID'] = 0;
+    $comment_data['comment_author'] = sanitize_text_field($_POST['author']);
+  }
+  return $comment_data;
+}
+add_filter('preprocess_comment', 'set_comment_user');
 
+// Custom Form
 
-?>
+function custom_comment_form($args = array(), $post_id = null)
+{
+  if (null === $post_id) {
+    $post_id = get_the_ID();
+  } else {
+    $id = $post_id;
+  }
+
+  $commenter = wp_get_current_commenter();
+  $req       = get_option('require_name_email');
+  $aria_req  = ($req ? " aria-required='true'" : '');
+
+  $fields = array(
+    'author' => '<p class="comment-form-author"><label for="author">' . __('Name', 'simplefolk') . ($req ? ' <span class="required">*</span>' : '') . '</label>
+                  <input id="author" name="author" type="text" value="' . esc_attr($commenter['comment_author']) . '" size="30" maxlength="100"' . $aria_req . ' /></p>',
+    'email'  => '<p class="comment-form-email"><label for="email">' . __('Email', 'simplefolk') . ($req ? ' <span class="required">*</span>' : '') . '</label>
+                  <input id="email" name="email" type="email" value="' . esc_attr($commenter['comment_author_email']) . '" size="30" maxlength="100"' . $aria_req . ' /></p>',
+    'comment_field' => '<p class="comment-form-comment"><label for="comment">' . __('Comment', 'simplefolk') . '<span class="required">*</span></label>
+                          <textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>',
+    'website' => '<p class="website-comment" style="display: none;"><label for="website">' . __('Website', 'simplefolk') . '</label> <span class="required">*</span><textarea id="website" name="website" cols="45" rows="8" maxlength="50" ></textarea></p>'
+  );
+
+  ob_start();
+  comment_form(array(
+    'fields'               => apply_filters('comment_form_default_fields', $fields),
+    'comment_field'        => '',
+    'comment_notes_before' => '',
+    'comment_notes_after'  => '',
+    'title_reply'          => __('Leave a Comment', 'simplefolk'),
+    'cancel_reply_link'    => __('Cancel reply', 'simplefolk'),
+    'class_submit'         => 'submit',
+  ));
+  $form = ob_get_contents();
+  ob_end_clean();
+
+  echo apply_filters('custom_comment_form_output', $form);
+}

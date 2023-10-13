@@ -22,6 +22,11 @@ while (have_posts()) :
                     endif; ?>
             </article>
         </main>
+        <?php
+            if (comments_open() || get_comments_number()) {
+                comments_template();
+            }
+            ?>
     </div>
     <aside id="secondary" class="widget-area">
         <?php echo the_title('<div id="post_title"><h1>', '</h1></div>'); ?>

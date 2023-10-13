@@ -8,18 +8,18 @@ while (have_posts()) :
     $tag_list = implode(', ', $tag_array);
 ?>
 
-<div class="content-wrap single-post">
-    <main id="main" class="single-main" role="main">
-        <div id="primary" class="content-area">
-            <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                <?php echo the_title('<div id="post_title"><h1>', '</h1></div>'); ?>
-                <div class="post-meta">
-                    <p>Published : <?php the_time('m/j/y g:i A'); // full dates : F jS, Y
+    <div class="content-wrap single-post">
+        <main id="main" class="single-main" role="main">
+            <div id="primary" class="content-area">
+                <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+                    <?php echo the_title('<div id="post_title"><h1>', '</h1></div>'); ?>
+                    <div class="post-meta">
+                        <p>Published : <?php the_time('m/j/y g:i A'); // full dates : F jS, Y
                                         // echo " at ";
                                         // the_time('g:i a');
                                         ?>
-                    </p>
-                    <?php
+                        </p>
+                        <?php
                         // $u_time = get_the_time('U');
                         // $u_modified_time = get_the_modified_time('U');
                         // if ($u_modified_time >= $u_time + 86400) {
@@ -31,29 +31,26 @@ while (have_posts()) :
 
 
                         ?>
-                </div>
+                    </div>
 
-                <?php // get_template_part('includes/social-share'); 
+                    <?php // get_template_part('includes/social-share'); 
                     ?>
 
 
-                <?php the_content(); ?>
+                    <?php the_content(); ?>
 
-            </article>
+                </article>
 
-            <?php
-                echo 'derp';
-                // Check if comments are open or if there are comments.
+                <?php
                 if (comments_open() || get_comments_number()) {
-                    echo ' yes';
                     comments_template();
                 }
                 ?>
-        </div>
-        <?php get_sidebar(); ?>
-    </main>
-</div>
+            </div>
+            <?php get_sidebar(); ?>
+        </main>
+    </div>
 
-</div>
+    </div>
 
 <?php endwhile;

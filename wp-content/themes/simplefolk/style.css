@@ -1081,7 +1081,7 @@ article.type-post figcaption {
 #tag_thumbs {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 #cat_thumbs a,
@@ -1199,8 +1199,52 @@ article.type-post figcaption {
   margin: 0 40px;
 }
 
+/* ***************
+*                *
+*    Comments    *
+*                *
+*************** */
+
 #comments {
   margin-top: 30px;
+}
+
+#comments h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px;
+  background-color: var(--warm-00);
+}
+
+.comment:nth-child(odd) {
+  background-color: var(--warm-2)
+    /* Light background color for odd parent comments */
+}
+
+.comment:nth-child(even) {
+  background-color: var(--warm-3)
+    /* Slightly darker background color for even parent comments */
+}
+
+.comment .children>.comment:nth-child(odd) {
+  background-color: var(--warm-0)
+    /* Slightly darker background color for child comments */
+}
+
+.comment .children .comment:nth-child(even) {
+  background-color: var(--warm-1)
+    /* Slightly darker background color for child comments */
+}
+
+.comment-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-text label {
+  margin: 10px 0;
+
 }
 
 .comment-list {
@@ -1208,9 +1252,18 @@ article.type-post figcaption {
   padding: 0;
 }
 
+.comment-list li {
+  margin: 0 0 20px;
+  border-bottom: 1px solid var(--warm-5);
+}
+
+
+
 .comment-body {
   margin-bottom: 20px;
 }
+
+
 
 .comment-author-avatar img {
   border-radius: 50%;
@@ -1235,6 +1288,53 @@ article.type-post figcaption {
   margin-top: 30px;
 }
 
+.comment-meta {
+  display: flex;
+  align-items: center;
+  background-color: var(--warm-00);
+}
+
+.comment-meta>div,
+.comment-meta>div:last-child time,
+.comment-meta>div:last-child span {
+  padding: 0 10px;
+}
+
+.comment-content {
+  border: 1px solid var(--warm-6);
+  width: 80%;
+  margin: 20px auto;
+  padding: 0 30px;
+}
+
+.comment-author-avatar {
+  margin: 20px
+}
+
+.reply-link {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20% 20px 0;
+}
+
+.children {
+  margin: 0 30px;
+  padding: 0 0 20px;
+  list-style: none;
+}
+
+ol.comment-list {
+  list-style: none;
+}
+
+.comment-metadata {}
+
+.comment-permalink {}
+
+.edit-link {}
+
+.
+
 /* Comment Form Styles */
 .comment-form input[type="text"],
 .comment-form input[type="email"],
@@ -1247,7 +1347,7 @@ article.type-post figcaption {
 }
 
 .comment-form input[type="submit"] {
-  background-color: #0073e6;
+  background-color: var(--warm-5);
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -1259,7 +1359,11 @@ article.type-post figcaption {
   background-color: #005aa5;
 }
 
-
+.comment-form textarea {
+  background-color: var(--warm-8);
+  padding: 20px;
+  width: 100%;
+}
 
 
 /* ********************
