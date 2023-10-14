@@ -319,6 +319,31 @@ footer {
   text-shadow: 3px 2px 4px var(--warm-1);
 }
 
+#comments h3 {
+  background-color: var(--warm-00);
+}
+
+.comment:nth-child(odd) {
+  background-color: var(--warm-2)
+}
+
+.comment:nth-child(even) {
+  background-color: var(--warm-3)
+}
+
+.comment .children>.comment:nth-child(odd) {
+  background-color: var(--warm-0)
+}
+
+.comment .children .comment:nth-child(even) {
+  background-color: var(--warm-1)
+}
+
+.comment-meta {
+  background-color: var(--warm-5);
+  color: var(--warm-0);
+}
+
 @media (max-width: 767px) {
   .menu>li {
     color: var(--warm-0);
@@ -462,6 +487,39 @@ body.lightmode .tax-header {
 
 body.lightmode .tax-name {
   text-shadow: 3px 2px 4px var(--warm-8);
+}
+
+body.lightmode #comments h3 {
+  background-color: var(--warm-9);
+}
+
+body.lightmode .comment:nth-child(odd) {
+  background-color: var(--warm-9)
+}
+
+body.lightmode .comment:nth-child(even) {
+  background-color: var(--warm-7)
+}
+
+body.lightmode .comment .children>.comment:nth-child(odd) {
+  background-color: var(--warm-6)
+}
+
+body.lightmode .comment .children .comment:nth-child(even) {
+  background-color: var(--warm-8)
+}
+
+body.lightmode .comment-meta {
+  background-color: var(--warm-8);
+  color: var(--warm-0);
+}
+
+body.lightmode .gslide-desc {
+  color: var(--warm-8)
+}
+
+body.lightmode .gslide-desc a {
+  color: var(--warm-7)
 }
 
 @media (max-width: 767px) {
@@ -1214,28 +1272,9 @@ article.type-post figcaption {
   align-items: center;
   justify-content: space-between;
   padding: 20px 20px;
-  background-color: var(--warm-00);
 }
 
-.comment:nth-child(odd) {
-  background-color: var(--warm-2)
-    /* Light background color for odd parent comments */
-}
 
-.comment:nth-child(even) {
-  background-color: var(--warm-3)
-    /* Slightly darker background color for even parent comments */
-}
-
-.comment .children>.comment:nth-child(odd) {
-  background-color: var(--warm-0)
-    /* Slightly darker background color for child comments */
-}
-
-.comment .children .comment:nth-child(even) {
-  background-color: var(--warm-1)
-    /* Slightly darker background color for child comments */
-}
 
 .comment-text {
   display: flex;
@@ -1252,32 +1291,18 @@ article.type-post figcaption {
   padding: 0;
 }
 
-.comment-list li {
-  margin: 0 0 20px;
-  border-bottom: 1px solid var(--warm-5);
-}
-
-
-
-.comment-body {
-  margin-bottom: 20px;
-}
-
-
-
 .comment-author-avatar img {
   border-radius: 50%;
   margin-right: 10px;
 }
 
 .comment-metadata {
-  font-size: 14px;
-  color: #888;
+  font-size: .7em;
   margin-top: 5px;
 }
 
-.comment-content {
-  margin-top: 10px;
+.comment {
+  margin: 0 0 20px;
 }
 
 .reply {
@@ -1291,7 +1316,6 @@ article.type-post figcaption {
 .comment-meta {
   display: flex;
   align-items: center;
-  background-color: var(--warm-00);
 }
 
 .comment-meta>div,
@@ -1301,7 +1325,6 @@ article.type-post figcaption {
 }
 
 .comment-content {
-  border: 1px solid var(--warm-6);
   width: 80%;
   margin: 20px auto;
   padding: 0 30px;
@@ -1327,14 +1350,6 @@ ol.comment-list {
   list-style: none;
 }
 
-.comment-metadata {}
-
-.comment-permalink {}
-
-.edit-link {}
-
-.
-
 /* Comment Form Styles */
 .comment-form input[type="text"],
 .comment-form input[type="email"],
@@ -1342,8 +1357,6 @@ ol.comment-list {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
 }
 
 .comment-form input[type="submit"] {
@@ -1581,6 +1594,7 @@ ol.comment-list {
 .archive-container {
   columns: 4 300px;
   column-gap: 1rem;
+  margin: 20px;
 }
 
 .archive-card {

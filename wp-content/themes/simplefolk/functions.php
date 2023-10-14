@@ -430,20 +430,18 @@ class project_thumbs_widget extends WP_Widget
     }
 
 ?>
-<?php if ($cat) {
+    <?php if ($cat) {
       featured_cat_card($cat);
     }
     ?>
-<p>
-    <label for="<?php echo $this->get_field_id('title'); ?>"><?php __('Title:', 'simplefolk'); ?></label>
-    <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>"
-        name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
-</p>
-<p>
-    <label for="<?php echo $this->get_field_id('cat'); ?>">
+    <p>
+      <label for="<?php echo $this->get_field_id('title'); ?>"><?php __('Title:', 'simplefolk'); ?></label>
+      <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
+    </p>
+    <p>
+      <label for="<?php echo $this->get_field_id('cat'); ?>">
         Select featured collectrion:
-        <select class="widefat" id="<?php echo $this->get_field_id('cat'); ?>"
-            name="<?php echo $this->get_field_name('cat'); ?>" />
+        <select class="widefat" id="<?php echo $this->get_field_id('cat'); ?>" name="<?php echo $this->get_field_name('cat'); ?>" />
         <?php
         echo '<option>' . __('No Category', 'simplefolk') . '</option>';
         $args = array('show_option_none' => 'No Category', 'hide_empty' => 0);
@@ -459,9 +457,9 @@ class project_thumbs_widget extends WP_Widget
           echo '<option value="' . $category->term_id . '" ' . $selected . '>' . $category->name . '</option>';
         endforeach; ?>
         </select>
-    </label>
-</p>
-<?php
+      </label>
+    </p>
+  <?php
   }
   public function update($new_instance, $old_instance)
   {
@@ -488,16 +486,15 @@ add_action('widgets_init', 'load_cat_thumb_widget');
  * */
 function featured_cat_card($catID, $tax = 'collections')
 {
-  // $name = strtolower(get_term($catID)->name);
-  // echo '<a title="View all photos from the ' . $name . ' collection" href="' . get_category_link($catID) . '">';
-  // echo '<div class="featured-cat-banner">';
-  // echo get_attachment_by_cat_id($catID, 'landscape_thumb', $tax);
-  // echo '<header><h3>' . $name . '</h3></header>';
-  // echo '</div></a>';
+  $name = strtolower(get_term($catID)->name);
+  echo '<a title="View all photos from the ' . $name . ' collection" href="' . get_category_link($catID) . '">';
+  echo '<div class="featured-cat-banner">';
+  echo get_attachment_by_cat_id($catID, 'landscape_thumb', $tax);
+  echo '<header><h3>' . $name . '</h3></header>';
+  echo '</div></a>';
   // echo category_description($catID);
-  //  echo '<div class="category-link" style="text-align: right"><a title="View all photos from the ' . $name . ' collection" href="' . get_category_link($catID) . '">View collection &raquo; </a>';
+  // echo '<div class="category-link" style="text-align: right"><a title="View all photos from the ' . $name . ' collection" href="' . get_category_link($catID) . '">View collection &raquo; </a>';
 }
-
 
 
 ////////////////////////////////////////
@@ -505,7 +502,6 @@ function featured_cat_card($catID, $tax = 'collections')
 //    Featured Tag widget        //
 //                                    //
 ////////////////////////////////////////
-
 /**
  * 
  * Creates a widget that allows to select from dropdown of all tags
@@ -552,20 +548,18 @@ class tag_thumbs_widget extends WP_Widget
     }
 
   ?>
-<?php if ($tag) {
+    <?php if ($tag) {
       featured_tag_card($tag);
     }
     ?>
-<p>
-    <label for="<?php echo $this->get_field_id('title'); ?>"><?php __('Title:', 'simplefolk'); ?></label>
-    <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>"
-        name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
-</p>
-<p>
-    <label for="<?php echo $this->get_field_id('tag'); ?>">
+    <p>
+      <label for="<?php echo $this->get_field_id('title'); ?>"><?php __('Title:', 'simplefolk'); ?></label>
+      <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
+    </p>
+    <p>
+      <label for="<?php echo $this->get_field_id('tag'); ?>">
         Select featured tag:
-        <select class="widefat" id="<?php echo $this->get_field_id('tag'); ?>"
-            name="<?php echo $this->get_field_name('tag'); ?>" />
+        <select class="widefat" id="<?php echo $this->get_field_id('tag'); ?>" name="<?php echo $this->get_field_name('tag'); ?>" />
         <?php
         echo '<option>' . __('No Category', 'simplefolk') . '</option>';
         $args = array('show_option_none' => 'No Category', 'hide_empty' => 0);
@@ -584,9 +578,9 @@ class tag_thumbs_widget extends WP_Widget
           echo '<option value="' . $t->term_id . '" ' . $selected . '>' . $t->name . '</option>';
         endforeach; ?>
         </select>
-    </label>
-</p>
-<?php
+      </label>
+    </p>
+  <?php
   }
   public function update($new_instance, $old_instance)
   {
@@ -713,12 +707,11 @@ class collections_carousel_widget extends WP_Widget
 
     // Input field for entering the widget title
   ?>
-<p>
-    <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
-    <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>"
-        name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
-</p>
-<?php
+    <p>
+      <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
+      <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+    </p>
+  <?php
   }
 
   public function update($new_instance, $old_instance)
@@ -874,17 +867,17 @@ function get_site_info()
   // todo
   $show_title   = (true === get_theme_mod('display_title_and_tagline', true));
   ?>
-<?php if ($blog_info) : ?>
+  <?php if ($blog_info) : ?>
 
-<?php if (is_front_page() && !is_paged()) : ?>
-<h1 class="site-title"><?php echo esc_html($blog_info); ?></h1>
-<?php elseif (is_front_page() && !is_home()) : ?>
-<h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html($blog_info); ?></a>
-</h1>
-<?php else : ?>
-<p class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html($blog_info); ?></a></p>
-<?php endif; ?>
-<?php endif;
+    <?php if (is_front_page() && !is_paged()) : ?>
+      <h1 class="site-title"><?php echo esc_html($blog_info); ?></h1>
+    <?php elseif (is_front_page() && !is_home()) : ?>
+      <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html($blog_info); ?></a>
+      </h1>
+    <?php else : ?>
+      <p class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html($blog_info); ?></a></p>
+    <?php endif; ?>
+    <?php endif;
 }
 
 // TODO : Connect with customizer options and add description
@@ -1362,10 +1355,10 @@ function get_gallery_by_tag($post_tag)
         $image_id = get_post_thumbnail_id();
         $image_caption =  wp_get_attachment_caption($image_id);
     ?>
-<a data-fancybox="gallery" data-caption="<?php echo $image_caption; ?>" href="<?php the_post_thumbnail_url(); ?>">
-    <?php get_img_with_sizes('thumbnail'); ?>
-</a>
-<?php endif;
+        <a data-fancybox="gallery" data-caption="<?php echo $image_caption; ?>" href="<?php the_post_thumbnail_url(); ?>">
+          <?php get_img_with_sizes('thumbnail'); ?>
+        </a>
+    <?php endif;
     endwhile;
     echo '</div>';
   endif;
@@ -1509,9 +1502,8 @@ function get_img_with_sizes($size)
 
   if ($image_attributes) :
     ?>
-<img src="<?php echo $image_attributes[0]; ?>" width="<?php echo $image_attributes[1]; ?>"
-    height="<?php echo $image_attributes[2]; ?>" alt="<?php echo $image_alt ?>" />
-<?php endif;
+    <img src="<?php echo $image_attributes[0]; ?>" width="<?php echo $image_attributes[1]; ?>" height="<?php echo $image_attributes[2]; ?>" alt="<?php echo $image_alt ?>" />
+  <?php endif;
 };
 
 
@@ -1840,66 +1832,58 @@ function photo_meta_callback($post)
   $meta_time = esc_attr(get_post_meta(get_the_ID(), 'time', true));
   $time_value = empty($meta_time) ? $converted_time : $meta_time;
   ?>
-<p>
+  <p>
     <label for="camera">Camera : </label>
-    <input id="camera" type="text" name="camera" style="margin-right: 10px; width: 100%"
-        value="<?php echo $camera_value; ?>" />
+    <input id="camera" type="text" name="camera" style="margin-right: 10px; width: 100%" value="<?php echo $camera_value; ?>" />
 
-</p>
-<p>
+  </p>
+  <p>
     <label for="iso">ISO : </label>
-    <input id="iso" type="text" name="iso" style="margin-right: 10px; width:100%; text-align: center;"
-        value="<?php echo $iso_value; ?>" />
-</p>
-<p>
+    <input id="iso" type="text" name="iso" style="margin-right: 10px; width:100%; text-align: center;" value="<?php echo $iso_value; ?>" />
+  </p>
+  <p>
     <label for="aperture">Aperture : </label>
-    <input id="aperture" type="text" name="aperture" style="margin-right: 10px; width:100%; text-align: center;"
-        value="<?php echo $aperture_value; ?>" />
+    <input id="aperture" type="text" name="aperture" style="margin-right: 10px; width:100%; text-align: center;" value="<?php echo $aperture_value; ?>" />
     <span class="extra-info">
-        This value is displayed with ƒ prefix
+      This value is displayed with ƒ prefix
     </span>
-</p>
-<p>
+  </p>
+  <p>
     <label for="shutter">Shutter : </label>
-    <input id="shutter" type="text" name="shutter" style="margin-right: 10px; width:100%; text-align: center;"
-        value="<?php echo $shutter_value; ?>" />
-</p>
-<p>
+    <input id="shutter" type="text" name="shutter" style="margin-right: 10px; width:100%; text-align: center;" value="<?php echo $shutter_value; ?>" />
+  </p>
+  <p>
     <label for="focal">Focal Length : </label>
-    <input id="focal" type="text" name="focal" style="margin-right: 10px; width:100%"
-        value="<?php echo $focal_value; ?>" />
-</p>
-<p>
+    <input id="focal" type="text" name="focal" style="margin-right: 10px; width:100%" value="<?php echo $focal_value; ?>" />
+  </p>
+  <p>
     <label for="film">Film type : </label>
-    <input id="film" type="text" name="film" style="margin-right: 10px; width: 100%"
-        value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'film', true)); ?>" />
-</p>
-<p>
+    <input id="film" type="text" name="film" style="margin-right: 10px; width: 100%" value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'film', true)); ?>" />
+  </p>
+  <p>
     <label for="time">Time of creation : </label>
-    <input id="time" type="text" name="time" style="margin-right: 10px; width:100%"
-        value="<?php echo $time_value; ?>" />
-</p>
-<p>
+    <input id="time" type="text" name="time" style="margin-right: 10px; width:100%" value="<?php echo $time_value; ?>" />
+  </p>
+  <p>
     <label for="location">Location : </label>
-    <input id="location" type="text" name="location" style="margin-right: 10px; width: 100%"
-        value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'location', true)); ?>" />
-</p>
+    <input id="location" type="text" name="location" style="margin-right: 10px; width: 100%" value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'location', true)); ?>" />
+  </p>
 
-<p>
+  <p>
     <label for="print_available">Prints Available?</label>
     <?php
     $checkbox_value = get_post_meta($post->ID, "print_available", true);
     if ($checkbox_value == "") {
     ?>
-    <input name="print_available" type="checkbox" value="true">
+      <input name="print_available" type="checkbox" value="true">
     <?php
     } else if ($checkbox_value == "true") {
     ?>
-    <input name="print_available" type="checkbox" value="true" checked>
+      <input name="print_available" type="checkbox" value="true" checked>
     <?php
     }
     ?>
-</p>
+  </p>
 <?php
 }
 
@@ -2154,28 +2138,28 @@ function custom_comment($comment, $args, $depth)
 {
   $GLOBALS['comment'] = $comment;
 ?>
-<li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
+  <li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
     <article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
-        <footer class="comment-meta">
-            <div class="comment-author-avatar">
-                <?php echo get_avatar($comment, 64); ?>
-            </div>
-            <div class="comment-author vcard">
-                <?php echo get_comment_author_link() ?>
-            </div>
-            <div class="comment-metadata">
-                <?php printf('<time datetime="%1$s">%2$s</time>', get_comment_time('c'), sprintf(__('%1$s at %2$s', 'simplefolk'), get_comment_date(), get_comment_time())); ?>
-                <span class="comment-permalink">
-                    <a href="<?php echo esc_url(get_comment_link($comment->comment_ID)); ?>" title="Comment link">Link
-                    </a>
-                </span>
-                <?php edit_comment_link(__('Edit', 'simplefolk'), '<span class="edit-link">', '</span>'); ?>
-            </div>
-        </footer>
-        <div class="comment-content">
-            <?php comment_text(); ?>
+      <footer class="comment-meta">
+        <div class="comment-author-avatar">
+          <?php echo get_avatar($comment, 64); ?>
         </div>
-        <?php
+        <div class="comment-author vcard">
+          <?php echo get_comment_author_link() ?>
+        </div>
+        <div class="comment-metadata">
+          <?php printf('<time datetime="%1$s">%2$s</time>', get_comment_time('c'), sprintf(__('%1$s at %2$s', 'simplefolk'), get_comment_date(), get_comment_time())); ?>
+          <span class="comment-permalink">
+            <a href="<?php echo esc_url(get_comment_link($comment->comment_ID)); ?>" title="Comment link">Link
+            </a>
+          </span>
+          <?php edit_comment_link(__('Edit', 'simplefolk'), '<span class="edit-link">', '</span>'); ?>
+        </div>
+      </footer>
+      <div class="comment-content">
+        <?php comment_text(); ?>
+      </div>
+      <?php
       comment_reply_link(array_merge($args, array(
         'depth' => $depth,
         'max_depth' => $args['max_depth'],
@@ -2184,7 +2168,7 @@ function custom_comment($comment, $args, $depth)
       )));
       ?>
     </article>
-    <?php
+  <?php
 }
 
 // Prevents Wordpress from setting user as anonymous if it can not locate their account
