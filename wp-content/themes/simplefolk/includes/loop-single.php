@@ -40,14 +40,19 @@ while (have_posts()) :
                     <?php the_content(); ?>
 
                 </article>
-
+                <div class="post-navigation">
+                    <div class="previous-post-link"><?php previous_post_link('%link', 'Previous Post'); ?></div>
+                    <div class="next-post-link"><?php next_post_link('%link', 'Next Post'); ?></div>
+                </div>
                 <?php
                 if (comments_open() || get_comments_number()) {
                     comments_template();
                 }
                 ?>
+
+
             </div>
-            <?php get_sidebar(); ?>
+
         </main>
     </div>
 

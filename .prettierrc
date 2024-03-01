@@ -1,0 +1,10 @@
+{
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 100,
+    "tabWidth": 4,
+    "useTabs": false,
+    "phpVersion": "7.4",
+    "htmlWhitespaceSensitivity": "ignore"
+  }
+  

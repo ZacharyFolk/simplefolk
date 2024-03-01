@@ -13,9 +13,10 @@ get_header(); ?>
             get_template_part('includes/loop', 'blog-archive'); ?>
         </main>
     </div>
-    <aside id="secondary" class="widget-area">
-
-        <?php get_sidebar(); ?></aside>
+    <!-- <aside id="secondary" class="widget-area">
+        <?php // get_sidebar(); 
+        ?>
+    </aside> -->
 </div>
 <?php
 get_footer();
