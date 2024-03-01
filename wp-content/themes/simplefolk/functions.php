@@ -21,7 +21,8 @@ function main_scripts()
 
 add_action('wp_enqueue_scripts', 'main_scripts');
 
-function load_google_fonts() {
+function load_google_fonts()
+{
   wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap&family=Lato:400,700&display=swap');
 }
 add_action('wp_enqueue_scripts', 'load_google_fonts');
@@ -628,8 +629,6 @@ function featured_tag_card($tag)
 //                                    //
 ////////////////////////////////////////
 
-
-
 /**
  * 
  * Creates a carousel from all of the collections
@@ -675,6 +674,12 @@ class collections_carousel_widget extends WP_Widget
             'taxonomy' => 'collections',
             'field' => 'id',
             'terms' => $collection->term_id,
+          ),
+        ),
+        'meta_query' => array(
+          array(
+            'key' => 'featured_image',
+            'value' => 'on',
           ),
         ),
       ));
@@ -1888,6 +1893,13 @@ function photo_meta_callback($post)
     <input id="location" type="text" name="location" style="margin-right: 10px; width: 100%"
         value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'location', true)); ?>" />
 </p>
+<p>
+    <label for="featured_image">Featured Image:</label>
+    <?php
+    $featured = get_post_meta($post->ID, "featured_image", true);
+    ?>
+    <input type="checkbox" id="featured_image" name="featured_image" <?php checked($featured, 'on'); ?>>
+</p>
 
 <p>
     <label for="print_available">Prints Available?</label>
@@ -1932,8 +1944,8 @@ function simple_save_meta($post_id)
     'film',
     'time',
     'location',
-
-    'print_available'
+    'print_available',
+    'featured_image'
   ];
   foreach ($textfields as $field) {
     if (array_key_exists($field, $_POST)) {
@@ -1950,7 +1962,7 @@ function simple_save_meta($post_id)
  *
  * Displays optional location, camera type, film, and prints available
  *
- * @param $id The current post id 
+ * @param $id The current post id  
  * @return string HTML of additional data as paragraphs
  */
 

@@ -24,8 +24,6 @@ get_header();
                 <?php the_content(); ?>
             </div>
             <div class="home-aside-container">
-
-
                 <div class="home-aside-1">
                     <?php
                     if (is_active_sidebar('home-1')) : ?>
