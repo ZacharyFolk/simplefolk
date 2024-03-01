@@ -1,24 +1,6 @@
 <?php
 
-/**
- * The template for displaying comments
- *
- * This is the template that displays the area of the page that contains both the current comments
- * and the comment form.
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
- *
- * @package WordPress
- * @subpackage Twenty_Seventeen
- * @since Twenty Seventeen 1.0
- * @version 1.0
- */
 
-/*
- * If the current post is protected by a password and
- * the visitor has not yet entered the password we will
- * return early without loading the comments.
- */
 if (post_password_required()) {
     return;
 }
@@ -49,6 +31,7 @@ if (post_password_required()) {
     <?php
     endif;
     comment_form(array(
+        'comment_notes_before' => '<p class="comment-notes">' . __('You can leave a comment if you like.  Email is optional but you can include it if you have a question.  Your email will not be made public or shared in any way. All comments are moderated before being published.', 'simplefolk') . '</p>',
         'title_reply' => __('Leave a Comment', 'simplefolk'),
         'fields' => array(
             'author' => '<p class="comment-form-author"><label for="author">' . __('Name', 'simplefolk') . '</label> <span class="required">*</span><input id="author" name="author" type="text" value="' . esc_attr($commenter['comment_author']) . '" size="30" maxlength="100" required /></p>',

@@ -193,9 +193,12 @@ button {
 .mode-button,
 .menu-button {
     cursor: pointer;
-    fill: var(--warm-5);
+    fill: var(--warm-8);
+    transition: fill 0.5s ease;
 }
-
+.mode-button:hover {
+    fill: var(--warm-10);
+}
 .mode-button .lightson {
     display: none;
 }
@@ -684,6 +687,8 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px 0 40px;
+    border-bottom: 20px solid #000;
 }
 
 footer .copyright {
@@ -693,6 +698,8 @@ footer .copyright {
 #social_links {
     display: flex;
     scale: 0.6;
+    width: 200px;
+    justify-content: space-between;
 }
 
 #social_links div {
@@ -850,7 +857,9 @@ figcaption {
     display: inline-grid;
     align-items: center;
     text-align: center;
-    padding: 0 20px;
+    padding: 0 60px;
+    font-size: 1.6em;
+    letter-spacing: 0.1em;
 }
 
 /* Single attachment */
@@ -889,22 +898,16 @@ body.page #secondary {
 
 .tax-header {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     padding: 20px 40px;
 }
 
 .tax-name {
-    flex: 1;
-    text-align: center;
     font-size: 2em;
     text-transform: uppercase;
     white-space: nowrap;
-    padding-right: 20px;
+    padding: 0 20px;
     font-weight: 600;
-}
-
-.tax-desc {
-    flex: 4;
 }
 
 /* Guttenberg overrides */
@@ -937,7 +940,14 @@ body.page #secondary {
     text-transform: uppercase;
     margin: 0;
 }
+/* .site-title a {
+    font-weight: 400;
+}
 
+.site-title a:hover {
+    text-decoration: none;
+    font-weight: 600;
+} */
 .top-nav {
     font-size: 1em;
     text-transform: uppercase;
@@ -950,8 +960,21 @@ body.page #secondary {
     min-height: 80px;
     padding: 16px 60px;
     position: relative;
+    transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
+.top-nav.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    opacity: 0.9;
+    transform: translateY(0); /* Keep the navigation at the top */
+}
+.top-nav.sticky:hover {
+    opacity: 1;
+}
 .menu {
     display: flex;
     flex-direction: row;
@@ -1326,13 +1349,14 @@ article:hover {
 
 #comments {
     margin-top: 30px;
+    padding: 20px;
 }
 
 #comments h3 {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 20px;
+    padding: 10px 20px;
 }
 
 .comment-text {
@@ -1369,6 +1393,7 @@ article:hover {
 
 .comment-form {
     margin-top: 30px;
+    padding: 0 50px;
 }
 
 .comment-meta {
@@ -1376,6 +1401,13 @@ article:hover {
     align-items: center;
 }
 
+.comment-notes {
+    margin-left: 20px;
+    font-size: 0.8em;
+    font-family: var(--font-nav);
+    line-height: 1.4em;
+    opacity: 0.8;
+}
 .comment-meta > div,
 .comment-meta > div:last-child time,
 .comment-meta > div:last-child span {
@@ -1451,17 +1483,26 @@ ol.comment-list {
     text-align: center;
 }
 
+#collection_carousel {
+    font-family: var(--font-nav);
+}
+
 #collection_carousel a:link,
 #collection_carousel a:visited {
+    /* TODO This doesn't even work, no background or text, it just shows the shadow of the text...  it is kind of cool so just leaving it as is for now */
+    background-clip: text;
+    -moz-text-fill-color: transparent;
+    -webkit-text-fill-color: transparent;
+    background-image: var(--background-site);
     text-transform: uppercase;
-    font-weight: bold;
     font-size: 9vw;
-    color: silver !important;
     text-shadow: 4px 6px 4px rgba(0, 0, 0, 0.7);
     /* filter: blur(0.007em); */
     opacity: 0.9;
     /* transition: opacity 1s ease-out, filter 1s ease-out; */
     transition: opacity 1s ease-out;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: rgb(229, 229, 229);
 }
 
 #collection_carousel a:hover {
@@ -1583,7 +1624,6 @@ ol.comment-list {
 
 .featured-gallery-header {
     display: flex;
-    justify-content: space-between;
     align-items: baseline;
     position: relative;
 }
@@ -1613,6 +1653,7 @@ ol.comment-list {
 .archive-card img {
     border: 1px solid var(--warm-4);
     max-width: 100%;
+    box-shadow: 1px 5px 4px rgb(0, 0, 0, 0.8);
 }
 
 .featured-gallery .post-gallery-wrap {

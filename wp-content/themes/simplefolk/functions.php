@@ -23,7 +23,7 @@ add_action('wp_enqueue_scripts', 'main_scripts');
 
 function load_google_fonts()
 {
-  wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap&family=Lato:400,700&display=swap');
+  wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap&family=Lato:400,600&display=swap');
 }
 add_action('wp_enqueue_scripts', 'load_google_fonts');
 
@@ -884,14 +884,13 @@ function get_site_info()
   $show_title   = (true === get_theme_mod('display_title_and_tagline', true));
   ?>
 <?php if ($blog_info) : ?>
-
 <?php if (is_front_page() && !is_paged()) : ?>
 <h1 class="site-title"><?php echo esc_html($blog_info); ?></h1>
 <?php elseif (is_front_page() && !is_home()) : ?>
 <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html($blog_info); ?></a>
 </h1>
 <?php else : ?>
-<p class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html($blog_info); ?></a></p>
+<h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html($blog_info); ?></a></h1>
 <?php endif; ?>
 <?php endif;
 }
