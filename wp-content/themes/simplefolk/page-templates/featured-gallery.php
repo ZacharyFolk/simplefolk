@@ -8,7 +8,7 @@ $gallery_heading = get_theme_mod('featured_heading');
 if (empty($gallery_heading)) {
     $gallery_heading = 'Featured Collections';
 }
-$num_posts = (int)(get_theme_mod('num_posts', 10));
+$num_posts = (int)(get_theme_mod('num_posts'));
 $tag_list = explode(',', esc_attr(get_theme_mod('tag_list')));
 ?>
 <div class="featured-gallery-content">
