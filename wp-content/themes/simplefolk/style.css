@@ -34,6 +34,7 @@ version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 ** Simple Modal
 ** Archive Pages
 ** Featured Gallery
+** WooCommerce
 ** Responsive Rules
 **
 /**********[ #RESETS ]**********/
@@ -1635,6 +1636,111 @@ ol.comment-list {
     margin-bottom: 0;
     position: relative;
     overflow: hidden;
+}
+
+/**********[ #WOOCOMMERCE ]**********/
+
+td.value {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+td.value input[type='radio'] {
+    appearance: none;
+    display: none;
+}
+
+td.value label {
+    font-size: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: inherit;
+    text-align: center;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: linear 0.3s;
+    color: #595959;
+    padding: 0.3em 0.6em;
+    border: 2px solid #1c1c1c;
+    cursor: pointer;
+}
+
+td.value input[type='radio']:checked + label,
+td.value input[type='radio']:hover + label {
+    background-color: #1c1c1c;
+    color: #f1f3f5;
+    transition: 0.3s;
+}
+
+a.reset_variations {
+    display: none !important;
+}
+
+.quantity input {
+    height: 39px;
+    border: 1px solid silver;
+    margin-right: 20px;
+}
+
+button.single_add_to_cart_button {
+    background-color: #26893a !important;
+    opacity: 0.7;
+    transition: opacity 1s;
+}
+button.single_add_to_cart_button:hover {
+    opacity: 1;
+}
+
+.related {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* TODO: This isn't great */
+.post-navigation {
+    display: none;
+}
+
+.cart-button {
+    position: relative;
+    display: block;
+    width: 60px;
+}
+.cart-count {
+    position: absolute;
+    top: 15px;
+    left: 17px;
+    font-size: 0.8em;
+}
+
+/* Custom Cart Panel Styles */
+.cart-panel {
+    position: fixed;
+    right: -100%;
+    top: 0;
+    width: 300px;
+    height: 100%;
+    background: #fff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: right 0.3s ease;
+    z-index: 1000;
+}
+.cart-panel.open {
+    right: 0;
+}
+.cart-panel .cart-panel-content {
+    padding: 20px;
+}
+.cart-panel .close-cart-panel {
+    float: right;
+    cursor: pointer;
+    font-size: 1.5em;
 }
 
 /**********[ #RESPONSIVE RULES ]**********/

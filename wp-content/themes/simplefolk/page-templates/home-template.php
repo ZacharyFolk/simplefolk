@@ -21,6 +21,7 @@ get_header();
         <div class="home-top-container">
 
             <div class="home-main-content">
+                zz
                 <?php the_content(); ?>
             </div>
             <div class="home-aside-container">
@@ -42,6 +43,7 @@ get_header();
                 </div>
             </div>
         </div>
+
         <?php get_template_part('page-templates/featured-gallery'); ?>
     </main>
 </div>

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * The template for displaying all single posts.
+ * The template for displaying all single products.
  *
  */
 get_header(); ?>
@@ -11,7 +11,6 @@ get_header(); ?>
         <div id="primary" class="content-area">
             <?php get_template_part('includes/loop', 'single'); ?>
         </div>
-        <?php get_sidebar(); ?>
     </main>
 </div>
 <?php

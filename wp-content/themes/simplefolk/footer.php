@@ -56,6 +56,16 @@ $insta = get_theme_mod('ig_link');
 </footer>
 
 <?php wp_footer(); ?>
+<div id="cart-panel" class="cart-panel">
+    <div class="cart-panel-content">
+        <a href="#" class="close-cart-panel">&times;</a>
+        <h3>Your Cart</h3>
+        <div id="cart-panel-summary">
+            <?php woocommerce_mini_cart(); ?>
+        </div>
+        <a href="<?php echo wc_get_checkout_url(); ?>" class="button checkout-button">Checkout</a>
+    </div>
+</div>
 
 </body>
 
