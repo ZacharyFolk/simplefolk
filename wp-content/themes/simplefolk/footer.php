@@ -18,8 +18,7 @@ $insta = get_theme_mod('ig_link');
 
     <div class="footer-wrap">
         <div class="site-name">
-            <a title="<?php echo esc_attr(get_bloginfo('name', 'display')); ?>" target="_blank"
-                href="<?php echo esc_url(home_url('/')); ?>">
+            <a title="<?php echo esc_attr(get_bloginfo('name', 'display')); ?>" target="_blank" href="<?php echo esc_url(home_url('/')); ?>">
                 <?php echo get_bloginfo('name', 'display'); ?>
             </a>
         </div>
@@ -56,17 +55,6 @@ $insta = get_theme_mod('ig_link');
 </footer>
 
 <?php wp_footer(); ?>
-<div id="cart-panel" class="cart-panel">
-    <div class="cart-panel-content">
-        <a href="#" class="close-cart-panel">&times;</a>
-        <h3>Your Cart</h3>
-        <div id="cart-panel-summary">
-            <?php woocommerce_mini_cart(); ?>
-        </div>
-        <a href="<?php echo wc_get_checkout_url(); ?>" class="button checkout-button">Checkout</a>
-    </div>
-</div>
-
 </body>
 
 </html>

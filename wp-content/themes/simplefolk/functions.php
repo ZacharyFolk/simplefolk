@@ -1901,6 +1901,17 @@ function photo_meta_callback($post)
     }
     ?>
   </p>
+
+
+  <p>
+    <label for="make_product">Make this a product:</label>
+    <?php
+    $make_product = get_post_meta($post->ID, "make_product", true);
+    ?>
+    <input type="checkbox" id="make_product" name="make_product" <?php checked($make_product, 'on'); ?>>
+  </p>
+
+
 <?php
 }
 
@@ -1930,7 +1941,9 @@ function simple_save_meta($post_id)
     'time',
     'location',
     'print_available',
-    'featured_image'
+    'featured_image',
+    'make_product'
+
   ];
   foreach ($textfields as $field) {
     if (array_key_exists($field, $_POST)) {
@@ -1938,9 +1951,45 @@ function simple_save_meta($post_id)
     }
   }
 
+  if (isset($_POST['make_product']) && $_POST['make_product'] == 'on') {
+    create_product_from_image($post_id);
+  }
   // TODO:  set values to custom taxonomy here?
 
 }
+
+
+function create_product_from_image($post_id)
+{
+  if (!class_exists('WooCommerce')) {
+    return;
+  }
+
+  // Check if the product already exists
+  $product_id = get_post_meta($post_id, '_product_id', true);
+  if ($product_id) {
+    return; // Product already created
+  }
+
+  $title = get_the_title($post_id);
+  $description = get_post_meta($post_id, 'description', true);
+  $price = 10.00; // Default price
+  $image_url = wp_get_attachment_url($post_id);
+
+  $product = new WC_Product();
+  $product->set_name($title);
+  $product->set_description($description);
+  $product->set_regular_price($price);
+  $product->set_image_id($post_id);
+
+  $product_id = $product->save();
+
+  // Save the product ID in the image meta to avoid duplicate creation
+  update_post_meta($post_id, '_product_id', $product_id);
+}
+
+
+
 
 /**
  * Display data from the media meta boxes
@@ -2351,67 +2400,3 @@ function custom_comment($comment, $args, $depth)
     return $classes;
   }
   add_filter('woocommerce_product_add_to_cart_class', 'custom_add_to_cart_button_classes', 10, 2);
-
-  /*
-  Setting up to have a modal cart 
-  */
-
-  function enqueue_woocommerce_cart_panel_scripts()
-  {
-    wp_enqueue_style('woocommerce-layout');
-    wp_enqueue_style('woocommerce-smallscreen');
-    wp_enqueue_style('woocommerce-general');
-
-    wp_enqueue_script('custom-cart-panel-script', get_template_directory_uri() . '/js/custom-cart-panel.js', array('jquery'), null, true);
-
-    // Localize script to pass AJAX URL to JavaScript
-    wp_localize_script('custom-cart-panel-script', 'cartPanelAjax', array(
-      'ajax_url' => admin_url('admin-ajax.php')
-    ));
-  }
-  add_action('wp_enqueue_scripts', 'enqueue_woocommerce_cart_panel_scripts');
-
-
-  function update_cart_summary()
-  {
-    woocommerce_mini_cart();
-    wp_die();
-  }
-  add_action('wp_ajax_update_cart_summary', 'update_cart_summary');
-  add_action('wp_ajax_nopriv_update_cart_summary', 'update_cart_summary');
-
-
-  ///////////////////////////////////
-  //                               //
-  //   Shopping Bag Icn            //
-  //                               //
-  ///////////////////////////////////
-  /**
-   * Add shopping bag icon to the menu.
-   *
-   * @param string $items Current menu items.
-   * @return string Modified menu items.
-   */
-
-  // . wc_get_cart_url()
-  function createShoppingBag($items)
-  {
-    $shopping_bag_svg = '
-  <li >
-    <a href="#" id="cart-button" class="cart-button">
-    <span class="cart-count">' . WC()->cart->get_cart_contents_count() . '</span>
-
-
-    <svg class="ba" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="none" width="60" height="60" viewBox="0 0 32 32">
-        <title>shopping bag</title>
-        <path d="M16 11V7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7V11M5 9H19L20 21H4L5 9Z" stroke="#374151" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
-    </a>
-</li>';
-
-
-
-
-    return $items . $shopping_bag_svg;
-  }
-
-  add_filter('wp_nav_menu_items', 'createShoppingBag');
