@@ -21,6 +21,24 @@ function main_scripts()
 
 add_action('wp_enqueue_scripts', 'main_scripts');
 
+// add_action('wp_enqueue_scripts', 'enqueue_woocommerce_scripts');
+// function enqueue_woocommerce_scripts()
+// {
+//   if (class_exists('woocommerce')) {
+//     wp_enqueue_script('wc-add-to-cart-variation');
+//   }
+// }
+
+
+// Add stylesheet for admin
+
+function custom_admin_styles()
+{
+  wp_enqueue_style('custom-admin-style', get_template_directory_uri() . '/admin-style.css');
+}
+add_action('admin_enqueue_scripts', 'custom_admin_styles');
+
+
 function load_google_fonts()
 {
   wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap&family=Lato:400,600&display=swap');
@@ -447,7 +465,7 @@ class project_thumbs_widget extends WP_Widget
     </p>
     <p>
       <label for="<?php echo $this->get_field_id('cat'); ?>">
-        Select featured collectrion:
+        Select featured collection:
         <select class="widefat" id="<?php echo $this->get_field_id('cat'); ?>" name="<?php echo $this->get_field_name('cat'); ?>" />
         <?php
         echo '<option>' . __('No Category', 'simplefolk') . '</option>';
@@ -1751,169 +1769,102 @@ function photo_meta_callback($post)
 {
   wp_nonce_field(basename(__FILE__), "meta-box-nonce");
   require_once ABSPATH . '/wp-admin/includes/image.php'; // Without this wp_read_image_metadata() throws Fatal error: Uncaught Error: Call to undefined function
+
   $id = get_the_ID();
   $filepath = get_attached_file($id);
   $imageEXIF = wp_read_image_metadata($filepath);
-  // wut(wp_read_image_metadata($filepath));
 
-  // [aperture]
-  $exif_aperture = empty($imageEXIF['aperture']) ? '' :  $imageEXIF['aperture'];
-  $meta_aperture = esc_attr(get_post_meta(get_the_ID(), 'aperture', true));
-  $aperture_value = empty($meta_aperture) ? $exif_aperture : $meta_aperture;
+  // Extract EXIF data and existing meta data
+  $exif_data = array(
+    'aperture' => empty($imageEXIF['aperture']) ? '' : $imageEXIF['aperture'],
+    'camera' => empty($imageEXIF['camera']) ? '' : ucwords(strtolower(explode(' ', $imageEXIF['camera'])[0])) . (isset(explode(' ', $imageEXIF['camera'])[1]) ? ' ' . explode(' ', $imageEXIF['camera'])[1] : ''),
+    'iso' => empty($imageEXIF['iso']) ? '' : $imageEXIF['iso'],
+    'shutter_speed' => empty($imageEXIF['shutter_speed']) ? '' : float2rat($imageEXIF['shutter_speed']),
+    'focal_length' => empty($imageEXIF['focal_length']) ? '' : $imageEXIF['focal_length'] . 'mm',
+    'created_timestamp' => empty($imageEXIF['created_timestamp']) ? '' : date("F j, Y, g:i A", $imageEXIF['created_timestamp'])
+  );
 
-  // [camera] 
-  // converted ex: NIKON D10 => Nikon D10
-  $exif_camera = empty($imageEXIF['camera']) ? '' :  $imageEXIF['camera'];
+  $meta_data = array(
+    'aperture' => esc_attr(get_post_meta($id, 'aperture', true)),
+    'camera' => esc_attr(get_post_meta($id, 'camera', true)),
+    'iso' => esc_attr(get_post_meta($id, 'iso', true)),
+    'shutter' => esc_attr(get_post_meta($id, 'shutter', true)),
+    'focal' => esc_attr(get_post_meta($id, 'focal', true)),
+    'time' => esc_attr(get_post_meta($id, 'time', true)),
+    'film' => esc_attr(get_post_meta($id, 'film', true)),
+    'location' => esc_attr(get_post_meta($id, 'location', true)),
+    'print_available' => esc_attr(get_post_meta($id, 'print_available', true)),
+    'featured_image' => esc_attr(get_post_meta($id, 'featured_image', true)),
+    'make_product' => esc_attr(get_post_meta($id, 'make_product', true)),
+    'product_template' => esc_attr(get_post_meta($id, 'product_template', true))
+  );
 
-  if (!empty($exif_camera)) :
-    $fixCase = explode(' ', $exif_camera);
-    $cam1 = $fixCase[0];
-    $capitalFirst = strtolower($cam1);
-    $capitalFirst = ucwords($capitalFirst);
-
-    $exif_camera = empty($fixCase[1]) ? $capitalFirst : $capitalFirst . ' ' .  $fixCase[1];
-  endif;
-  $meta_camera = esc_attr(get_post_meta(get_the_ID(), 'camera', true));
-  $camera_value = empty($meta_camera) ? $exif_camera : $meta_camera;
-
-  // [iso] 
-  $exif_iso =  empty($imageEXIF['iso']) ? '' :  $imageEXIF['iso'];
-  $meta_iso = esc_attr(get_post_meta(get_the_ID(), 'iso', true));
-  $iso_value = empty($meta_iso) ? $exif_iso : $meta_iso;
-
-  // [shutter_speed] 
-  $exif_shutter =  empty($imageEXIF['shutter_speed']) ? '' :  $imageEXIF['shutter_speed'];
-  if (!empty($exif_shutter)) :
-    $exif_shutter = float2rat($exif_shutter);
-    $ExposureTime = '';
-    $arrExposureTime = explode('/', $exif_shutter);
-    // wut($arrExposureTime);
-    // Sanity check for zero denominator.
-    if ($arrExposureTime[1] == 0) {
-      $ExposureTime = '<sup>1</sup>/? sec';
-      // In case numerator is zero.
-    } elseif ($arrExposureTime[0] == 0) {
-      $ExposureTime = '<sup>0</sup>/' . $arrExposureTime[1] . ' sec';
-      // When denominator is 1, display time in whole seconds, minutes, and/or hours.
-    } elseif ($arrExposureTime[1] == 1) {
-      // In the Seconds range.
-      if ($arrExposureTime[0] < 60) {
-        $ExposureTime = $arrExposureTime[0] . ' s';
-        // In the Minutes range.
-      } elseif (($arrExposureTime[0] >= 60) && ($arrExposureTime[0] < 3600)) {
-        $ExposureTime = gmdate("i\m:s\s", $arrExposureTime[0]);
-        // In the Hours range.
-      } else {
-        $ExposureTime = gmdate("H\h:i\m:s\s", $arrExposureTime[0]);
-      }
-      // When inverse is evenly divisable, show reduced fractional exposure.
-    } elseif (($arrExposureTime[1] % $arrExposureTime[0]) == 0) {
-      $ExposureTime = '<sup>1</sup>/' . $arrExposureTime[1] / $arrExposureTime[0] . ' sec';
-      // If the value is greater or equal to 3/10, which is the smallest standard
-      // exposure value that doesn't divide evenly, show it in decimal form.
-    } elseif (($arrExposureTime[0] / $arrExposureTime[1]) >= 3 / 10) {
-      $ExposureTime = round(($arrExposureTime[0] / $arrExposureTime[1]), 1) . ' sec';
-      // If all else fails, just display it as it was found.
-    } else {
-      $ExposureTime = '<sup>' . $arrExposureTime[0] . '</sup>/' . $arrExposureTime[1] . ' sec';
+  // Fallback to EXIF data if meta data is empty
+  foreach ($exif_data as $key => $value) {
+    if (empty($meta_data[$key])) {
+      $meta_data[$key] = $value;
     }
-  //  wut($ExposureTime);
+  }
 
-  endif;
-  $meta_shutter = esc_attr(get_post_meta(get_the_ID(), 'shutter', true));
-  $shutter_value = empty($meta_shutter) ? $exif_shutter : $meta_shutter;
-
-  // [focal_length] 
-  // lens focal length (in millimeters (mm))
-
-  $exif_focal = empty($imageEXIF['focal_length']) ? '' :  $imageEXIF['focal_length'] . 'mm';
-  $meta_focal = esc_attr(get_post_meta(get_the_ID(), 'focal', true));
-  $focal_value = empty($meta_focal) ? $exif_focal  : $meta_focal;
-
-  // [created_timestamp] 
-  // unix timestamp converted, eg: 1471244893 => August 15, 2016, 7:08 AM
-  // date("F j, Y, g:i a")
-
-  $exif_time = empty($imageEXIF['created_timestamp']) ? '' :  $imageEXIF['created_timestamp'];
-  $converted_time = '';
-  if (!empty($exif_time)) :
-    $converted_time = date("F j, Y, g:i A", $exif_time);
-  endif;
-  $meta_time = esc_attr(get_post_meta(get_the_ID(), 'time', true));
-  $time_value = empty($meta_time) ? $converted_time : $meta_time;
+  $products = wc_get_products(array('limit' => -1));
   ?>
   <p>
     <label for="camera">Camera : </label>
-    <input id="camera" type="text" name="camera" style="margin-right: 10px; width: 100%" value="<?php echo $camera_value; ?>" />
-
+    <input id="camera" type="text" name="camera" style="margin-right: 10px; width: 100%" value="<?php echo esc_attr($meta_data['camera']); ?>" />
   </p>
   <p>
     <label for="iso">ISO : </label>
-    <input id="iso" type="text" name="iso" style="margin-right: 10px; width:100%; text-align: center;" value="<?php echo $iso_value; ?>" />
+    <input id="iso" type="text" name="iso" style="margin-right: 10px; width:100%; text-align: center;" value="<?php echo esc_attr($meta_data['iso']); ?>" />
   </p>
   <p>
     <label for="aperture">Aperture : </label>
-    <input id="aperture" type="text" name="aperture" style="margin-right: 10px; width:100%; text-align: center;" value="<?php echo $aperture_value; ?>" />
-    <span class="extra-info">
-      This value is displayed with ƒ prefix
-    </span>
+    <input id="aperture" type="text" name="aperture" style="margin-right: 10px; width:100%; text-align: center;" value="<?php echo esc_attr($meta_data['aperture']); ?>" />
   </p>
   <p>
-    <label for="shutter">Shutter : </label>
-    <input id="shutter" type="text" name="shutter" style="margin-right: 10px; width:100%; text-align: center;" value="<?php echo $shutter_value; ?>" />
+    <label for="shutter">Shutter Speed : </label>
+    <input id="shutter" type="text" name="shutter" style="margin-right: 10px; width:100%; text-align: center;" value="<?php echo esc_attr($meta_data['shutter']); ?>" />
   </p>
   <p>
     <label for="focal">Focal Length : </label>
-    <input id="focal" type="text" name="focal" style="margin-right: 10px; width:100%" value="<?php echo $focal_value; ?>" />
+    <input id="focal" type="text" name="focal" style="margin-right: 10px; width:100%; text-align: center;" value="<?php echo esc_attr($meta_data['focal']); ?>" />
   </p>
   <p>
-    <label for="film">Film type : </label>
-    <input id="film" type="text" name="film" style="margin-right: 10px; width: 100%" value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'film', true)); ?>" />
+    <label for="time">Date Taken : </label>
+    <input id="time" type="text" name="time" style="margin-right: 10px; width:100%; text-align: center;" value="<?php echo esc_attr($meta_data['time']); ?>" />
   </p>
   <p>
-    <label for="time">Time of creation : </label>
-    <input id="time" type="text" name="time" style="margin-right: 10px; width:100%" value="<?php echo $time_value; ?>" />
+    <label for="film">Film Type : </label>
+    <input id="film" type="text" name="film" style="margin-right: 10px; width:100%; text-align: center;" value="<?php echo esc_attr($meta_data['film']); ?>" />
   </p>
   <p>
     <label for="location">Location : </label>
-    <input id="location" type="text" name="location" style="margin-right: 10px; width: 100%" value="<?php echo esc_attr(get_post_meta(get_the_ID(), 'location', true)); ?>" />
+    <input id="location" type="text" name="location" style="margin-right: 10px; width:100%; text-align: center;" value="<?php echo esc_attr($meta_data['location']); ?>" />
   </p>
   <p>
-    <label for="featured_image">Featured Image:</label>
-    <?php
-    $featured = get_post_meta($post->ID, "featured_image", true);
-    ?>
-    <input type="checkbox" id="featured_image" name="featured_image" <?php checked($featured, 'on'); ?>>
+    <label for="print_available">Print Available : </label>
+    <input id="print_available" type="checkbox" name="print_available" <?php checked($meta_data['print_available'], 'on'); ?> />
   </p>
-
   <p>
-    <label for="print_available">Prints Available?</label>
-    <?php
-    $checkbox_value = get_post_meta($post->ID, "print_available", true);
-    if ($checkbox_value == "") {
-    ?>
-      <input name="print_available" type="checkbox" value="true">
-    <?php
-    } else if ($checkbox_value == "true") {
-    ?>
-      <input name="print_available" type="checkbox" value="true" checked>
-    <?php
-    }
-    ?>
+    <label for="featured_image">Featured Image : </label>
+    <input id="featured_image" type="checkbox" name="featured_image" <?php checked($meta_data['featured_image'], 'on'); ?> />
   </p>
-
-
   <p>
-    <label for="make_product">Make this a product:</label>
-    <?php
-    $make_product = get_post_meta($post->ID, "make_product", true);
-    ?>
-    <input type="checkbox" id="make_product" name="make_product" <?php checked($make_product, 'on'); ?>>
+    <label for="make_product">Make Product : </label>
+    <input id="make_product" type="checkbox" name="make_product" <?php checked($meta_data['make_product'], 'on'); ?> />
   </p>
-
-
+  <p>
+    <label for="product_template">Product Template : </label>
+    <select id="product_template" name="product_template" style="width: 100%">
+      <option value="">Select a template</option>
+      <?php foreach ($products as $product) : ?>
+        <option value="<?php echo $product->get_id(); ?>" <?php selected($meta_data['product_template'], $product->get_id()); ?>><?php echo $product->get_name(); ?>
+        </option>
+      <?php endforeach; ?>
+    </select>
+  </p>
 <?php
 }
+
 
 /**
  * Save post meta box content.
@@ -1921,30 +1872,39 @@ function photo_meta_callback($post)
  * @param int $post_id Post ID
  */
 
-add_action('edit_attachment', 'simple_save_meta');
-
 function simple_save_meta($post_id)
 {
+  // Check if this is an autosave, if so, return
+  if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+    return;
+  }
 
-  // Check if user has permissions to save data.
+  // Check if the user has permissions to save data
   if (!current_user_can('edit_post', $post_id)) {
     return;
   }
 
-  $textfields = [
-    'camera',
-    'iso',
-    'aperture',
-    'shutter',
-    'focal',
-    'film',
-    'time',
-    'location',
-    'print_available',
-    'featured_image',
-    'make_product'
+  // Check if this is a revision, if so, return
+  if (wp_is_post_revision($post_id)) {
+    return;
+  }
 
+  // Verify the nonce
+  if (!isset($_POST['meta-box-nonce']) || !wp_verify_nonce($_POST['meta-box-nonce'], basename(__FILE__))) {
+    return;
+  }
+
+  // Ensure this is for attachments
+  if (get_post_type($post_id) !== 'attachment') {
+    return;
+  }
+
+  $textfields = [
+    'camera', 'iso', 'aperture', 'shutter', 'focal',
+    'film', 'time', 'location', 'print_available',
+    'featured_image', 'make_product', 'product_template'
   ];
+
   foreach ($textfields as $field) {
     if (array_key_exists($field, $_POST)) {
       update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
@@ -1954,42 +1914,98 @@ function simple_save_meta($post_id)
   if (isset($_POST['make_product']) && $_POST['make_product'] == 'on') {
     create_product_from_image($post_id);
   }
-  // TODO:  set values to custom taxonomy here?
-
 }
 
+add_action('save_post', 'simple_save_meta', 10, 1);
+add_action('edit_attachment', 'simple_save_meta');
 
 function create_product_from_image($post_id)
 {
   if (!class_exists('WooCommerce')) {
+    error_log('WooCommerce not found.');
     return;
   }
 
   // Check if the product already exists
   $product_id = get_post_meta($post_id, '_product_id', true);
   if ($product_id) {
+    error_log('Product already exists with ID: ' . $product_id);
     return; // Product already created
   }
 
   $title = get_the_title($post_id);
   $description = get_post_meta($post_id, 'description', true);
   $price = 10.00; // Default price
-  $image_url = wp_get_attachment_url($post_id);
+  $template_id = get_post_meta($post_id, 'product_template', true);
 
-  $product = new WC_Product();
-  $product->set_name($title);
-  $product->set_description($description);
-  $product->set_regular_price($price);
-  $product->set_image_id($post_id);
+  $sku = sanitize_title($title) . '-' . uniqid();
 
-  $product_id = $product->save();
+  if ($template_id) {
+    error_log('Template ID found: ' . $template_id);
+    $template_product = wc_get_product($template_id);
 
-  // Save the product ID in the image meta to avoid duplicate creation
+    if ($template_product && $template_product->is_type('variable')) {
+      error_log('Template product is variable.');
+
+      $product = new WC_Product_Variable();
+      $product->set_name($title);
+      $product->set_description($description);
+      $product->set_image_id($post_id);
+      $product->set_sku($sku);
+
+      // Get the attributes of the template product
+      $attributes = $template_product->get_attributes();
+      $product->set_attributes($attributes);
+
+      // Save the variable product
+      $product->save();
+      $product_id = $product->get_id();
+
+      // Create variations based on template product
+      $variation_ids = $template_product->get_children();
+      foreach ($variation_ids as $variation_id) {
+        $variation = wc_get_product($variation_id);
+
+        if ($variation) {
+          $new_variation = new WC_Product_Variation();
+          $new_variation->set_parent_id($product_id);
+          $new_variation->set_attributes($variation->get_attributes());
+          $new_variation->set_regular_price($variation->get_regular_price());
+          $new_variation->set_image_id($post_id);
+          $new_variation->set_stock_status('instock');
+          $new_variation->save();
+
+          error_log('New variation created with ID: ' . $new_variation->get_id());
+        }
+      }
+
+      // Ensure the variable product is in stock
+      $product->set_stock_status('instock');
+      $product->save();
+
+      error_log('Variable product saved with ID: ' . $product_id);
+    } else {
+      error_log('Template product is not variable.');
+    }
+  } else {
+    $product = new WC_Product_Simple();
+    $product->set_name($title);
+    $product->set_description($description);
+    $product->set_regular_price($price);
+    $product->set_image_id($post_id);
+    $product->set_sku($sku);
+    $product->set_stock_status('instock');
+    $product->save();
+    $product_id = $product->get_id();
+
+    error_log('Simple product created with ID: ' . $product_id);
+  }
+
+  // Save the product ID and details in the image meta to avoid duplicate creation
   update_post_meta($post_id, '_product_id', $product_id);
+  update_post_meta($post_id, '_product_price', $price);
+  update_post_meta($post_id, '_product_template', $template_id);
 }
-
-
-
 
 /**
  * Display data from the media meta boxes
@@ -2390,6 +2406,22 @@ function custom_comment($comment, $args, $depth)
   <?php
   }
 
+  /**
+   * Prevent redirect after adding item to cart
+   */
+
+  function modify_add_to_cart_redirect($url)
+  {
+    if (is_attachment()) {
+      // return wc_get_cart_url(); // Redirect to the cart page
+      // return get_permalink(); // Stay on the current page
+      return false;
+    }
+    return $url;
+  }
+  add_filter('woocommerce_add_to_cart_redirect', 'modify_add_to_cart_redirect');
+
+
   /* 
  Add my own class to button - must be a better way to adjust this color
  */
@@ -2400,3 +2432,75 @@ function custom_comment($comment, $args, $depth)
     return $classes;
   }
   add_filter('woocommerce_product_add_to_cart_class', 'custom_add_to_cart_button_classes', 10, 2);
+
+  function custom_product_variation_add_to_cart($atts)
+  {
+    if (!isset($atts['id'])) {
+      return '<p>No product ID provided.</p>';
+    }
+
+    $product = wc_get_product($atts['id']);
+
+    if (!$product || !$product->is_type('variable')) {
+      return '<p>Invalid product ID or the product is not a variable product.</p>';
+    }
+
+    // Ensure product is loaded for variations
+    if (!$product->is_purchasable() || !$product->is_in_stock()) {
+      return '<p>This product is currently out of stock and unavailable.</p>';
+    }
+
+    ob_start();
+  ?>
+    <form class="variations_form cart" method="post" enctype="multipart/form-data" data-product_id="<?php echo esc_attr($product->get_id()); ?>" data-product_variations="<?php echo htmlspecialchars(json_encode($product->get_available_variations())); ?>">
+      <?php
+      $attributes = $product->get_variation_attributes();
+      $selected_attributes = $product->get_default_attributes();
+
+      if (empty($attributes)) {
+        echo '<p class="stock out-of-stock">' . __('This product is currently out of stock and unavailable.', 'woocommerce') . '</p>';
+      } else {
+      ?>
+        <table class="variations" cellspacing="0">
+          <tbody>
+            <?php foreach ($attributes as $attribute_name => $options) : ?>
+              <tr>
+                <td class="label">
+                  <label for="<?php echo esc_attr(sanitize_title($attribute_name)); ?>">
+                    <?php echo wc_attribute_label($attribute_name); ?>
+                  </label>
+                </td>
+                <td class="value">
+                  <?php
+                  wc_dropdown_variation_attribute_options(array(
+                    'options' => $options,
+                    'attribute' => $attribute_name,
+                    'product' => $product,
+                    'selected' => isset($selected_attributes[$attribute_name]) ? $selected_attributes[$attribute_name] : '',
+                  ));
+                  echo '<a class="reset_variations" href="#">' . esc_html__('Clear', 'woocommerce') . '</a>';
+                  ?>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+        <?php
+        do_action('woocommerce_before_add_to_cart_button');
+        ?>
+        <div class="single_variation_wrap">
+          <?php
+          do_action('woocommerce_before_single_variation');
+          do_action('woocommerce_single_variation');
+          do_action('woocommerce_after_single_variation');
+          ?>
+        </div>
+        <?php
+        do_action('woocommerce_after_add_to_cart_button');
+        ?>
+      <?php } ?>
+    </form>
+  <?php
+    return ob_get_clean();
+  }
+  add_shortcode('custom_variation_add_to_cart', 'custom_product_variation_add_to_cart');

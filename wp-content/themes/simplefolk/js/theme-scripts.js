@@ -131,3 +131,35 @@ window.addEventListener('scroll', function () {
         topNav.classList.remove('sticky')
     }
 })
+
+/* Trying to override woocommerce ajax */
+
+// jQuery(document).ready(function ($) {
+//     $('body').on('submit', 'form.cart', function (e) {
+//         e.preventDefault()
+//         var form = $(this)
+//         var formData = form.serialize()
+
+//         $.post(wc_add_to_cart_params.ajax_url, formData, function (response) {
+//             if (!response.error) {
+//                 // Trigger WooCommerce event after the product is added to the cart
+//                 $(document.body).trigger('added_to_cart', [
+//                     response.fragments,
+//                     response.cart_hash,
+//                     form,
+//                 ])
+
+//                 // Optionally, display a message or update cart count here
+//                 // For example, update the cart fragments
+//                 $.each(response.fragments, function (key, value) {
+//                     $(key).replaceWith(value)
+//                 })
+//             } else {
+//                 // If there's an error, redirect to the product URL
+//                 window.location = response.product_url
+//             }
+//         })
+
+//         return false
+//     })
+// })
