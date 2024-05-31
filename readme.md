@@ -15,20 +15,20 @@ The goal is for it to be incredibly simple and attention is on the photography.
 
     Features
 
-- **Fast** - Speed is a major priority. See below for performance test results.
-- **Enhanced Media Library** - Organize and display your images all from the media library.
-- **Meta data** - EXIF (Camera type, shutter speed, etc.. ) imported and additional fields for film cameras.
-- **Blog** - All the usual WordPress post functionality still exists along with the media content.
-- **SEO** - Theme adds breadcrumb support, dynamic titles, and dynamic meta descriptions.
-- **Fully Responsive** - Website flexes to give the user the best experience on any device.
-- **Analytics** - Setup to work with a unique API key added to the admin.
-- **Darkmode/Lightmode toggle** - Built in frontend toggle to give the user their preferred style.
-- **Organization** - Tags and Category added to media attachments.
-- **Custom Menus** - multiple spots to customize with widgets and navigation
-- **Custom Widgets** - Feature a project (category) or add a gallery of a particular tag
-- **Configuration** - Layout and features easily controlled through admin customizer
-- **Image modals** - using glightbox for zoom views.
-- **Masonry** - Uses isotope for filters and flexible layouts.
+-   **Fast** - Speed is a major priority. See below for performance test results.
+-   **Enhanced Media Library** - Organize and display your images all from the media library.
+-   **Meta data** - EXIF (Camera type, shutter speed, etc.. ) imported and additional fields for film cameras.
+-   **Blog** - All the usual WordPress post functionality still exists along with the media content.
+-   **SEO** - Theme adds breadcrumb support, dynamic titles, and dynamic meta descriptions.
+-   **Fully Responsive** - Website flexes to give the user the best experience on any device.
+-   **Analytics** - Setup to work with a unique API key added to the admin.
+-   **Darkmode/Lightmode toggle** - Built in frontend toggle to give the user their preferred style.
+-   **Organization** - Tags and Category added to media attachments.
+-   **Custom Menus** - multiple spots to customize with widgets and navigation
+-   **Custom Widgets** - Feature a project (category) or add a gallery of a particular tag
+-   **Configuration** - Layout and features easily controlled through admin customizer
+-   **E-Commerce** - Built to work with WooCommerce, easily create products directly from the attachments
+-   **Image modals** - using glightbox for zoom views.
 
 ---
 
@@ -77,8 +77,8 @@ some of the features you can expect.
 
 So far this has only been tested in the following browsers.
 
-- Chrome
-- Edge
+-   Chrome
+-   Edge
 
 ---
 
@@ -99,78 +99,94 @@ you can also boost my day when you [buy me a coffee](https://www.buymeacoffee.co
 
     Changelog
 
+## [0.6.0] - 2024-05-30
+
+### Fixed
+
+-   layouts with lightbox and light mode
+-   addressed a lot of W3 recommendations - #50
+
+### Updated
+
+-   A lot of style updates, textures, fonts
+
+### Added
+
+-   Support for WooCommerce - #59
+-   Create product from Media attachment page
+-   Support comments - #53
+
 ## [0.5.3] - 2023-10-09
 
 ### Fixed
 
-- error from carousel script 
-- missing tag icon
+-   error from carousel script
+-   missing tag icon - #31
 
 ## [0.5.2] - 2023-10-09
 
 ### Removed
 
-- Replaced isotope and imagesLoaded JS with basic CSS
+-   Replaced isotope and imagesLoaded JS with basic CSS
 
 ## [0.4.2] - 2023-10-04
 
 ### Fixed
 
-- z-index of menu and link - #54
-- Removed unnecessary type attributes - #50
-- Mobile link in glightbox to view full post
+-   z-index of menu and link - #54
+-   Removed unnecessary type attributes - #50
+-   Mobile link in glightbox to view full post
 
 ### Updated
 
-- Various styles, better colors for light/dark modes
-- gLightbox core script 
+-   Various styles, better colors for light/dark modes
+-   gLightbox core script
 
 ### Added
 
-- Deprecated db sync plugin
-- Carousel widget for full width collections banner
-
+-   Deprecated db sync plugin
+-   Carousel widget for full width collections banner
 
 ## [0.3.0] - 2022-10-17
 
 ### Fixed
 
-- Hashtag widget
-- Breadcrumbs for collections #40
-- Added blog archive page and templage #42
+-   Hashtag widget
+-   Breadcrumbs for collections - #40
+-   Added blog archive page and template #42
 
 ### Changed
 
-- Style of banners, removing the text link
+-   Style of banners, removing the text link
 
 ### Added
 
-- Configuration for Footer Copyright
-- Configurations for social media links
-- SVG of social media icons
+-   Configuration for Footer Copyright
+-   Configurations for social media links
+-   SVG of social media icons
 
 ### Removed
 
-- Featured image from single post
+-   Featured image from single post
 
 ## [0.2.0] - 2022-10-06
 
 ### Removed
 
-- Core Tax and Category from the archive pages
-- All associated pages for the category and tag taxonomy
+-   Core Tax and Category from the archive pages
+-   All associated pages for the category and tag taxonomy
 
 ### Added
 
-- Custom taxonomy Collections to replace Categories
-- Custom taxonomy Hashtags to replace Tags
-- Automates building of pages - hashtags and collections to be used for archives
+-   Custom taxonomy Collections to replace Categories
+-   Custom taxonomy Hashtags to replace Tags
+-   Automates building of pages - hashtags and collections to be used for archives
 
 ## [0.1.0] - 2022-09-24
 
 ### Removed
 
-- Reset version and previous changelog. Check prior commit history to review.
+-   Reset version and previous changelog. Check prior commit history to review.
 
 ---
 

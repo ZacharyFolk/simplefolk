@@ -8,11 +8,6 @@ while (have_posts()) {
     $image = wp_get_attachment_image($image_id, 'large');
     $full_image_link = wp_get_attachment_image_url(get_the_ID(), 'full');
 
-    // Check if the attachment is linked to a product
-    $product_id = get_post_meta(get_the_ID(), '_product_id', true);
-    $product = wc_get_product($product_id);
-
-
 ?>
     <div class="wrap">
         <div id="primary" class="content-area">
