@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * The Template for displaying all single products
+ *
+ * @see         https://woocommerce.com/document/template-structure/
+ * @package     WooCommerce\Templates
+ * @version     1.6.4
+ */
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
+get_header('shop'); ?>
+<div class="content-wrap single-post">
+    <main id="main" class="single-main" role="main">
+        <div id="primary" class="content-area">
+            <?php get_template_part('includes/loop', 'single'); ?>
+        </div>
+    </main>
+</div>
+<?php
+get_footer('shop');
