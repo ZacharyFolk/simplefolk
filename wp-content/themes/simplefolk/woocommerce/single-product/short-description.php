@@ -21,14 +21,18 @@ if (!defined('ABSPATH')) {
 }
 
 global $post;
+
 $short_description = apply_filters('woocommerce_short_description', $post->post_excerpt);
-echo ('THIS IS A WORKING OVERRIDE')
+
+// custom photo meta details
+display_photo_meta(get_the_ID());
+
 if (!$short_description) {
     return;
 }
 
 ?>
-<div class="woocommerce-product-details__short-description">Oh wut??
+<div class="woocommerce-product-details__short-description">
     <?php echo $short_description; // WPCS: XSS ok. 
     ?>
 </div>
