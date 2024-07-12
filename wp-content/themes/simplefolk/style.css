@@ -1721,6 +1721,17 @@ button.single_add_to_cart_button:hover {
 .woocommerce-variation-price {
     margin: 20px 0;
 }
+
+.product_meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.woocommerce div.product form.cart .variations td,
+.woocommerce div.product form.cart .variations th {
+    vertical-align: middle;
+}
+
 /* TODO: This isn't great */
 .post-navigation {
     display: none;
@@ -1755,6 +1766,15 @@ button.single_add_to_cart_button:hover {
     margin: 0 10%;
     height: 90%;
     object-fit: cover;
+}
+/* Adjust the main product image */
+
+@media only screen and (min-width: 1501px) {
+    .woocommerce div.product div.images img {
+        width: auto;
+        max-width: 700px;
+        margin: 0 auto;
+    }
 }
 
 /**********[ #RESPONSIVE RULES ]**********/
