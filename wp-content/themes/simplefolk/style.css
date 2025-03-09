@@ -1091,6 +1091,7 @@ body.page #secondary {
 }
 
 .archive-card {
+    break-inside: avoid;
     padding-bottom: 20px;
 }
 
